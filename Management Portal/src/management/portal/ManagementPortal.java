@@ -18,4 +18,7 @@ public class ManagementPortal {
         // TODO code application logic here
     }
     
+    public void startScreen() {
+        
+    }
 }
