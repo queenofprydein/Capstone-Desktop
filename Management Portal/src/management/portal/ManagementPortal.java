@@ -16,6 +16,7 @@ public class ManagementPortal {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        // Here is a change
     }
     
     public void startScreen() {
