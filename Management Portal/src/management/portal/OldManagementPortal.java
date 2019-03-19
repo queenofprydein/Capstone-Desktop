@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2019 Marshall Casey <caseym1325@students.forsythtech.edu>
+ * Created for the FTCC course CSC-289-900-2019SP.
+ * This program can be freely copied and/or distributed.
  */
 package management.portal;
 
@@ -12,10 +12,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- *
- * @author saved
+ **
+ * @author Marshall Casey
  */
-public class ManagementPortal {
+public class OldManagementPortal {
 
     /**
      * @param args the command line arguments
