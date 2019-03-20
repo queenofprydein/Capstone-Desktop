@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 Marshall Casey <caseym1325@students.forsythtech.edu>
+ * Copyright (C) 2019 Fast Track Computer Consultants <caseym1325@forsythtech.edu>
  * Created for the FTCC course CSC-289-900-2019SP.
  * This program can be freely copied and/or distributed.
  */
@@ -11,13 +11,16 @@ import java.util.logging.Logger;
 
 /**
  **
+ * @author Alondra Dorantes
+ * @author Dana Caldwell
  * @author Marshall Casey
+ * @author William West
  */
 public class ManagementPortal extends javax.swing.JFrame {
 
     // Variable Declaration
     //final String myDBURL = "jdbc:mysql://sql5.freemysqlhosting.net:3306/sql5114695?user=sql5114695&password=gaVQFSCRKx";
-    //final String myDBURL = "jdbc:mysql://karnij.com:3306/quinic_school?user=quinic_acid&password=W4ke^call";
+    //final String myDBURL = "jdbc:mysql://karnij.com:3306/quinic_school?user=quinic_acid&password=12345678";
     final String myDBURL = "jdbc:mysql://db4free.net:3306/karnij?user=quinicacid&password=Mm436yru";
 
     private static Connection conn = null;
@@ -96,7 +99,6 @@ public class ManagementPortal extends javax.swing.JFrame {
 
         btnCreateTable.setText("Create Inventory Table");
         btnCreateTable.setFocusCycleRoot(true);
-        btnCreateTable.setNextFocusableComponent(btnDisplayAll);
         btnCreateTable.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCreateTableActionPerformed(evt);
@@ -123,7 +125,6 @@ public class ManagementPortal extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         btnDisplayAll.setText("Display All");
-        btnDisplayAll.setNextFocusableComponent(btnAddRecord);
         btnDisplayAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDisplayAllActionPerformed(evt);
@@ -150,7 +151,6 @@ public class ManagementPortal extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         btnAddRecord.setText("Add Record");
-        btnAddRecord.setNextFocusableComponent(txtID);
         btnAddRecord.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddRecordActionPerformed(evt);
@@ -163,16 +163,11 @@ public class ManagementPortal extends javax.swing.JFrame {
 
         jLabel4.setText("Price");
 
-        txtDescription.setNextFocusableComponent(txtQuantity);
         txtDescription.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDescriptionActionPerformed(evt);
             }
         });
-
-        txtQuantity.setNextFocusableComponent(txtPrice);
-
-        txtPrice.setNextFocusableComponent(btnShowOne);
 
         jLabel1.setText("ID");
 
@@ -226,7 +221,6 @@ public class ManagementPortal extends javax.swing.JFrame {
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         btnShowOne.setText("Show One Item");
-        btnShowOne.setNextFocusableComponent(txtSearch);
         btnShowOne.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnShowOneActionPerformed(evt);
