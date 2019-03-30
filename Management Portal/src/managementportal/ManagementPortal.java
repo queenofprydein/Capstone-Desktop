@@ -19,8 +19,9 @@ import java.util.logging.Logger;
 public class ManagementPortal extends javax.swing.JFrame {
 
     // Variable Declaration
-    final String myDBURL = "jdbc:mysql://db4free.net:3306/karnij?user=quinicacid&password=Mm436yru";
-
+    // final String myDBURL = "jdbc:mysql://db4free.net:3306/karnij?user=quinicacid&password=Mm436yru";
+    final String myDBURL = "jdbc:mysql://db4free.net:3306/smgroup?user=ftccgroup&password=ftccgroup";
+    
     private static Connection conn = null;
     private static Statement statement = null;
 
