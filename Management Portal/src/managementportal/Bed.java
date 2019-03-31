@@ -28,6 +28,13 @@ public class Bed {
         typeOfBed = "";
         bed_description = "";
     }
+    //forgot abour this constructor
+    public Bed(int bID, String tob)
+    {
+        bedID = bID;
+        typeOfBed = tob;
+        bed_description = "";
+    }
 
     public int getBedID() {
         return bedID;
