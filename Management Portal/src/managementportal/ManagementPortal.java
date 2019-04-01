@@ -9,6 +9,7 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 /**
  **
  * @author Alondra Dorantes
@@ -20,7 +21,8 @@ public class ManagementPortal extends javax.swing.JFrame {
 
     // Variable Declaration
     // final String myDBURL = "jdbc:mysql://db4free.net:3306/karnij?user=quinicacid&password=Mm436yru";
-    final String myDBURL = "jdbc:mysql://db4free.net:3306/smgroup?user=ftccgroup&password=ftccgroup";
+    // final String myDBURL = "jdbc:mysql://db4free.net:3306/smgroup?user=ftccgroup&password=ftccgroup";
+    final String myDBURL = "jdbc:sqlserver://sql5008.site4now.net:1433;DatabaseName=DB_A47087_smgroup;user=DB_A47087_smgroup_admin;password=ftccgroup1";
     
     private static Connection conn = null;
     private static Statement statement = null;
