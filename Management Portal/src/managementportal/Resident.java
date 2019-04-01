@@ -5,6 +5,7 @@
  */
 package managementportal;
 
+
 /**
  *
  * @author Lupe
@@ -117,7 +118,7 @@ public class Resident {
     public void setMiddleName(String middleName) {
         this.middleName = middleName;
     }
-
+    
     public String getAddressLn1() {
         return addressLn1;
     }
@@ -246,5 +247,121 @@ public class Resident {
         this.ethnicity = ethnicity;
     }
     
+    //Vaidation of data
     
+    public boolean isFirstNameValid(String name)
+    {
+        return name.matches("[A-Z][a-zA-Z]*");
+    }
+    
+    public boolean isLastNameValid(String name)
+    {
+        return name.matches("[a-zA-Z]+([ '-][a-zA-Z]+)*");
+    }
+    
+    public boolean isMiddleNameValid(String name)
+    {
+        if(name.equals(""))
+        {
+            return true;
+        }
+        return name.matches("[A-Z][a-zA-Z]*");
+    }
+    
+    public boolean isAddressValid(String add)
+    {
+        if(add.equals(""))
+        {
+            return true;
+        }
+        return add.matches("\\d+\\s+([a-zA-Z]+|[a-zA-Z]+\\s[a-zA-Z]+)");
+    }
+    
+    public boolean isCityValid(String city)
+    {
+        if(city.equals(""))
+        {
+            return true;
+        }
+        return city.matches("([a-zA-Z]+|[a-zA-Z]+\\s[a-zA-Z]+)");
+    }
+    
+    public boolean isStateValid(String state)
+    {
+        if(state.equals(""))
+        {
+            return true;
+        }
+        //two letter only
+        return state.matches("[A-Z][A-Z]");
+    }
+    
+    public boolean isZipValid(String zip)
+    {
+        if(zip.equals(""))
+        {
+            return true;
+        }
+        return zip.matches("\\d{4}-\\d{5}|\\d{5}");
+    }
+    
+    public boolean isPhoneValid(String phone)
+    {
+        if(phone.equals(""))
+        {
+            return true;
+        }
+        return phone.matches("[1-9]\\d{2}-[1-9]\\d{2}-\\d{4}");
+    }
+    
+    public boolean isEmailValid(String email)
+    {
+        if(email.equals(""))
+        {
+            return true;
+        }
+        return email.matches("^(.+)@(.+)$");
+    }
+    
+    public boolean isBirthDateValid(String birthD)
+    {
+        if(birthD.equals(""))
+        {
+            return true;
+        }
+        //bith date mm/dd/yyyy with leading zeroes
+        return birthD.matches("^[0-3][0-9]/[0-3][0-9]/(?:[0-9][0-9])?[0-9][0-9]$");
+    }
+    
+    public boolean isSSNValid(String ssn)
+    {
+        return ssn.matches("[1-9]\\\\d{2}-[1-9]\\\\d{2}-\\\\d{4}");
+    }
+    
+    public boolean isGenderValid(String gen)
+    {
+        //are we just excepting males or not?
+        return gen.equals("Male");
+    }
+    
+    public boolean isUSVetValid(String vet)
+    {
+        //One letter only
+        if(vet.equals("Y") || vet.equals("N"))
+        {
+            return true;
+        }
+        
+        return false;
+    }
+    
+    public boolean isRaceValid(String race)
+    {
+        return race.matches("[A-Z][a-zA-Z]*");
+    }
+    
+    public boolean isEthnicityValid(String ethnic)
+    {
+        return ethnic.matches("[A-Z][a-zA-Z]*");
+    }
 }
