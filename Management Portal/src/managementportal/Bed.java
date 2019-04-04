@@ -11,8 +11,10 @@ package managementportal;
  */
 public class Bed {
     private int bedID;              //NOT null
-    //private int visitID;          //NOT null
-    //private int lockerID;         //NOT null
+    private int visitID;            //NOT null
+    Visit visit;
+    private int lockerID;           //NOT null
+    Locker locker;
     private String typeOfBed;       //NOT null
     private String bed_description; //null
     
@@ -21,17 +23,27 @@ public class Bed {
         typeOfBed = "";
         bed_description = "";
     }
-    
     public Bed(int bID)
     {
         bedID = bID;
         typeOfBed = "";
         bed_description = "";
     }
-    //forgot abour this constructor
-    public Bed(int bID, String tob)
+    
+    public Bed(int bID, int vID, int lID)
     {
         bedID = bID;
+        visit = new Visit(vID);
+        locker = new Locker(lID);
+        typeOfBed = "";
+        bed_description = "";
+    }
+    //forgot abour this constructor
+    public Bed(int bID, String tob, int vID, int lID)
+    {
+        bedID = bID;
+        visit = new Visit(vID);
+        locker = new Locker(lID);
         typeOfBed = tob;
         bed_description = "";
     }
