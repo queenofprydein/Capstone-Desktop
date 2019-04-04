@@ -364,4 +364,9 @@ public class Resident {
     {
         return ethnic.matches("[A-Z][a-zA-Z]*");
     }
+    
+    public void AddNewResident()
+    {
+           
+    }
 }
