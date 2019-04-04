@@ -5,13 +5,18 @@
  */
 package managementportal;
 
+import java.text.*;
+import java.util.*;
 /**
  *
  * @author Lupe
  */
 public class Visit {
     private int visitID;                //NOT null
-    //private int residentID;           //NOT null
+    private int residentID;             //NOT null
+    Resident resident;
+    private int bedID;
+    Bed bed;
     private String date_CheckIn;        //NOT null
     private String date_CheckOut;       //NOT null
     private String refer_other_org;     //NOT null
@@ -72,6 +77,39 @@ public class Visit {
     public Visit(int visID)
     {
         visitID = visID;
+        date_CheckIn = "";        
+        date_CheckOut = "";       
+        refer_other_org = "";     
+        relastionship_head = "";  
+        disability_con = "";      
+        disabilityType = "";      
+        disability_longT = "";    
+        disability_dep = "";
+        recieve_disab = "";
+        insurance_con = "";
+        insuranceType = "";
+        homeless_history = "";
+        length_stay_prior = "";
+        homeless_start = "";
+        numOfTimes_homeless = 1;
+        house_status = "";
+        last_zip = "";
+        coc_code = "";
+        NC_county_serv = "";
+        residentCounty = "";
+        residentCity = "";
+        shelter_cat = "";
+        recieving_income = "";
+        source_income = "";
+        source_nonIncome_name = "";
+        form_sharingPlan = "";
+    }
+    //Consturctor with resident ID
+    public Visit(int visID, int rID, int bID)
+    {
+        visitID = visID;
+        resident = new Resident(rID);
+        bed = new Bed(bID);
         date_CheckIn = "";        
         date_CheckOut = "";       
         refer_other_org = "";     
@@ -316,5 +354,40 @@ public class Visit {
         this.form_sharingPlan = form_sharingPlan;
     }
     
+    //Validation
+    public boolean isDateValid(String date)
+    {
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+        format.setLenient(false);
+        try
+        {
+            Date dateForm = format.parse(date);
+        }
+        catch(ParseException e)
+        {
+            return false;
+        }
+        return true;
+        
+    }
     
-}
+    public boolean ValidateYesOrNo(String str)
+    {
+        if(str.equals("Y") || str.equals("N"))
+        {
+            return true;
+        }
+        
+        return false;
+    }
+    
+    public boolean NotNullIsFilled(String str)
+    {
+        if(str != null && !str.isEmpty())
+        {
+            return true;
+        }
+        return false;
+    }
+}   
+
