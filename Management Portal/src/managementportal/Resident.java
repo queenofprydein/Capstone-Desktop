@@ -28,7 +28,7 @@ public class Resident {
     private String gender;      //NOT null
     private String emContPhone; //null
     private String emContName;  //null
-    private String usVet;         //NOT null
+    private String usVet;       //NOT null
     private String race;        //NOT null
     private String ethnicity;   //NOT null
     
@@ -53,9 +53,9 @@ public class Resident {
         race = "";
         ethnicity = "";
     }
-    public Resident(int resID)
+    public Resident(int rID)
     {
-        residentID = resID;
+        residentID = rID;
         firstName = "";
         lastName = "";
         middleName = "";
@@ -75,9 +75,9 @@ public class Resident {
         race = "";
         ethnicity = "";
     }
-    public Resident(int resID, String fn, String ln, String ssn, String gen, String vet, String r, String eth)
+    
+    public Resident(String fn, String ln, String ssn, String gen, String vet, String r, String eth)
     {
-        residentID = resID;
         firstName = fn;
         lastName = ln;
         socialSN = ssn;
@@ -314,6 +314,15 @@ public class Resident {
         return phone.matches("[1-9]\\d{2}-[1-9]\\d{2}-\\d{4}");
     }
     
+    public boolean isFullNameValid(String fullN)
+    {
+        if(fullN.equals(""))
+        {
+            return true;
+        }
+        return fullN.matches("^[a-zA-Z\\\\s]+");
+    }
+    
     public boolean isEmailValid(String email)
     {
         if(email.equals(""))
@@ -365,8 +374,197 @@ public class Resident {
         return ethnic.matches("[A-Z][a-zA-Z]*");
     }
     
-    public void AddNewResident()
+    public void AddNewResident(String fName, String lName, String ssn, String gen, String vet, String r, String eth)
     {
-           
+        
+        if(isFirstNameValid(fName) == true)
+        {
+            firstName = fName;
+        }
+        if(isLastNameValid(lName) == true)
+        {
+            lastName = lName;
+        }
+        if(isSSNValid(ssn) == true)
+        {
+            socialSN = ssn;
+        }
+        if(isGenderValid(gen) == true)
+        {
+            gender = gen;
+        }
+        if(isUSVetValid(vet) == true)
+        {
+            usVet = vet;
+        }
+        if(isRaceValid(r) == true)
+        {
+            race = r;
+        }
+        if(isEthnicityValid(eth) == true)
+        {
+            ethnicity = eth;
+        }
+    }
+    
+    public void AddNewResident(String fName, String lName,String mName, String add,String add2, String c, String st, String zp, String phne, String phneAlt, String email, String bDate, String ssn, String gen, String emergencyP, String emergencyN, String vet, String r, String eth)
+    {
+        if(isFirstNameValid(fName) == true)
+        {
+            firstName = fName;
+        }
+        if(isLastNameValid(lName) == true)
+        {
+            lastName = lName;
+        }
+        if(isMiddleNameValid(mName) == true)
+        {
+            middleName = mName;
+        }
+        if(isAddressValid(add) == true)
+        {
+            addressLn1 = add;
+        }
+        if(isAddressValid(add2) == true)
+        {
+            addressLn2 = add2;
+        }
+        if(isCityValid(c) == true)
+        {
+            city = c;
+        }
+        if(isStateValid(st) == true)
+        {
+            state = st;
+        }
+        if(isZipValid(zp) == true)
+        {
+            zip = zp;
+        }
+        if(isPhoneValid(phne) == true)
+        {
+            phone = phne;
+        }
+        if(isPhoneValid(phneAlt) == true)
+        {
+            phoneAlt = phneAlt;
+        }
+        if(isEmailValid(email) == true)
+        {
+            res_email = email;
+        }
+        if(isBirthDateValid(bDate) == true)
+        {
+            birthDate = bDate;
+        }
+        if(isPhoneValid(emergencyP) == true)
+        {
+            emContPhone = emergencyP;
+        }
+        if(isFullNameValid(emergencyN) == true)
+        {
+            emContName = emergencyN;
+        }
+        if(isSSNValid(ssn) == true)
+        {
+            socialSN = ssn;
+        }
+        if(isGenderValid(gen) == true)
+        {
+            gender = gen;
+        }
+        if(isUSVetValid(vet) == true)
+        {
+            usVet = vet;
+        }
+        if(isRaceValid(r) == true)
+        {
+            race = r;
+        }
+        if(isEthnicityValid(eth) == true)
+        {
+            ethnicity = eth;
+        }
+        
+    }
+    
+    public void UpdateResident(String fName, String lName,String mName, String add,String add2, String c, String st, String zp, String phne, String phneAlt, String email, String bDate, String ssn, String gen, String emergencyP, String emergencyN, String vet, String r, String eth)
+    {
+        if(isFirstNameValid(fName) == true)
+        {
+            firstName = fName;
+        }
+        if(isLastNameValid(lName) == true)
+        {
+            lastName = lName;
+        }
+        if(isMiddleNameValid(mName) == true)
+        {
+            middleName = mName;
+        }
+        if(isAddressValid(add) == true)
+        {
+            addressLn1 = add;
+        }
+        if(isAddressValid(add2) == true)
+        {
+            addressLn2 = add2;
+        }
+        if(isCityValid(c) == true)
+        {
+            city = c;
+        }
+        if(isStateValid(st) == true)
+        {
+            state = st;
+        }
+        if(isZipValid(zp) == true)
+        {
+            zip = zp;
+        }
+        if(isPhoneValid(phne) == true)
+        {
+            phone = phne;
+        }
+        if(isPhoneValid(phneAlt) == true)
+        {
+            phoneAlt = phneAlt;
+        }
+        if(isEmailValid(email) == true)
+        {
+            res_email = email;
+        }
+        if(isBirthDateValid(bDate) == true)
+        {
+            birthDate = bDate;
+        }
+        if(isPhoneValid(emergencyP) == true)
+        {
+            emContPhone = emergencyP;
+        }
+        if(isFullNameValid(emergencyN) == true)
+        {
+            emContName = emergencyN;
+        }
+        if(isSSNValid(ssn) == true)
+        {
+            socialSN = ssn;
+        }
+        if(isGenderValid(gen) == true)
+        {
+            gender = gen;
+        }
+        if(isUSVetValid(vet) == true)
+        {
+            usVet = vet;
+        }
+        if(isRaceValid(r) == true)
+        {
+            race = r;
+        }
+        if(isEthnicityValid(eth) == true)
+        {
+            ethnicity = eth;
+        }
     }
 }
