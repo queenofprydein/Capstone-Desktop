@@ -23,7 +23,7 @@ public class Bed {
         typeOfBed = "";
         bed_description = "";
     }
-    public Bed(int bID)
+    /*public Bed(int bID)
     {
         bedID = bID;
         typeOfBed = "";
@@ -46,7 +46,7 @@ public class Bed {
         locker = new Locker(lID);
         typeOfBed = tob;
         bed_description = "";
-    }
+    }*/
 
     public int getBedID() {
         return bedID;
