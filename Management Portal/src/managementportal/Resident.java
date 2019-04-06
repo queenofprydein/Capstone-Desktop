@@ -5,7 +5,8 @@
  */
 package managementportal;
 
-
+import java.sql.*;
+import javax.swing.*;
 /**
  *
  * @author Lupe
@@ -374,7 +375,7 @@ public class Resident {
         return ethnic.matches("[A-Z][a-zA-Z]*");
     }
     
-    public void AddNewResident(String fName, String lName, String ssn, String gen, String vet, String r, String eth)
+    public void AddNewResident(Connection conn, Statement statement, String fName, String lName, String ssn, String gen, String vet, String r, String eth)
     {
         
         if(isFirstNameValid(fName) == true)
@@ -405,9 +406,28 @@ public class Resident {
         {
             ethnicity = eth;
         }
+        try
+        {
+            statement = conn.createStatement();
+            String sql = "INSERT INTO [dbo].[Resident]([Last_Name],[First_Name],[SSN],[Gender],[US_Military_Veteran],[Race],[Ethnicity]) VALUES(?,?,?,?,?,?,?)";
+            PreparedStatement pstatement = conn.prepareStatement(sql);
+            pstatement.setString(1, lastName);
+            pstatement.setString(2, firstName);
+            pstatement.setString(3, socialSN);
+            pstatement.setString(4, gender);
+            pstatement.setString(5, usVet);
+            pstatement.setString(6, race);
+            pstatement.setString(7, ethnicity);
+            statement.executeUpdate(sql);
+        }
+        catch(SQLException ex)
+        {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        
     }
     
-    public void AddNewResident(String fName, String lName,String mName, String add,String add2, String c, String st, String zp, String phne, String phneAlt, String email, String bDate, String ssn, String gen, String emergencyP, String emergencyN, String vet, String r, String eth)
+    public void AddNewResident(Connection conn, Statement statement, String fName, String lName,String mName, String add,String add2, String c, String st, String zp, String phne, String phneAlt, String email, String bDate, String ssn, String gen, String emergencyP, String emergencyN, String vet, String r, String eth)
     {
         if(isFirstNameValid(fName) == true)
         {
@@ -486,9 +506,27 @@ public class Resident {
             ethnicity = eth;
         }
         
+        try
+        {
+            statement = conn.createStatement();
+            String sql = "INSERT INTO [dbo].[Resident]([Last_Name],[First_Name],[Address],[AddressLine2],[City],[State],[Zip_Code],[Phone],[Bith_Date],[SSN],[Gender],[Phone_Alternate],[Email],[Emergency_Contact_Phone],[Emergency_Phone_Name],[US_Military_Veteran],[Race],[Ethnicity]) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            PreparedStatement pstatement = conn.prepareStatement(sql);
+            pstatement.setString(1, lastName);
+            pstatement.setString(2, firstName);
+            pstatement.setString(3, addressLn1);
+            pstatement.setString(4, addressLn2);
+            pstatement.setString(5, city);
+            pstatement.setString(6, state);
+            pstatement.setString(7, zip);
+            
+        }
+        catch(SQLException ex)
+        {
+            
+        }
     }
     
-    public void UpdateResident(String fName, String lName,String mName, String add,String add2, String c, String st, String zp, String phne, String phneAlt, String email, String bDate, String ssn, String gen, String emergencyP, String emergencyN, String vet, String r, String eth)
+    public void UpdateResident(Connection conn, Statement statement, String fName, String lName,String mName, String add,String add2, String c, String st, String zp, String phne, String phneAlt, String email, String bDate, String ssn, String gen, String emergencyP, String emergencyN, String vet, String r, String eth)
     {
         if(isFirstNameValid(fName) == true)
         {
