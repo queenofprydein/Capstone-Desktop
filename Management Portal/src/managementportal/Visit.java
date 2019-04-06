@@ -74,7 +74,7 @@ public class Visit {
         form_sharingPlan = "";
     }
     
-    public Visit(int visID)
+   /* public Visit(int visID)
     {
         visitID = visID;
         date_CheckIn = "";        
@@ -103,9 +103,9 @@ public class Visit {
         source_income = "";
         source_nonIncome_name = "";
         form_sharingPlan = "";
-    }
+    }*/
     //Consturctor with resident ID
-    public Visit(int visID, int rID, int bID)
+   /* public Visit(int visID, int rID, int bID)
     {
         visitID = visID;
         resident = new Resident(rID);
@@ -136,7 +136,7 @@ public class Visit {
         source_income = "";
         source_nonIncome_name = "";
         form_sharingPlan = "";
-    }
+    }*/
 
     public int getVisitID() {
         return visitID;
