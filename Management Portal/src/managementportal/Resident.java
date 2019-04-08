@@ -436,7 +436,9 @@ public class Resident {
             pstatement.setString(5, usVet);
             pstatement.setString(6, race);
             pstatement.setString(7, ethnicity);
-            statement.executeUpdate(sql);
+            pstatement.executeUpdate(sql);
+            pstatement.close();
+            statement.close();
         }
         catch(SQLException ex)
         {
@@ -551,6 +553,9 @@ public class Resident {
             pstatement.setString(16, usVet);
             pstatement.setString(17, race);
             pstatement.setString(18, ethnicity);
+            pstatement.executeUpdate(sql);
+            pstatement.close();
+            statement.close();
             
         }
         catch(SQLException ex)
@@ -559,8 +564,9 @@ public class Resident {
         }
     }
     
-    public void UpdateResident(Connection conn, Statement statement, String fName, String lName,String mName, String add,String add2, String c, String st, String zp, String phne, String phneAlt, String email, String bDate, String ssn, String gen, String emergencyP, String emergencyN, String vet, String r, String eth)
+    public void UpdateResident(Connection conn, Statement statement,int rID, String fName, String lName,String mName, String add,String add2, String c, String st, String zp, String phne, String phneAlt, String email, String bDate, String ssn, String gen, String emergencyP, String emergencyN, String vet, String r, String eth)
     {
+        residentID = rID;
         if(isFirstNameValid(fName) == true)
         {
             firstName = fName;
@@ -658,32 +664,55 @@ public class Resident {
                             "\n" +
                             ",[Phone] = ?\n" +
                             "\n" +
-                            ",[Birth_Date] = <Birth_Date, date,>\n" +
+                            ",[Birth_Date] = ?\n" +
                             "\n" +
-                            ",[SSN] = <SSN, char(9),>\n" +
+                            ",[SSN] = ?\n" +
                             "\n" +
-                            ",[Gender] = <Gender, varchar(5),>\n" +
+                            ",[Gender] = ?\n" +
                             "\n" +
-                            ",[Phone_Alternate] = <Phone_Alternate, varchar(10),>\n" +
+                            ",[Phone_Alternate] = ?\n" +
                             "\n" +
-                            ",[Email] = <Email, varchar(255),>\n" +
+                            ",[Email] = ?\n" +
                             "\n" +
-                            ",[Emergency_Contact_Phone] = <Emergency_Contact_Phone, varchar(10),>\n" +
+                            ",[Emergency_Contact_Phone] = ?\n" +
                             "\n" +
-                            ",[Emergency_Contact_Name] = <Emergency_Contact_Name, varchar(100),>\n" +
+                            ",[Emergency_Contact_Name] = ?\n" +
                             "\n" +
-                            ",[US_Military_Veteran] = <US_Military_Veteran, char(1),>\n" +
+                            ",[US_Military_Veteran] = ?\n" +
                             "\n" +
-                            ",[Race] = <Race, varchar(5),>\n" +
+                            ",[Race] = ?\n" +
                             "\n" +
-                            ",[Ethnicity] = <Ethnicity, varchar(5),>\n" +
+                            ",[Ethnicity] = ?\n" +
                             "\n" +
-                            "WHERE";
+                            "WHERE Resident_ID = ?"; //ask dee what she called the id column
             PreparedStatement pstatement = conn.prepareStatement(sql);
+            pstatement.setString(1, lastName);
+            pstatement.setString(2, firstName);
+            pstatement.setString(3, addressLn1);
+            pstatement.setString(4, addressLn2);
+            pstatement.setString(5, city);
+            pstatement.setString(6, state);
+            pstatement.setString(7, zip);
+            pstatement.setString(8, phone);
+            pstatement.setDate(9, turnStringToDate(bDate));
+            pstatement.setString(10, socialSN);
+            pstatement.setString(11, gender);
+            pstatement.setString(12, phoneAlt);
+            pstatement.setString(13, res_email);
+            pstatement.setString(14, emContPhone);
+            pstatement.setString(15, emContName);
+            pstatement.setString(16, usVet);
+            pstatement.setString(17, race);
+            pstatement.setString(18, ethnicity);
+            pstatement.setInt(19, residentID);
+            pstatement.executeUpdate(sql);
+            pstatement.close();
+            statement.close();
+            
         }
         catch(SQLException ex)
         {
-            
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
 }
