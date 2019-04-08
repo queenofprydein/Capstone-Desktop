@@ -6,6 +6,10 @@
 package managementportal;
 
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 /**
  *
@@ -343,6 +347,20 @@ public class Resident {
         return birthD.matches("^[0-3][0-9]/[0-3][0-9]/(?:[0-9][0-9])?[0-9][0-9]$");
     }
     
+    public Date turnStringToDate(String bDay)
+    {
+        Date birthD;
+        try 
+        {
+            birthD = (Date) new SimpleDateFormat("MM/dd/yyyy").parse(birthDate);
+        } 
+        catch (ParseException ex) 
+        {
+            birthD = null;
+        }
+        return birthD;
+    }
+    
     public boolean isSSNValid(String ssn)
     {
         return ssn.matches("[1-9]\\\\d{2}-[1-9]\\\\d{2}-\\\\d{4}");
@@ -477,6 +495,10 @@ public class Resident {
         {
             birthDate = bDate;
         }
+        if(isSSNValid(ssn) == true)
+        {
+            socialSN = ssn;
+        }
         if(isPhoneValid(emergencyP) == true)
         {
             emContPhone = emergencyP;
@@ -518,11 +540,22 @@ public class Resident {
             pstatement.setString(5, city);
             pstatement.setString(6, state);
             pstatement.setString(7, zip);
+            pstatement.setString(8, phone);
+            pstatement.setDate(9, turnStringToDate(bDate));
+            pstatement.setString(10, socialSN);
+            pstatement.setString(11, gender);
+            pstatement.setString(12, phoneAlt);
+            pstatement.setString(13, res_email);
+            pstatement.setString(14, emContPhone);
+            pstatement.setString(15, emContName);
+            pstatement.setString(16, usVet);
+            pstatement.setString(17, race);
+            pstatement.setString(18, ethnicity);
             
         }
         catch(SQLException ex)
         {
-            
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
     
@@ -603,6 +636,54 @@ public class Resident {
         if(isEthnicityValid(eth) == true)
         {
             ethnicity = eth;
+        }
+        try
+        {
+            statement = conn.createStatement();
+            String sql = "UPDATE [dbo].[Resident]\n" +
+                            "\n" +
+                            "SET [Last_Name] =?\n" +
+                            "\n" +
+                            ",[First_Name] = ?\n" +
+                            "\n" +
+                            ",[Address] = ?\n" +
+                            "\n" +
+                            ",[AddressLine2] = ?\n" +
+                            "\n" +
+                            ",[City] = ?\n" +
+                            "\n" +
+                            ",[State] = ?\n" +
+                            "\n" +
+                            ",[Zip_Code] = ?\n" +
+                            "\n" +
+                            ",[Phone] = ?\n" +
+                            "\n" +
+                            ",[Birth_Date] = <Birth_Date, date,>\n" +
+                            "\n" +
+                            ",[SSN] = <SSN, char(9),>\n" +
+                            "\n" +
+                            ",[Gender] = <Gender, varchar(5),>\n" +
+                            "\n" +
+                            ",[Phone_Alternate] = <Phone_Alternate, varchar(10),>\n" +
+                            "\n" +
+                            ",[Email] = <Email, varchar(255),>\n" +
+                            "\n" +
+                            ",[Emergency_Contact_Phone] = <Emergency_Contact_Phone, varchar(10),>\n" +
+                            "\n" +
+                            ",[Emergency_Contact_Name] = <Emergency_Contact_Name, varchar(100),>\n" +
+                            "\n" +
+                            ",[US_Military_Veteran] = <US_Military_Veteran, char(1),>\n" +
+                            "\n" +
+                            ",[Race] = <Race, varchar(5),>\n" +
+                            "\n" +
+                            ",[Ethnicity] = <Ethnicity, varchar(5),>\n" +
+                            "\n" +
+                            "WHERE";
+            PreparedStatement pstatement = conn.prepareStatement(sql);
+        }
+        catch(SQLException ex)
+        {
+            
         }
     }
 }
