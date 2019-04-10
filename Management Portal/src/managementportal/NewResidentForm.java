@@ -92,6 +92,29 @@ public class NewResidentForm extends javax.swing.JFrame {
         txtAdditionalInsuranceTypes = new javax.swing.JTextField();
         btnAddInsuranceType = new javax.swing.JButton();
         jLabel18 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        jPanel8 = new javax.swing.JPanel();
+        jlblAdd = new javax.swing.JLabel();
+        jlblAdd2 = new javax.swing.JLabel();
+        jlblCity = new javax.swing.JLabel();
+        jlblState = new javax.swing.JLabel();
+        jlblZip = new javax.swing.JLabel();
+        jlblPhone = new javax.swing.JLabel();
+        jlblPhoneAlt = new javax.swing.JLabel();
+        jlblEmail = new javax.swing.JLabel();
+        jlblEmPhone = new javax.swing.JLabel();
+        jlblEmName = new javax.swing.JLabel();
+        jtxtAdd = new javax.swing.JTextField();
+        jtxtAdd2 = new javax.swing.JTextField();
+        jtxtCity = new javax.swing.JTextField();
+        jtxtState = new javax.swing.JTextField();
+        jtxtZip = new javax.swing.JTextField();
+        jtxtPhone = new javax.swing.JTextField();
+        jtxtPhoneAlt = new javax.swing.JTextField();
+        jtxtEmail = new javax.swing.JTextField();
+        jtxtEmPhone = new javax.swing.JTextField();
+        jtxtEmName = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -465,6 +488,192 @@ public class NewResidentForm extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Health Insurance", jPanel5);
 
+        jlblAdd.setText("Address");
+
+        jlblAdd2.setText("Address Ln2");
+
+        jlblCity.setText("City");
+
+        jlblState.setText("State");
+
+        jlblZip.setText("Zip");
+
+        jlblPhone.setText("Phone");
+
+        jlblPhoneAlt.setText("Phone Alternative");
+
+        jlblEmail.setText("Email");
+
+        jlblEmPhone.setText("Emergency Phone");
+
+        jlblEmName.setText("Emergency Name");
+
+        jtxtAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtAddActionPerformed(evt);
+            }
+        });
+
+        jtxtAdd2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtAdd2ActionPerformed(evt);
+            }
+        });
+
+        jtxtCity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtCityActionPerformed(evt);
+            }
+        });
+
+        jtxtState.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtStateActionPerformed(evt);
+            }
+        });
+
+        jtxtZip.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtZipActionPerformed(evt);
+            }
+        });
+
+        jtxtPhone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtPhoneActionPerformed(evt);
+            }
+        });
+
+        jtxtPhoneAlt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtPhoneAltActionPerformed(evt);
+            }
+        });
+
+        jtxtEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtEmailActionPerformed(evt);
+            }
+        });
+
+        jtxtEmPhone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtEmPhoneActionPerformed(evt);
+            }
+        });
+
+        jtxtEmName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtEmNameActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlblPhoneAlt)
+                            .addComponent(jlblEmPhone)
+                            .addComponent(jlblAdd, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jlblAdd2, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jlblCity, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jlblState, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jlblZip, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jlblPhone, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jlblEmail, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jtxtAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtxtAdd2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtxtCity, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtxtZip, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtxtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtxtPhoneAlt, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtxtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtxtEmPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtxtState, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(jlblEmName)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtxtEmName, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtxtAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlblAdd))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtxtAdd2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlblAdd2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtxtCity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlblCity))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtxtState, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlblState))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtxtZip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlblZip))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtxtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlblPhone))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtxtPhoneAlt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlblPhoneAlt))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtxtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlblEmail))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlblEmPhone)
+                    .addComponent(jtxtEmPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtxtEmName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlblEmName))
+                .addGap(20, 20, 20))
+        );
+
+        jLabel17.setText("Any section may be left blank if resident does not know or if they prefer not to say");
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jLabel17)
+                        .addGap(0, 120, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addComponent(jLabel17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jTabbedPane1.addTab("Contact Information", jPanel7);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -490,6 +699,46 @@ public class NewResidentForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jtxtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtAddActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtAddActionPerformed
+
+    private void jtxtAdd2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtAdd2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtAdd2ActionPerformed
+
+    private void jtxtCityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtCityActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtCityActionPerformed
+
+    private void jtxtStateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtStateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtStateActionPerformed
+
+    private void jtxtZipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtZipActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtZipActionPerformed
+
+    private void jtxtPhoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtPhoneActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtPhoneActionPerformed
+
+    private void jtxtPhoneAltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtPhoneAltActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtPhoneAltActionPerformed
+
+    private void jtxtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtEmailActionPerformed
+
+    private void jtxtEmPhoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtEmPhoneActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtEmPhoneActionPerformed
+
+    private void jtxtEmNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtEmNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtEmNameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -552,6 +801,7 @@ public class NewResidentForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -567,6 +817,8 @@ public class NewResidentForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton10;
     private javax.swing.JRadioButton jRadioButton11;
@@ -584,6 +836,26 @@ public class NewResidentForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel jlblAdd;
+    private javax.swing.JLabel jlblAdd2;
+    private javax.swing.JLabel jlblCity;
+    private javax.swing.JLabel jlblEmName;
+    private javax.swing.JLabel jlblEmPhone;
+    private javax.swing.JLabel jlblEmail;
+    private javax.swing.JLabel jlblPhone;
+    private javax.swing.JLabel jlblPhoneAlt;
+    private javax.swing.JLabel jlblState;
+    private javax.swing.JLabel jlblZip;
+    private javax.swing.JTextField jtxtAdd;
+    private javax.swing.JTextField jtxtAdd2;
+    private javax.swing.JTextField jtxtCity;
+    private javax.swing.JTextField jtxtEmName;
+    private javax.swing.JTextField jtxtEmPhone;
+    private javax.swing.JTextField jtxtEmail;
+    private javax.swing.JTextField jtxtPhone;
+    private javax.swing.JTextField jtxtPhoneAlt;
+    private javax.swing.JTextField jtxtState;
+    private javax.swing.JTextField jtxtZip;
     private javax.swing.JList<String> lstDisabilityType;
     private javax.swing.JList<String> lstInsuranceTypes;
     private javax.swing.JTextField txtAdditionalInsuranceTypes;
