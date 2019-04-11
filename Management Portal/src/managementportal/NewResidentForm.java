@@ -5,14 +5,24 @@
  */
 package managementportal;
 
+import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.HashSet;
+import java.util.logging.*;
 
 /**
  *
  * @author saved
  */
 public class NewResidentForm extends javax.swing.JFrame {
+    // Variable Declaration
+    // final String myDBURL = "jdbc:mysql://db4free.net:3306/karnij?user=quinicacid&password=Mm436yru";
+    // final String myDBURL = "jdbc:mysql://db4free.net:3306/smgroup?user=ftccgroup&password=ftccgroup";
+    final String myDBURL = "jdbc:sqlserver://sql5008.site4now.net:1433;DatabaseName=DB_A47087_smgroup;user=DB_A47087_smgroup_admin;password=ftccgroup1";
+    
+    private static Connection conn = null;
+    private static Statement statement = null;
 
     /**
      * Creates new form NewResidentForm
@@ -51,26 +61,26 @@ public class NewResidentForm extends javax.swing.JFrame {
         txtSSN = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jRadioButton5 = new javax.swing.JRadioButton();
-        jRadioButton6 = new javax.swing.JRadioButton();
-        jRadioButton7 = new javax.swing.JRadioButton();
-        jRadioButton8 = new javax.swing.JRadioButton();
+        radFirstNameNoSay = new javax.swing.JRadioButton();
+        radFirstNameUnknown = new javax.swing.JRadioButton();
+        radLastNameNoSay = new javax.swing.JRadioButton();
+        radLastNameUnknown = new javax.swing.JRadioButton();
+        radSSNNoSay = new javax.swing.JRadioButton();
+        radSSNUnknown = new javax.swing.JRadioButton();
+        radDateOfBirthNoSay = new javax.swing.JRadioButton();
+        radDateOfBirthUnknown = new javax.swing.JRadioButton();
         jLabel8 = new javax.swing.JLabel();
         cboGender = new javax.swing.JComboBox<>();
-        jRadioButton9 = new javax.swing.JRadioButton();
-        jRadioButton10 = new javax.swing.JRadioButton();
+        radGenderNoSay = new javax.swing.JRadioButton();
+        radGenderUnknown = new javax.swing.JRadioButton();
         jLabel9 = new javax.swing.JLabel();
         cboRace = new javax.swing.JComboBox<>();
-        jRadioButton11 = new javax.swing.JRadioButton();
-        jRadioButton12 = new javax.swing.JRadioButton();
+        radRaceNoSay = new javax.swing.JRadioButton();
+        radRaceUnknown = new javax.swing.JRadioButton();
         jLabel10 = new javax.swing.JLabel();
-        cboRace1 = new javax.swing.JComboBox<>();
-        jRadioButton13 = new javax.swing.JRadioButton();
-        jRadioButton14 = new javax.swing.JRadioButton();
+        cboEthnicity = new javax.swing.JComboBox<>();
+        radEthnicityNoSay = new javax.swing.JRadioButton();
+        radEthnicityUnknown = new javax.swing.JRadioButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -92,8 +102,14 @@ public class NewResidentForm extends javax.swing.JFrame {
         txtAdditionalInsuranceTypes = new javax.swing.JTextField();
         btnAddInsuranceType = new javax.swing.JButton();
         jLabel18 = new javax.swing.JLabel();
+        lblStatus = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setText("New Resident Entry");
 
@@ -101,62 +117,86 @@ public class NewResidentForm extends javax.swing.JFrame {
         jLabel2.setText("First Name");
         jLabel2.setToolTipText("");
 
+        txtFirstName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtFirstNameKeyTyped(evt);
+            }
+        });
+
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Last Name");
         jLabel3.setToolTipText("");
 
+        txtLastName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtLastNameKeyTyped(evt);
+            }
+        });
+
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel4.setText("Date of Birth");
 
+        txtDateOfBirth.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDateOfBirthKeyTyped(evt);
+            }
+        });
+
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel5.setText("SSN");
+
+        txtSSN.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtSSNKeyTyped(evt);
+            }
+        });
 
         jLabel6.setText("Prefers not to say");
 
         jLabel7.setText("Doesn't know");
 
-        grpFirstName.add(jRadioButton1);
+        grpFirstName.add(radFirstNameNoSay);
 
-        grpFirstName.add(jRadioButton2);
+        grpFirstName.add(radFirstNameUnknown);
 
-        grpLastName.add(jRadioButton3);
+        grpLastName.add(radLastNameNoSay);
 
-        grpLastName.add(jRadioButton4);
+        grpLastName.add(radLastNameUnknown);
 
-        grpSSN.add(jRadioButton5);
+        grpSSN.add(radSSNNoSay);
 
-        grpSSN.add(jRadioButton6);
+        grpSSN.add(radSSNUnknown);
 
-        grpDateOfBirth.add(jRadioButton7);
+        grpDateOfBirth.add(radDateOfBirthNoSay);
 
-        grpDateOfBirth.add(jRadioButton8);
+        grpDateOfBirth.add(radDateOfBirthUnknown);
 
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel8.setText("Gender");
 
         cboGender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        grpGender.add(jRadioButton9);
+        grpGender.add(radGenderNoSay);
 
-        grpGender.add(jRadioButton10);
+        grpGender.add(radGenderUnknown);
 
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel9.setText("Race");
 
         cboRace.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        grpRace.add(jRadioButton11);
+        grpRace.add(radRaceNoSay);
 
-        grpRace.add(jRadioButton12);
+        grpRace.add(radRaceUnknown);
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel10.setText("Ethnicity");
 
-        cboRace1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboEthnicity.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        grpRace.add(jRadioButton13);
+        grpRace.add(radEthnicityNoSay);
 
-        grpRace.add(jRadioButton14);
+        grpRace.add(radEthnicityUnknown);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -173,15 +213,15 @@ public class NewResidentForm extends javax.swing.JFrame {
                     .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cboRace, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cboGender, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cboRace1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDateOfBirth, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtSSN, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cboRace, 0, 224, Short.MAX_VALUE)
+                    .addComponent(cboEthnicity, 0, 224, Short.MAX_VALUE)
+                    .addComponent(txtDateOfBirth, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                    .addComponent(txtSSN, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                    .addComponent(cboGender, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtLastName)
+                    .addComponent(txtFirstName))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel6)
@@ -191,27 +231,27 @@ public class NewResidentForm extends javax.swing.JFrame {
                         .addGap(43, 43, 43)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jRadioButton9)
+                                .addComponent(radGenderNoSay)
                                 .addGap(76, 76, 76)
-                                .addComponent(jRadioButton10))
+                                .addComponent(radGenderUnknown))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jRadioButton13)
-                                    .addComponent(jRadioButton7)
-                                    .addComponent(jRadioButton5)
-                                    .addComponent(jRadioButton3)
-                                    .addComponent(jRadioButton1))
+                                    .addComponent(radEthnicityNoSay)
+                                    .addComponent(radDateOfBirthNoSay)
+                                    .addComponent(radSSNNoSay)
+                                    .addComponent(radLastNameNoSay)
+                                    .addComponent(radFirstNameNoSay))
                                 .addGap(76, 76, 76)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jRadioButton2)
-                                    .addComponent(jRadioButton4)
-                                    .addComponent(jRadioButton6)
-                                    .addComponent(jRadioButton8)
-                                    .addComponent(jRadioButton14)))
+                                    .addComponent(radFirstNameUnknown)
+                                    .addComponent(radLastNameUnknown)
+                                    .addComponent(radSSNUnknown)
+                                    .addComponent(radDateOfBirthUnknown)
+                                    .addComponent(radEthnicityUnknown)))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jRadioButton11)
+                                .addComponent(radRaceNoSay)
                                 .addGap(76, 76, 76)
-                                .addComponent(jRadioButton12)))))
+                                .addComponent(radRaceUnknown)))))
                 .addGap(34, 34, 34))
         );
         jPanel2Layout.setVerticalGroup(
@@ -225,50 +265,49 @@ public class NewResidentForm extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel2))
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2))
+                    .addComponent(radFirstNameNoSay)
+                    .addComponent(radFirstNameUnknown))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel3))
-                    .addComponent(jRadioButton3)
-                    .addComponent(jRadioButton4))
+                    .addComponent(radLastNameNoSay)
+                    .addComponent(radLastNameUnknown))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtSSN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel5))
-                    .addComponent(jRadioButton5)
-                    .addComponent(jRadioButton6))
+                    .addComponent(radSSNNoSay)
+                    .addComponent(radSSNUnknown))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtDateOfBirth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel4))
-                    .addComponent(jRadioButton7)
-                    .addComponent(jRadioButton8))
+                    .addComponent(radDateOfBirthNoSay)
+                    .addComponent(radDateOfBirthUnknown))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cboGender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel8))
-                    .addComponent(jRadioButton10)
-                    .addComponent(jRadioButton9))
+                    .addComponent(cboGender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(radGenderUnknown)
+                    .addComponent(radGenderNoSay))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(cboRace, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel9))
-                    .addComponent(jRadioButton12)
-                    .addComponent(jRadioButton11))
+                    .addComponent(radRaceUnknown)
+                    .addComponent(radRaceNoSay))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cboRace1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cboEthnicity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel10))
-                    .addComponent(jRadioButton13)
-                    .addComponent(jRadioButton14))
+                    .addComponent(radEthnicityNoSay)
+                    .addComponent(radEthnicityUnknown))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
 
@@ -360,7 +399,7 @@ public class NewResidentForm extends javax.swing.JFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(72, Short.MAX_VALUE)
+                .addContainerGap(196, Short.MAX_VALUE)
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cboDisablingCondition, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -446,7 +485,7 @@ public class NewResidentForm extends javax.swing.JFrame {
                 .addComponent(jLabel15)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cboHealthInsurance, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(162, Short.MAX_VALUE))
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -470,13 +509,18 @@ public class NewResidentForm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(224, 224, 224)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane1)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 695, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(224, 224, 224)
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -486,12 +530,151 @@ public class NewResidentForm extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(lblStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        
+        // Declare arrays for options from database to populate selection controls on the form
+        String result = ""; 
+        
+        try {
+            conn = DriverManager.getConnection(myDBURL);
+            statement = conn.createStatement();
+
+            //create result set for query results 
+            ResultSet custResultsOfQuery = null;
+
+            //clear any current options from Gender combo box
+            cboGender.removeAllItems();
+                        
+            // populate Gender combo box
+            String sql = "select Gender_Description from Gender";
+
+            custResultsOfQuery = statement.executeQuery(sql); //Remember to tell them its Execute Query like Fig 28.23
+
+            ResultSetMetaData meta = custResultsOfQuery.getMetaData();
+
+            cboGender.addItem("");
+            while(custResultsOfQuery.next()) {
+                result = custResultsOfQuery.getObject(1).toString();
+                
+                if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
+                    cboGender.addItem(result);
+                }
+            }
+            
+            // clear result set 
+            custResultsOfQuery = null; 
+                        
+            //clear any current options from Race combo box
+            cboRace.removeAllItems();
+                        
+            // populate Gender combo box
+            sql = "select Race_Description from Resident_Race";
+
+            custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
+
+            cboRace.addItem("");
+            while(custResultsOfQuery.next()) {
+                result = custResultsOfQuery.getObject(1).toString();
+                
+                if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
+                    cboRace.addItem(result);
+                }
+            }
+            
+            // clear result set 
+            custResultsOfQuery = null; 
+                        
+            //clear any current options from Ethnicity combo box
+            cboEthnicity.removeAllItems();
+                        
+            // populate Gender combo box
+            sql = "select Ethnicity_Description from Resident_Ethnicity";
+
+            custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
+
+            cboEthnicity.addItem("");
+            while(custResultsOfQuery.next()) {
+                result = custResultsOfQuery.getObject(1).toString();
+                
+                if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
+                    cboEthnicity.addItem(result);
+                }
+            }
+            
+            // Inform user database was displayed.
+            lblStatus.setText("Populated comboboxes.");
+
+        } catch (SQLException ex) {
+            lblStatus.setText(ex.getMessage());
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ManagementPortal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        
+    }//GEN-LAST:event_formWindowOpened
+
+    private void txtFirstNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFirstNameKeyTyped
+        // disable the radio buttons if there's text entered into the text field 
+        if (txtFirstName.getText().equals("")){
+            radFirstNameUnknown.setEnabled(true);
+            radFirstNameNoSay.setEnabled(true);
+        } else {
+            grpFirstName.clearSelection();
+            radFirstNameUnknown.setEnabled(false);
+            radFirstNameNoSay.setEnabled(false);
+        }
+        
+    }//GEN-LAST:event_txtFirstNameKeyTyped
+
+    private void txtLastNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLastNameKeyTyped
+        // disable the radio buttons if there's text entered into the text field 
+        if (txtLastName.getText().equals("")){
+            radLastNameUnknown.setEnabled(true);
+            radLastNameNoSay.setEnabled(true);
+        } else {
+            grpLastName.clearSelection();
+            radLastNameUnknown.setEnabled(false);
+            radLastNameNoSay.setEnabled(false);
+        }
+    }//GEN-LAST:event_txtLastNameKeyTyped
+
+    private void txtSSNKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSSNKeyTyped
+        // disable the radio buttons if there's text entered into the text field 
+        if (txtSSN.getText().equals("")){
+            radSSNUnknown.setEnabled(true);
+            radSSNNoSay.setEnabled(true);
+        } else {
+            grpSSN.clearSelection();
+            radSSNUnknown.setEnabled(false);
+            radSSNNoSay.setEnabled(false);
+        }
+    }//GEN-LAST:event_txtSSNKeyTyped
+
+    private void txtDateOfBirthKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDateOfBirthKeyTyped
+        // disable the radio buttons if there's text entered into the text field 
+        if (txtDateOfBirth.getText().equals("")){
+            radDateOfBirthUnknown.setEnabled(true);
+            radDateOfBirthNoSay.setEnabled(true);
+        } else {
+            grpDateOfBirth.clearSelection();
+            radDateOfBirthUnknown.setEnabled(false);
+            radDateOfBirthNoSay.setEnabled(false);
+        }
+    }//GEN-LAST:event_txtDateOfBirthKeyTyped
+  
+    
     /**
      * @param args the command line arguments
      */
@@ -534,11 +717,11 @@ public class NewResidentForm extends javax.swing.JFrame {
     private javax.swing.JButton btnAddInsuranceType;
     private javax.swing.JComboBox<String> cboDisabilityDetermination;
     private javax.swing.JComboBox<String> cboDisablingCondition;
+    private javax.swing.JComboBox<String> cboEthnicity;
     private javax.swing.JComboBox<String> cboGender;
     private javax.swing.JComboBox<String> cboHealthInsurance;
     private javax.swing.JComboBox<String> cboLongTermDisability;
     private javax.swing.JComboBox<String> cboRace;
-    private javax.swing.JComboBox<String> cboRace1;
     private javax.swing.ButtonGroup grpDateOfBirth;
     private javax.swing.ButtonGroup grpFirstName;
     private javax.swing.ButtonGroup grpGender;
@@ -568,25 +751,26 @@ public class NewResidentForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton10;
-    private javax.swing.JRadioButton jRadioButton11;
-    private javax.swing.JRadioButton jRadioButton12;
-    private javax.swing.JRadioButton jRadioButton13;
-    private javax.swing.JRadioButton jRadioButton14;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
-    private javax.swing.JRadioButton jRadioButton6;
-    private javax.swing.JRadioButton jRadioButton7;
-    private javax.swing.JRadioButton jRadioButton8;
-    private javax.swing.JRadioButton jRadioButton9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel lblStatus;
     private javax.swing.JList<String> lstDisabilityType;
     private javax.swing.JList<String> lstInsuranceTypes;
+    private javax.swing.JRadioButton radDateOfBirthNoSay;
+    private javax.swing.JRadioButton radDateOfBirthUnknown;
+    private javax.swing.JRadioButton radEthnicityNoSay;
+    private javax.swing.JRadioButton radEthnicityUnknown;
+    private javax.swing.JRadioButton radFirstNameNoSay;
+    private javax.swing.JRadioButton radFirstNameUnknown;
+    private javax.swing.JRadioButton radGenderNoSay;
+    private javax.swing.JRadioButton radGenderUnknown;
+    private javax.swing.JRadioButton radLastNameNoSay;
+    private javax.swing.JRadioButton radLastNameUnknown;
+    private javax.swing.JRadioButton radRaceNoSay;
+    private javax.swing.JRadioButton radRaceUnknown;
+    private javax.swing.JRadioButton radSSNNoSay;
+    private javax.swing.JRadioButton radSSNUnknown;
     private javax.swing.JTextField txtAdditionalInsuranceTypes;
     private javax.swing.JFormattedTextField txtDateOfBirth;
     private javax.swing.JTextField txtFirstName;
