@@ -15,7 +15,7 @@ public class Visit {
     private int visitID;                //NOT null
     private int residentID;             //NOT null
     Resident resident;
-    private int bedID;
+    private int bedID;                  //NOT null
     Bed bed;
     private String date_CheckIn;        //NOT null
     private String date_CheckOut;       //NOT null
@@ -30,14 +30,14 @@ public class Visit {
     private String insuranceType;       //NOT null
     private String homeless_history;    //NOT null
     private String length_stay_prior;   //NOT null
-    private String homeless_start;      
+    private String homeless_start;      //null
     private int numOfTimes_homeless;    //NOT null
     private String house_status;        //NOT null
-    private String last_zip;            
-    private String coc_code;
-    private String NC_county_serv;
-    private String residentCounty;
-    private String residentCity;
+    private String last_zip;            //null
+    private String coc_code;            //null
+    private String NC_county_serv;      //null
+    private String residentCounty;      //null
+    private String residentCity;        //null
     private String shelter_cat;         //NOT null
     private String recieving_income;    //NOT null
     private String source_income;       //NOT null
@@ -74,7 +74,7 @@ public class Visit {
         form_sharingPlan = "";
     }
     
-    public Visit(int visID)
+   /* public Visit(int visID)
     {
         visitID = visID;
         date_CheckIn = "";        
@@ -103,9 +103,9 @@ public class Visit {
         source_income = "";
         source_nonIncome_name = "";
         form_sharingPlan = "";
-    }
+    }*/
     //Consturctor with resident ID
-    public Visit(int visID, int rID, int bID)
+   /* public Visit(int visID, int rID, int bID)
     {
         visitID = visID;
         resident = new Resident(rID);
@@ -136,7 +136,7 @@ public class Visit {
         source_income = "";
         source_nonIncome_name = "";
         form_sharingPlan = "";
-    }
+    }*/
 
     public int getVisitID() {
         return visitID;

@@ -40,20 +40,20 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="lblStatus" max="32767" attributes="0"/>
-                  </Group>
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jTabbedPane1" pref="695" max="32767" attributes="0"/>
+                      <Component id="jTabbedPane1" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="224" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lblStatus" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -67,8 +67,8 @@
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jTabbedPane1" min="-2" pref="367" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="lblStatus" pref="29" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="lblStatus" pref="40" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -848,6 +848,253 @@
                 </Component>
               </SubComponents>
             </Container>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jPanel7">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Contact Information">
+                <Property name="tabTitle" type="java.lang.String" value="Contact Information"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jPanel8" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="120" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jPanel8" min="-2" pref="318" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Container class="javax.swing.JPanel" name="jPanel8">
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jlblPhoneAlt" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jlblEmPhone" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jlblAdd" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jlblAdd2" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jlblCity" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jlblState" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jlblZip" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jlblPhone" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jlblEmail" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jtxtAdd" min="-2" pref="180" max="-2" attributes="0"/>
+                                      <Component id="jtxtAdd2" min="-2" pref="180" max="-2" attributes="0"/>
+                                      <Component id="jtxtCity" min="-2" pref="180" max="-2" attributes="0"/>
+                                      <Component id="jtxtZip" min="-2" pref="180" max="-2" attributes="0"/>
+                                      <Component id="jtxtPhone" min="-2" pref="180" max="-2" attributes="0"/>
+                                      <Component id="jtxtPhoneAlt" min="-2" pref="180" max="-2" attributes="0"/>
+                                      <Component id="jtxtEmail" min="-2" pref="180" max="-2" attributes="0"/>
+                                      <Component id="jtxtEmPhone" min="-2" pref="180" max="-2" attributes="0"/>
+                                      <Component id="jtxtState" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jlblEmName" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jtxtEmName" min="-2" pref="177" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jtxtAdd" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jlblAdd" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jtxtAdd2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jlblAdd2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jtxtCity" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jlblCity" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jtxtState" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jlblState" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jtxtZip" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jlblZip" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jtxtPhone" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jlblPhone" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jtxtPhoneAlt" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jlblPhoneAlt" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jtxtEmail" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jlblEmail" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jlblEmPhone" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jtxtEmPhone" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jtxtEmName" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jlblEmName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="jlblAdd">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Address"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jlblAdd2">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Address Ln2"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jlblCity">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="City"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jlblState">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="State"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jlblZip">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Zip"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jlblPhone">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Phone"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jlblPhoneAlt">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Phone Alternative"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jlblEmail">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Email"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jlblEmPhone">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Emergency Phone"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jlblEmName">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Emergency Name"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="jtxtAdd">
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtxtAddActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JTextField" name="jtxtAdd2">
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtxtAdd2ActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JTextField" name="jtxtCity">
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtxtCityActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JTextField" name="jtxtState">
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtxtStateActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JTextField" name="jtxtZip">
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtxtZipActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JTextField" name="jtxtPhone">
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtxtPhoneActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JTextField" name="jtxtPhoneAlt">
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtxtPhoneAltActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JTextField" name="jtxtEmail">
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtxtEmailActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JTextField" name="jtxtEmPhone">
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtxtEmPhoneActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JTextField" name="jtxtEmName">
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtxtEmNameActionPerformed"/>
+                  </Events>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Component class="javax.swing.JLabel" name="jLabel17">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Any section may be left blank if resident does not know or if they prefer not to say"/>
+              </Properties>
+            </Component>
           </SubComponents>
         </Container>
       </SubComponents>
