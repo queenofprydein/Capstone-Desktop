@@ -6,6 +6,7 @@
 package managementportal;
 
 import java.sql.*;
+import java.util.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.HashSet;
@@ -23,7 +24,7 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
     private static Connection conn = null;
     private static Statement statement = null;
     
-   DefaultTableModel model = new DefaultTableModel();
+   DefaultTableModel volModel = new DefaultTableModel();
     /**
      * Creates new form ViewVolunteerReprts
      */
@@ -43,7 +44,7 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
         jbgOrder = new javax.swing.ButtonGroup();
         jbgFilters = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jtableScroll = new javax.swing.JScrollPane();
         VolunteersTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -80,7 +81,7 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(VolunteersTable);
+        jtableScroll.setViewportView(VolunteersTable);
 
         jLabel2.setText("Sort By");
 
@@ -202,7 +203,7 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
                 .addGap(242, 242, 242))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 544, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtableScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 544, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -223,7 +224,7 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
+                .addComponent(jtableScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -236,18 +237,39 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
+        //Getting the data into the jtable
+        
+        //vectors to hold data and column names
+        Vector<Object> columnNames = new Vector<>();
+        Vector<Object> data = new Vector<>();
+        
         try
         {
+            //Read data from database
             conn = DriverManager.getConnection(myDBURL);
             statement = conn.createStatement();
             
             ResultSet volunteers = statement.executeQuery("SELECT * FROM Volunteer");
+            ResultSetMetaData volunteersMD = volunteers.getMetaData();
+            int columns = volunteersMD.getColumnCount();
             
             //Get the data from database
+            for (int i = 1; i <= columns; i++)
+            {
+                columnNames.addElement( volunteersMD.getColumnName(i) );
+            }
             while(volunteers.next())
             {
-                
+                Vector<Object> row = new Vector<>(columns);
+
+                for (int i = 1; i <= columns; i++)
+                {
+                    row.addElement( volunteers.getObject(i) );
+                }
+
+                data.addElement( row );
             }
+            JOptionPane.showMessageDialog(null, "SQL Data has been entered in the jTable");
         }
         catch(SQLException ex) 
         {
@@ -305,7 +327,6 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.ButtonGroup jbgFilters;
     private javax.swing.ButtonGroup jbgOrder;
     private javax.swing.JRadioButton jbtnAsc;
@@ -315,5 +336,6 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
     private javax.swing.JRadioButton jbtnNone;
     private javax.swing.JRadioButton jbtnOlder13;
     private javax.swing.JComboBox<String> jcbSort;
+    private javax.swing.JScrollPane jtableScroll;
     // End of variables declaration//GEN-END:variables
 }
