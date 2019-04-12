@@ -249,7 +249,7 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
             conn = DriverManager.getConnection(myDBURL);
             statement = conn.createStatement();
             
-            ResultSet volunteers = statement.executeQuery("SELECT * FROM Volunteer");
+            ResultSet volunteers = statement.executeQuery("SELECT * FROM [DB_A47087_smgroup].[dbo].[Volunteer]");
             ResultSetMetaData volunteersMD = volunteers.getMetaData();
             int columns = volunteersMD.getColumnCount();
             
