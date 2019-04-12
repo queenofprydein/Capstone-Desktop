@@ -10,6 +10,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.logging.*;
+import javax.swing.*;
 
 /**
  *
@@ -20,7 +21,7 @@ public class NewResidentForm extends javax.swing.JFrame {
     // final String myDBURL = "jdbc:mysql://db4free.net:3306/karnij?user=quinicacid&password=Mm436yru";
     // final String myDBURL = "jdbc:mysql://db4free.net:3306/smgroup?user=ftccgroup&password=ftccgroup";
     final String myDBURL = "jdbc:sqlserver://sql5008.site4now.net:1433;DatabaseName=DB_A47087_smgroup;user=DB_A47087_smgroup_admin;password=ftccgroup1";
-    
+    CheckboxListCellRenderer cellRenderer = new CheckboxListCellRenderer(); 
     private static Connection conn = null;
     private static Statement statement = null;
 
@@ -28,6 +29,7 @@ public class NewResidentForm extends javax.swing.JFrame {
      * Creates new form NewResidentForm
      */
     public NewResidentForm() {
+        
         initComponents();
     }
 
@@ -83,13 +85,9 @@ public class NewResidentForm extends javax.swing.JFrame {
         radEthnicityUnknown = new javax.swing.JRadioButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        lstDisabilityType = new javax.swing.JList<>();
         jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        cboDisabilityDetermination = new javax.swing.JComboBox<>();
-        jLabel14 = new javax.swing.JLabel();
-        cboLongTermDisability = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lstDisabilityTypes = new javax.swing.JList<>();
         cboDisablingCondition = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -366,24 +364,15 @@ public class NewResidentForm extends javax.swing.JFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Disability Details"));
 
-        lstDisabilityType.setModel(new javax.swing.AbstractListModel<String>() {
+        jLabel12.setText("Select all disability types that apply:");
+
+        lstDisabilityTypes.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        lstDisabilityType.setName(""); // NOI18N
-        jScrollPane1.setViewportView(lstDisabilityType);
-
-        jLabel12.setLabelFor(lstDisabilityType);
-        jLabel12.setText("Select all disability types that apply:");
-
-        jLabel13.setText("Determination");
-
-        cboDisabilityDetermination.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jLabel14.setText("Long-term");
-
-        cboLongTermDisability.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        lstDisabilityTypes.setCellRenderer(cellRenderer);
+        jScrollPane1.setViewportView(lstDisabilityTypes);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -391,18 +380,12 @@ public class NewResidentForm extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel13)
-                    .addComponent(jLabel14))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cboDisabilityDetermination, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cboLongTermDisability, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -410,17 +393,8 @@ public class NewResidentForm extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel13)
-                            .addComponent(cboDisabilityDetermination, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel14)
-                            .addComponent(cboLongTermDisability, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         cboDisablingCondition.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -435,12 +409,12 @@ public class NewResidentForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(196, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(114, 114, 114)
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cboDisablingCondition, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53))
+                .addContainerGap(135, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -467,6 +441,7 @@ public class NewResidentForm extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        lstInsuranceTypes.setCellRenderer(cellRenderer);
         jScrollPane2.setViewportView(lstInsuranceTypes);
 
         jLabel16.setText("Please select all that apply:");
@@ -839,8 +814,8 @@ public class NewResidentForm extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(lblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(71, Short.MAX_VALUE))
         );
 
         pack();
@@ -895,6 +870,10 @@ public class NewResidentForm extends javax.swing.JFrame {
             conn = DriverManager.getConnection(myDBURL);
             statement = conn.createStatement();
 
+            // **********************************************
+            // *******    populate Gender Combo Box   *******
+            // **********************************************
+            
             //create result set for query results 
             ResultSet custResultsOfQuery = null;
 
@@ -917,6 +896,10 @@ public class NewResidentForm extends javax.swing.JFrame {
                 }
             }
             
+            // **********************************************
+            // *******     populate Race Combo Box    *******
+            // **********************************************
+            
             // clear result set 
             custResultsOfQuery = null; 
                         
@@ -937,6 +920,11 @@ public class NewResidentForm extends javax.swing.JFrame {
                 }
             }
             
+            
+            // **********************************************
+            // *******  populate Ethnicity Combo Box  *******
+            // **********************************************
+            
             // clear result set 
             custResultsOfQuery = null; 
                         
@@ -956,9 +944,170 @@ public class NewResidentForm extends javax.swing.JFrame {
                     cboEthnicity.addItem(result);
                 }
             }
+
+
+
+            // *******************************************************
+            // *******  populate DisablingCondition Combo Box  *******
+            // *******************************************************
+             
+            // clear result set 
+            custResultsOfQuery = null; 
+                        
+            //clear any current options from Ethnicity combo box
+            cboEthnicity.removeAllItems();
+                        
+            // populate Gender combo box
+            sql = "select Ethnicity_Description from Resident_Ethnicity";
+
+            custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
+
+            cboEthnicity.addItem("");
+            while(custResultsOfQuery.next()) {
+                result = custResultsOfQuery.getObject(1).toString();
+                
+                if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
+                    cboEthnicity.addItem(result);
+                }
+            }           
+            
+            // ****************************************************
+            // *******  populate HealthInsurance Combo Box  *******
+            // ****************************************************
+            
+            // clear result set 
+            custResultsOfQuery = null; 
+                        
+            //clear any current options from Ethnicity combo box
+            cboEthnicity.removeAllItems();
+                        
+            // populate Gender combo box
+            sql = "select Ethnicity_Description from Resident_Ethnicity";
+
+            custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
+
+            while(custResultsOfQuery.next()) {
+                result = custResultsOfQuery.getObject(1).toString();
+                
+                if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
+                    cboEthnicity.addItem(result);
+                }
+            }
+
+
+            // *******************************************************
+            // *******  populate LongTermDisability Combo Box  *******
+            // *******************************************************
+            
+            // clear result set 
+            custResultsOfQuery = null; 
+                        
+            //clear any current options from Ethnicity combo box
+            cboEthnicity.removeAllItems();
+                        
+            // populate Gender combo box
+            sql = "select Ethnicity_Description from Resident_Ethnicity";
+
+            custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
+
+            cboEthnicity.addItem("");
+            while(custResultsOfQuery.next()) {
+                result = custResultsOfQuery.getObject(1).toString();
+                
+                if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
+                    cboEthnicity.addItem(result);
+                }
+            }
+
+
+            // **************************************************
+            // *******  populate DisabilityType List Box  *******
+            // **************************************************
+            
+            lstDisabilityTypes.setSelectionModel(new DefaultListSelectionModel() {
+                @Override
+                public void setSelectionInterval(int index0, int index1) {
+                    if(super.isSelectedIndex(index0)) {
+                        super.removeSelectionInterval(index0, index1);
+                    }
+                    else {
+                        super.addSelectionInterval(index0, index1);
+                    }
+                }
+            });
+            
+            // clear result set 
+            custResultsOfQuery = null; 
+                        
+            DefaultListModel disabilityModel;
+            disabilityModel = new DefaultListModel(); 
+            
+            lstDisabilityTypes.setModel(disabilityModel);
+            
+            //clear any current options from DisabilityType list box
+            disabilityModel.clear();
+                        
+            // populate Gender combo box
+            sql = "	SELECT Disability_Description FROM [DB_A47087_smgroup].[dbo].[Visit_Disability_Option]";
+
+            custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
+
+            while(custResultsOfQuery.next()) {
+                result = custResultsOfQuery.getObject(1).toString();
+                
+                if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
+                    disabilityModel.addElement(result);
+                }
+            }
+            
+            
+
+
+
+            // **************************************************
+            // *******  populate InsuranceTypes List Box  *******
+            // **************************************************
+            lstInsuranceTypes.setSelectionModel(new DefaultListSelectionModel() {
+                @Override
+                public void setSelectionInterval(int index0, int index1) {
+                    if(super.isSelectedIndex(index0)) {
+                        super.removeSelectionInterval(index0, index1);
+                    }
+                    else {
+                        super.addSelectionInterval(index0, index1);
+                    }
+                }
+            });
+            
+            
+            // clear result set 
+            custResultsOfQuery = null; 
+                        
+            DefaultListModel insuranceModel;
+            insuranceModel = new DefaultListModel(); 
+            
+            lstInsuranceTypes.setModel(insuranceModel);
+            
+            //clear any current options from Insurance list box
+            insuranceModel.clear();
+                        
+            // populate Gender combo box
+            sql = "SELECT Disability_Description FROM [DB_A47087_smgroup].[dbo].[Visit_Disability_Option]";
+
+            custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
+
+            while(custResultsOfQuery.next()) {
+                result = custResultsOfQuery.getObject(1).toString();
+                
+                if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
+                    insuranceModel.addElement(result);
+                }
+            }
+        
+            
             
             // Inform user database was displayed.
-            lblStatus.setText("Populated comboboxes.");
+            lblStatus.setText("Populated controls.");
 
         } catch (SQLException ex) {
             lblStatus.setText(ex.getMessage());
@@ -1063,12 +1212,10 @@ public class NewResidentForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddInsuranceType;
-    private javax.swing.JComboBox<String> cboDisabilityDetermination;
     private javax.swing.JComboBox<String> cboDisablingCondition;
     private javax.swing.JComboBox<String> cboEthnicity;
     private javax.swing.JComboBox<String> cboGender;
     private javax.swing.JComboBox<String> cboHealthInsurance;
-    private javax.swing.JComboBox<String> cboLongTermDisability;
     private javax.swing.JComboBox<String> cboRace;
     private javax.swing.ButtonGroup grpDateOfBirth;
     private javax.swing.ButtonGroup grpFirstName;
@@ -1080,8 +1227,6 @@ public class NewResidentForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
@@ -1140,7 +1285,7 @@ public class NewResidentForm extends javax.swing.JFrame {
     private javax.swing.JTextField jtxtState;
     private javax.swing.JTextField jtxtZip;
     private javax.swing.JLabel lblStatus;
-    private javax.swing.JList<String> lstDisabilityType;
+    private javax.swing.JList<String> lstDisabilityTypes;
     private javax.swing.JList<String> lstInsuranceTypes;
     private javax.swing.JRadioButton radDateOfBirthNoSay;
     private javax.swing.JRadioButton radDateOfBirthUnknown;
@@ -1162,4 +1307,7 @@ public class NewResidentForm extends javax.swing.JFrame {
     private javax.swing.JTextField txtLastName;
     private javax.swing.JTextField txtSSN;
     // End of variables declaration//GEN-END:variables
+
+
+
 }
