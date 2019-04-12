@@ -24,7 +24,7 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
     private static Connection conn = null;
     private static Statement statement = null;
     
-   DefaultTableModel volModel = new DefaultTableModel();
+   
     /**
      * Creates new form ViewVolunteerReprts
      */
@@ -240,8 +240,8 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
         //Getting the data into the jtable
         
         //vectors to hold data and column names
-        Vector<Object> columnNames = new Vector<>();
-        Vector<Object> data = new Vector<>();
+        Vector<Object> columnNames = new Vector<Object>();
+        Vector<Object> data = new Vector<Object>();
         
         try
         {
@@ -260,7 +260,7 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
             }
             while(volunteers.next())
             {
-                Vector<Object> row = new Vector<>(columns);
+                Vector<Object> row = new Vector<Object>(columns);
 
                 for (int i = 1; i <= columns; i++)
                 {
@@ -269,6 +269,27 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
 
                 data.addElement( row );
             }
+            
+            DefaultTableModel volModel = new DefaultTableModel(data, columnNames)
+            {
+                @Override
+                public Class getColumnClass(int column)
+                {
+                    for (int row = 0; row < getRowCount(); row++)
+                    {
+                        Object o = getValueAt(row, column);
+
+                        if (o != null)
+                        {
+                            return o.getClass();
+                        }
+                    }
+
+                    return Object.class;
+                }
+            };
+            
+            
             JOptionPane.showMessageDialog(null, "SQL Data has been entered in the jTable");
         }
         catch(SQLException ex) 
