@@ -462,8 +462,8 @@ public class NewResidentForm extends javax.swing.JFrame {
                         .addComponent(jLabel16)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtAdditionalInsuranceTypes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel18)
@@ -1092,7 +1092,7 @@ public class NewResidentForm extends javax.swing.JFrame {
             insuranceModel.clear();
                         
             // populate Gender combo box
-            sql = "SELECT Disability_Description FROM [DB_A47087_smgroup].[dbo].[Visit_Disability_Option]";
+            sql = "SELECT Insurance_Description FROM [DB_A47087_smgroup].[dbo].[Visit_Health_Insurance_Types_Option]";
 
             custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
 
