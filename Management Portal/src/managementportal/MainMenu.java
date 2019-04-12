@@ -37,7 +37,6 @@ public class MainMenu extends javax.swing.JFrame {
         btnReportsVolunteers = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(null);
 
         jLabel1.setText("Samaritan Ministries Management Portal");
 
