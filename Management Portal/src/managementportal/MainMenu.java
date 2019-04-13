@@ -189,8 +189,11 @@ public class MainMenu extends javax.swing.JFrame {
         //</editor-fold>
 
         try {
+            // set up the theme for the Look and Feel
+            com.jtattoo.plaf.smart.SmartLookAndFeel.setTheme("Large-Font", "", "Samaritan Ministries");
+            
             // Select the Look and Feel
-            UIManager.setLookAndFeel("com.jtattoo.plaf.aero.AeroLookAndFeel");
+            UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
 
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
