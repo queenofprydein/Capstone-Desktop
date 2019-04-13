@@ -240,7 +240,7 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
         //Getting the data into the jtable
         
         //vectors to hold data and column names
-        Vector<Object> columnNames = new Vector<Object>();
+        Vector<String> columnNames = new Vector<String>();
         Vector<Object> data = new Vector<Object>();
         
         try
@@ -258,16 +258,13 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
             {
                 columnNames.addElement( volunteersMD.getColumnName(i) );
             }
-            while(volunteers.next())
+            while (volunteers.next()) 
             {
-                Vector<Object> row = new Vector<Object>(columns);
-
-                for (int i = 1; i <= columns; i++)
-                {
-                    row.addElement( volunteers.getObject(i) );
+                Vector<Object> vector = new Vector<Object>();
+                for (int columnIndex = 1; columnIndex <= columns; columnIndex++) {
+                    vector.add(volunteers.getObject(columnIndex));
                 }
-
-                data.addElement( row );
+                data.add(vector);
             }
             
             DefaultTableModel volModel = new DefaultTableModel(data, columnNames)
@@ -288,6 +285,8 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
                     return Object.class;
                 }
             };
+            
+            VolunteersTable.setModel(volModel);
             
             
             JOptionPane.showMessageDialog(null, "SQL Data has been entered in the jTable");
