@@ -190,7 +190,7 @@ public class MainMenu extends javax.swing.JFrame {
 
         try {
             // Select the Look and Feel
-            UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
+            UIManager.setLookAndFeel("com.jtattoo.plaf.aero.AeroLookAndFeel");
 
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
