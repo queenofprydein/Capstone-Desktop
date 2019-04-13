@@ -259,7 +259,7 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        
+        jbtnNone.isSelected();
         
         //vectors to hold data and column names
         Vector<String> columnNames = new Vector<String>();
@@ -349,6 +349,7 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
         String sqlSort = "";
         String sqlFilter = "";
         String sqlOrder = "";
+        String startSQL = "SELECT * FROM [DB_A47087_smgroup].[dbo].[Volunteer]";
         
         switch(jcbSort.getSelectedIndex())
         {
@@ -391,6 +392,11 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
             case 12:
                 sqlSort = " ORDER BY Community_Service";
                 break;
+        }
+        
+        if(jbtnOlder13.isSelected())
+        {
+            sqlFilter = "";
         }
         
     }//GEN-LAST:event_jbtnDisplayActionPerformed
