@@ -65,7 +65,7 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Viewing Volunteers");
-        setPreferredSize(new java.awt.Dimension(1000, 450));
+        setPreferredSize(new java.awt.Dimension(1200, 450));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -97,14 +97,13 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(jcbSort, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(56, 56, 56)
-                        .addComponent(jLabel2)))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addGap(99, 99, 99)
+                .addComponent(jLabel2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(37, Short.MAX_VALUE)
+                .addComponent(jcbSort, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,6 +117,7 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
 
         jLabel3.setText("Order");
 
+        jbgOrder.add(jbtnAsc);
         jbtnAsc.setText("Ascending");
         jbtnAsc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -125,8 +125,10 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
             }
         });
 
+        jbgOrder.add(jbtnDes);
         jbtnDes.setText("Descending");
 
+        jbgOrder.add(jbtnNone);
         jbtnNone.setText("None");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -161,10 +163,13 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
 
         jLabel4.setText("Filter By");
 
+        jbgFilters.add(jbtnOlder13);
         jbtnOlder13.setText("Older than 13");
 
+        jbgFilters.add(jbtnMales);
         jbtnMales.setText("Males Only");
 
+        jbgFilters.add(jbtnFemales);
         jbtnFemales.setText("Females Only");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -199,6 +204,11 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
         );
 
         jbtnDisplay.setText("Display Reports");
+        jbtnDisplay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnDisplayActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -206,8 +216,8 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(55, 55, 55)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(74, 74, 74)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -249,7 +259,7 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        //Getting the data into the jtable
+        jbtnNone.isSelected();
         
         //vectors to hold data and column names
         Vector<String> columnNames = new Vector<String>();
@@ -313,7 +323,7 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
             //add blank first
             jcbSort.addItem("");
 
-            //Get the data from database
+            //Get the data from database 
             for (int i = 1; i <= columns; i++)
             {
                 jcbSort.addItem( volunteersMD.getColumnName(i) );
@@ -332,6 +342,64 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_formWindowOpened
+
+    private void jbtnDisplayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDisplayActionPerformed
+        // TODO add your handling code here:
+        // Get info from sort, filter, order
+        String sqlSort = "";
+        String sqlFilter = "";
+        String sqlOrder = "";
+        String startSQL = "SELECT * FROM [DB_A47087_smgroup].[dbo].[Volunteer]";
+        
+        switch(jcbSort.getSelectedIndex())
+        {
+            case 0:
+                sqlSort = "";
+                break;
+            case 1:
+                sqlSort = " ORDER BY Volunteer_ID";
+                break;
+            case 2:
+                sqlSort = " ORDER BY Last_Name";
+                break;
+            case 3:
+                sqlSort = " ORDER BY First_Name";
+                break;
+            case 4:
+                sqlSort = " ORDER BY Middle_Name";
+                break;
+            case 5:
+                sqlSort  = " ORDER BY Phone";
+                break;
+            case 6:
+                sqlSort = " ORDER BY Email";
+                break;
+            case 7:
+                sqlSort = " ORDER BY Preferred_Method_Of_Contact";
+                break;
+            case 8:
+                sqlSort = " ORDER BY BirthDate";
+                break;
+            case 9:
+                sqlSort = " ORDER BY Gender";
+                break;
+            case 10:
+                sqlSort = " ORDER BY Emergency_Contact_Phone";
+                break;
+            case 11:
+                sqlSort = " ORDER BY Emergency_Contact_Name";
+                break;
+            case 12:
+                sqlSort = " ORDER BY Community_Service";
+                break;
+        }
+        
+        if(jbtnOlder13.isSelected())
+        {
+            sqlFilter = "";
+        }
+        
+    }//GEN-LAST:event_jbtnDisplayActionPerformed
 
     /**
      * @param args the command line arguments
