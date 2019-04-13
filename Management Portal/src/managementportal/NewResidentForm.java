@@ -8,9 +8,9 @@ package managementportal;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.HashSet;
 import java.util.logging.*;
 import javax.swing.*;
+
 
 /**
  *
@@ -48,6 +48,7 @@ public class NewResidentForm extends javax.swing.JFrame {
         grpDateOfBirth = new javax.swing.ButtonGroup();
         grpGender = new javax.swing.ButtonGroup();
         grpRace = new javax.swing.ButtonGroup();
+        grpEthnicity = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
@@ -99,7 +100,7 @@ public class NewResidentForm extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         txtAdditionalInsuranceTypes = new javax.swing.JTextField();
         btnAddInsuranceType = new javax.swing.JButton();
-        jLabel18 = new javax.swing.JLabel();
+        lblAdditionalInsuranceTypes = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jlblAdd = new javax.swing.JLabel();
@@ -210,6 +211,11 @@ public class NewResidentForm extends javax.swing.JFrame {
         jLabel8.setText("Gender");
 
         cboGender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboGender.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboGenderItemStateChanged(evt);
+            }
+        });
 
         grpGender.add(radGenderNoSay);
 
@@ -219,6 +225,11 @@ public class NewResidentForm extends javax.swing.JFrame {
         jLabel9.setText("Race");
 
         cboRace.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboRace.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboRaceItemStateChanged(evt);
+            }
+        });
 
         grpRace.add(radRaceNoSay);
 
@@ -228,10 +239,15 @@ public class NewResidentForm extends javax.swing.JFrame {
         jLabel10.setText("Ethnicity");
 
         cboEthnicity.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboEthnicity.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboEthnicityItemStateChanged(evt);
+            }
+        });
 
-        grpRace.add(radEthnicityNoSay);
+        grpEthnicity.add(radEthnicityNoSay);
 
-        grpRace.add(radEthnicityUnknown);
+        grpEthnicity.add(radEthnicityUnknown);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -398,6 +414,11 @@ public class NewResidentForm extends javax.swing.JFrame {
         );
 
         cboDisablingCondition.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboDisablingCondition.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboDisablingConditionItemStateChanged(evt);
+            }
+        });
 
         jLabel11.setText("Does the resident have a disabling condition?");
 
@@ -433,6 +454,11 @@ public class NewResidentForm extends javax.swing.JFrame {
         jLabel15.setText("Is the resident currently covered by health insurance? ");
 
         cboHealthInsurance.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboHealthInsurance.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboHealthInsuranceItemStateChanged(evt);
+            }
+        });
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Health Insurance Information"));
 
@@ -449,7 +475,7 @@ public class NewResidentForm extends javax.swing.JFrame {
 
         btnAddInsuranceType.setText("Add");
 
-        jLabel18.setText("Please enter any other types that apply:");
+        lblAdditionalInsuranceTypes.setText("Please enter any other types that apply:");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -466,7 +492,7 @@ public class NewResidentForm extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtAdditionalInsuranceTypes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel18)
+                            .addComponent(lblAdditionalInsuranceTypes)
                             .addComponent(btnAddInsuranceType))))
                 .addContainerGap())
         );
@@ -478,7 +504,7 @@ public class NewResidentForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel18)
+                        .addComponent(lblAdditionalInsuranceTypes)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtAdditionalInsuranceTypes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -821,6 +847,7 @@ public class NewResidentForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void jtxtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtAddActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtxtAddActionPerformed
@@ -862,6 +889,9 @@ public class NewResidentForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jtxtEmNameActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        txtAdditionalInsuranceTypes.setVisible(false);
+        btnAddInsuranceType.setVisible(false);
+        lblAdditionalInsuranceTypes.setVisible(false);
         
         // Declare arrays for options from database to populate selection controls on the form
         String result = ""; 
@@ -943,81 +973,37 @@ public class NewResidentForm extends javax.swing.JFrame {
                 if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
                     cboEthnicity.addItem(result);
                 }
-            }
-
-
-
-            // *******************************************************
-            // *******  populate DisablingCondition Combo Box  *******
-            // *******************************************************
-             
-            // clear result set 
-            custResultsOfQuery = null; 
-                        
-            //clear any current options from Ethnicity combo box
-            cboEthnicity.removeAllItems();
-                        
-            // populate Gender combo box
-            sql = "select Ethnicity_Description from Resident_Ethnicity";
-
-            custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
-
-            cboEthnicity.addItem("");
-            while(custResultsOfQuery.next()) {
-                result = custResultsOfQuery.getObject(1).toString();
-                
-                if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
-                    cboEthnicity.addItem(result);
-                }
-            }           
+            }      
+            
             
             // ****************************************************
             // *******  populate HealthInsurance Combo Box  *******
             // ****************************************************
             
-            // clear result set 
-            custResultsOfQuery = null; 
-                        
-            //clear any current options from Ethnicity combo box
-            cboEthnicity.removeAllItems();
-                        
-            // populate Gender combo box
-            sql = "select Ethnicity_Description from Resident_Ethnicity";
-
-            custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
-
-            while(custResultsOfQuery.next()) {
-                result = custResultsOfQuery.getObject(1).toString();
-                
-                if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
-                    cboEthnicity.addItem(result);
-                }
-            }
+            //clear any current options from Disabling Condition combo box
+            cboHealthInsurance.removeAllItems();
+            
+            // populate DisablingCondition combo box
+            cboHealthInsurance.addItem("");
+            cboHealthInsurance.addItem("Yes");
+            cboHealthInsurance.addItem("No");
+            cboHealthInsurance.addItem("Doesn't know");
+            cboHealthInsurance.addItem("Prefers not to say");
 
 
             // *******************************************************
-            // *******  populate LongTermDisability Combo Box  *******
+            // *******  populate DisablingCondition Combo Box  *******
             // *******************************************************
             
-            // clear result set 
-            custResultsOfQuery = null; 
-                        
-            //clear any current options from Ethnicity combo box
-            cboEthnicity.removeAllItems();
-                        
-            // populate Gender combo box
-            sql = "select Ethnicity_Description from Resident_Ethnicity";
-
-            custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
-
-            cboEthnicity.addItem("");
-            while(custResultsOfQuery.next()) {
-                result = custResultsOfQuery.getObject(1).toString();
-                
-                if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
-                    cboEthnicity.addItem(result);
-                }
-            }
+            //clear any current options from Disabling Condition combo box
+            cboDisablingCondition.removeAllItems();
+            
+            // populate DisablingCondition combo box
+            cboDisablingCondition.addItem("");
+            cboDisablingCondition.addItem("Yes");
+            cboDisablingCondition.addItem("No");
+            cboDisablingCondition.addItem("Doesn't know");
+            cboDisablingCondition.addItem("Prefers not to say");
 
 
             // **************************************************
@@ -1092,7 +1078,7 @@ public class NewResidentForm extends javax.swing.JFrame {
             insuranceModel.clear();
                         
             // populate Gender combo box
-            sql = "SELECT Insurance_Description FROM [DB_A47087_smgroup].[dbo].[Visit_Health_Insurance_Types_Option]";
+            sql = "SELECT Insurance_Description FROM [DB_A47087_smgroup].[dbo].[Visit_Health_Insurance_Type_Option]";
 
             custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
 
@@ -1170,6 +1156,72 @@ public class NewResidentForm extends javax.swing.JFrame {
             radDateOfBirthNoSay.setEnabled(false);
         }
     }//GEN-LAST:event_txtDateOfBirthKeyTyped
+
+    private void cboGenderItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboGenderItemStateChanged
+        // disable the radio buttons if the combo box has a value selected 
+        if (cboGender.getItemCount() > 0){
+            if (cboGender.getSelectedItem().equals("")){
+                radGenderUnknown.setEnabled(true);
+                radGenderNoSay.setEnabled(true);
+            } else {
+                grpGender.clearSelection();
+                radGenderUnknown.setEnabled(false);
+                radGenderNoSay.setEnabled(false);
+            }
+        }
+    }//GEN-LAST:event_cboGenderItemStateChanged
+
+    private void cboRaceItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboRaceItemStateChanged
+        // disable the radio buttons if the combo box has a value selected 
+        if (cboRace.getItemCount() > 0){
+            if (cboRace.getSelectedItem().equals("")){
+                radRaceUnknown.setEnabled(true);
+                radRaceNoSay.setEnabled(true);
+            } else {
+                grpRace.clearSelection();
+                radRaceUnknown.setEnabled(false);
+                radRaceNoSay.setEnabled(false);
+            }
+        }
+    }//GEN-LAST:event_cboRaceItemStateChanged
+
+    private void cboEthnicityItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboEthnicityItemStateChanged
+        // disable the radio buttons if the combo box has a value selected 
+        if (cboEthnicity.getItemCount() > 0){
+            if (cboEthnicity.getSelectedItem().equals("")){
+                radEthnicityUnknown.setEnabled(true);
+                radEthnicityNoSay.setEnabled(true);
+            } else {
+                grpEthnicity.clearSelection();
+                radEthnicityUnknown.setEnabled(false);
+                radEthnicityNoSay.setEnabled(false);
+            }
+        }
+    }//GEN-LAST:event_cboEthnicityItemStateChanged
+
+    private void cboDisablingConditionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboDisablingConditionItemStateChanged
+        // disable the list box if the combo box is not set to "Yes" 
+        if (cboDisablingCondition.getItemCount() > 0){
+            if (cboDisablingCondition.getSelectedItem().equals("Yes")){
+                lstDisabilityTypes.setEnabled(true);
+            } else {
+                lstDisabilityTypes.setEnabled(false);
+                lstDisabilityTypes.clearSelection();
+            }
+        }
+    }//GEN-LAST:event_cboDisablingConditionItemStateChanged
+
+    private void cboHealthInsuranceItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboHealthInsuranceItemStateChanged
+        // disable the list box if the combo box is not set to "Yes" 
+        if (cboHealthInsurance.getItemCount() > 0){
+            if (cboHealthInsurance.getSelectedItem().equals("Yes")){
+                lstInsuranceTypes.setEnabled(true);
+            } else {
+                lstInsuranceTypes.setEnabled(false);
+                lstInsuranceTypes.clearSelection();
+            }
+        }
+    }//GEN-LAST:event_cboHealthInsuranceItemStateChanged
   
     
     /**
@@ -1185,7 +1237,7 @@ public class NewResidentForm extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("SeaGlass".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -1205,6 +1257,7 @@ public class NewResidentForm extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new NewResidentForm().setVisible(true);
+                
             }
         });
     } 
@@ -1218,6 +1271,7 @@ public class NewResidentForm extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cboHealthInsurance;
     private javax.swing.JComboBox<String> cboRace;
     private javax.swing.ButtonGroup grpDateOfBirth;
+    private javax.swing.ButtonGroup grpEthnicity;
     private javax.swing.ButtonGroup grpFirstName;
     private javax.swing.ButtonGroup grpGender;
     private javax.swing.ButtonGroup grpLastName;
@@ -1230,7 +1284,6 @@ public class NewResidentForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
@@ -1284,6 +1337,7 @@ public class NewResidentForm extends javax.swing.JFrame {
     private javax.swing.JTextField jtxtShelterCat;
     private javax.swing.JTextField jtxtState;
     private javax.swing.JTextField jtxtZip;
+    private javax.swing.JLabel lblAdditionalInsuranceTypes;
     private javax.swing.JLabel lblStatus;
     private javax.swing.JList<String> lstDisabilityTypes;
     private javax.swing.JList<String> lstInsuranceTypes;
