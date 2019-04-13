@@ -5,6 +5,11 @@
  */
 package managementportal;
 
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
+
 /**
  *
  * @author saved
@@ -183,12 +188,37 @@ public class MainMenu extends javax.swing.JFrame {
         }
         //</editor-fold>
 
+        try {
+            // Select the Look and Feel
+            UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
+
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    new MainMenu().setVisible(true);
+                }
+            });
+        } 
+        catch (UnsupportedLookAndFeelException e) {
+           // handle exception
+        }
+        catch (ClassNotFoundException e) {
+           // handle exception
+        }
+        catch (InstantiationException e) {
+           // handle exception
+        }
+        catch (IllegalAccessException e) {
+           // handle exception
+        }
+
         /* Create and display the form */
+        /*
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new MainMenu().setVisible(true);
             }
         });
+        */
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
