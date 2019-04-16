@@ -115,14 +115,6 @@ public class Resident {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
     
     public String getAddressLn1() {
         return addressLn1;
@@ -262,15 +254,6 @@ public class Resident {
     public boolean isLastNameValid(String name)
     {
         return name.matches("[a-zA-Z]+([ '-][a-zA-Z]+)*");
-    }
-    
-    public boolean isMiddleNameValid(String name)
-    {
-        if(name.equals(""))
-        {
-            return true;
-        }
-        return name.matches("[A-Z][a-zA-Z]*");
     }
     
     public boolean isAddressValid(String add)
@@ -447,7 +430,7 @@ public class Resident {
         
     }
     
-    public void AddNewResident(Connection conn, Statement statement, String fName, String lName,String mName, String add,String add2, String c, String st, String zp, String phne, String phneAlt, String email, String bDate, String ssn, String gen, String emergencyP, String emergencyN, String vet, String r, String eth)
+    public void AddNewResident(Connection conn, Statement statement, String fName, String lName, String add,String add2, String c, String st, String zp, String phne, String phneAlt, String email, String bDate, String ssn, String gen, String emergencyP, String emergencyN, String vet, String r, String eth)
     {
         if(isFirstNameValid(fName) == true)
         {
@@ -456,10 +439,6 @@ public class Resident {
         if(isLastNameValid(lName) == true)
         {
             lastName = lName;
-        }
-        if(isMiddleNameValid(mName) == true)
-        {
-            middleName = mName;
         }
         if(isAddressValid(add) == true)
         {
@@ -564,7 +543,7 @@ public class Resident {
         }
     }
     
-    public void UpdateResident(Connection conn, Statement statement,int rID, String fName, String lName,String mName, String add,String add2, String c, String st, String zp, String phne, String phneAlt, String email, String bDate, String ssn, String gen, String emergencyP, String emergencyN, String vet, String r, String eth)
+    public void UpdateResident(Connection conn, Statement statement,int rID, String fName, String lName, String add,String add2, String c, String st, String zp, String phne, String phneAlt, String email, String bDate, String ssn, String gen, String emergencyP, String emergencyN, String vet, String r, String eth)
     {
         residentID = rID;
         if(isFirstNameValid(fName) == true)
@@ -574,10 +553,6 @@ public class Resident {
         if(isLastNameValid(lName) == true)
         {
             lastName = lName;
-        }
-        if(isMiddleNameValid(mName) == true)
-        {
-            middleName = mName;
         }
         if(isAddressValid(add) == true)
         {
