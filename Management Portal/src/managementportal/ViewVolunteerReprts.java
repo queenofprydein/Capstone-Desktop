@@ -14,6 +14,7 @@ import java.util.logging.*;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -48,15 +49,15 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jtableScroll = new javax.swing.JScrollPane();
         VolunteersTable = new javax.swing.JTable();
-        jPanel1 = new javax.swing.JPanel();
+        jPanelSort = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jcbSort = new javax.swing.JComboBox<>();
-        jPanel2 = new javax.swing.JPanel();
+        jPanelOrder = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jbtnAsc = new javax.swing.JRadioButton();
         jbtnDes = new javax.swing.JRadioButton();
         jbtnNone = new javax.swing.JRadioButton();
-        jPanel3 = new javax.swing.JPanel();
+        jPanelFilter = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jbtnOlder13 = new javax.swing.JRadioButton();
         jbtnMales = new javax.swing.JRadioButton();
@@ -65,7 +66,7 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Viewing Volunteers");
-        setPreferredSize(new java.awt.Dimension(1200, 450));
+        setPreferredSize(new java.awt.Dimension(1200, 500));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -85,29 +86,29 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        VolunteersTable.setPreferredSize(new java.awt.Dimension(800, 450));
+        VolunteersTable.setPreferredSize(new java.awt.Dimension(1175, 260));
         jtableScroll.setViewportView(VolunteersTable);
 
         jLabel2.setText("Sort By");
 
         jcbSort.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(99, 99, 99)
+        javax.swing.GroupLayout jPanelSortLayout = new javax.swing.GroupLayout(jPanelSort);
+        jPanelSort.setLayout(jPanelSortLayout);
+        jPanelSortLayout.setHorizontalGroup(
+            jPanelSortLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelSortLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jcbSort, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(134, 134, 134))
+            .addGroup(jPanelSortLayout.createSequentialGroup()
+                .addGap(69, 69, 69)
                 .addComponent(jLabel2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(37, Short.MAX_VALUE)
-                .addComponent(jcbSort, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jPanelSortLayout.setVerticalGroup(
+            jPanelSortLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelSortLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
@@ -131,25 +132,25 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
         jbgOrder.add(jbtnNone);
         jbtnNone.setText("None");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelOrderLayout = new javax.swing.GroupLayout(jPanelOrder);
+        jPanelOrder.setLayout(jPanelOrderLayout);
+        jPanelOrderLayout.setHorizontalGroup(
+            jPanelOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelOrderLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jbtnNone)
                     .addComponent(jbtnDes)
                     .addComponent(jbtnAsc))
                 .addContainerGap(13, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelOrderLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(44, 44, 44))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        jPanelOrderLayout.setVerticalGroup(
+            jPanelOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelOrderLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -172,26 +173,26 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
         jbgFilters.add(jbtnFemales);
         jbtnFemales.setText("Females Only");
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelFilterLayout = new javax.swing.GroupLayout(jPanelFilter);
+        jPanelFilter.setLayout(jPanelFilterLayout);
+        jPanelFilterLayout.setHorizontalGroup(
+            jPanelFilterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelFilterLayout.createSequentialGroup()
+                .addGroup(jPanelFilterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelFilterLayout.createSequentialGroup()
                         .addGap(105, 105, 105)
                         .addComponent(jLabel4))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGroup(jPanelFilterLayout.createSequentialGroup()
                         .addGap(15, 15, 15)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanelFilterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jbtnMales)
                             .addComponent(jbtnOlder13)
                             .addComponent(jbtnFemales))))
                 .addContainerGap(107, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        jPanelFilterLayout.setVerticalGroup(
+            jPanelFilterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelFilterLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -214,24 +215,27 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(55, 55, 55)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(272, 272, 272)
+                .addComponent(jPanelSort, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(74, 74, 74)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50))
+                .addComponent(jPanelFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanelOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(342, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(540, 540, 540))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jbtnDisplay)
+                        .addGap(538, 538, 538))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jtableScroll)
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jbtnDisplay, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(323, 323, 323))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,14 +244,14 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jPanelOrder, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanelSort, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelFilter, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addComponent(jbtnDisplay)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                .addComponent(jtableScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addComponent(jtableScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
@@ -264,7 +268,6 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
         //vectors to hold data and column names
         Vector<String> columnNames = new Vector<String>();
         Vector<Object> data = new Vector<Object>();
-        
         try
         {
             //Read data from database
@@ -280,6 +283,7 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
             {
                 columnNames.addElement( volunteersMD.getColumnName(i) );
             }
+            
             while (volunteers.next()) 
             {
                 Vector<Object> vector = new Vector<Object>();
@@ -289,26 +293,10 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
                 data.add(vector);
             }
             
-            DefaultTableModel volModel = new DefaultTableModel(data, columnNames)
-            {
-                @Override
-                public Class getColumnClass(int column)
-                {
-                    for (int row = 0; row < getRowCount(); row++)
-                    {
-                        Object o = getValueAt(row, column);
-
-                        if (o != null)
-                        {
-                            return o.getClass();
-                        }
-                    }
-
-                    return Object.class;
-                }
-            };
-            
+            DefaultTableModel volModel = new DefaultTableModel(data,columnNames);
             VolunteersTable.setModel(volModel);
+            
+            
             
             //Get column names for combo box
             volunteers = null;
@@ -350,6 +338,7 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
         String sqlFilter = "";
         String sqlOrder = "";
         String startSQL = "SELECT * FROM [DB_A47087_smgroup].[dbo].[Volunteer]";
+        String wholeSQL;
         
         switch(jcbSort.getSelectedIndex())
         {
@@ -396,7 +385,100 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
         
         if(jbtnOlder13.isSelected())
         {
-            sqlFilter = "";
+            sqlFilter = "select  last_name, First_name, year(getdate())-YEAR(birthdate) as age\n" +
+                        "\n" +
+                        "\n" +
+                        "from Volunteer\n" +
+                        "\n" +
+                        "WHERE year(getdate())-YEAR(birthdate)>=13\n" +
+                        "\n" +
+                        "ORDER BY age";
+        }
+        if(jbtnMales.isSelected())
+        {
+            sqlFilter = " WHERE Gender = 'MA'";
+        }
+        if(jbtnFemales.isSelected())
+        {
+            sqlFilter = " WHERE Gender = 'FE'";
+        }
+        
+        if(jbtnAsc.isSelected())
+        {
+            sqlOrder = " ASC";
+        }
+        if(jbtnDes.isSelected())
+        {
+            sqlOrder = " DESC";
+        }
+        
+        if(jbtnOlder13.isSelected())
+        {
+            wholeSQL = sqlFilter;
+        }
+        else
+        {
+            wholeSQL = startSQL + sqlFilter + sqlSort + sqlOrder;
+        }
+        
+        //get new database table
+        
+        Vector<String> columnNames = new Vector<String>();
+        Vector<Object> data = new Vector<Object>();
+        try
+        {
+            conn = DriverManager.getConnection(myDBURL);
+            statement = conn.createStatement();
+            ResultSet volunteers = statement.executeQuery(wholeSQL);
+            ResultSetMetaData volunteersMD = volunteers.getMetaData();
+            int columns = volunteersMD.getColumnCount();
+            
+            //Get the data from database
+            for (int i = 1; i <= columns; i++)
+            {
+                columnNames.addElement( volunteersMD.getColumnName(i) );
+            }
+            while (volunteers.next()) 
+            {
+                Vector<Object> vector = new Vector<Object>();
+                for (int columnIndex = 1; columnIndex <= columns; columnIndex++) {
+                    vector.add(volunteers.getObject(columnIndex));
+                }
+                data.add(vector);
+            }
+            
+            DefaultTableModel volModel = new DefaultTableModel(data, columnNames)
+            {
+                @Override
+                public Class getColumnClass(int column)
+                {
+                    for (int row = 0; row < getRowCount(); row++)
+                    {
+                        Object o = getValueAt(row, column);
+
+                        if (o != null)
+                        {
+                            return o.getClass();
+                        }
+                    }
+
+                    return Object.class;
+                }
+            };
+            
+            VolunteersTable.setModel(volModel);
+        }
+        catch(SQLException ex)
+        {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        finally 
+        {
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ManagementPortal.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
     }//GEN-LAST:event_jbtnDisplayActionPerformed
@@ -442,9 +524,9 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanelFilter;
+    private javax.swing.JPanel jPanelOrder;
+    private javax.swing.JPanel jPanelSort;
     private javax.swing.ButtonGroup jbgFilters;
     private javax.swing.ButtonGroup jbgOrder;
     private javax.swing.JRadioButton jbtnAsc;
