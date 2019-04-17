@@ -86,7 +86,6 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        VolunteersTable.setPreferredSize(new java.awt.Dimension(1175, 260));
         jtableScroll.setViewportView(VolunteersTable);
 
         jLabel2.setText("Sort By");
@@ -336,9 +335,9 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
         // Get info from sort, filter, order
         String sqlSort = "";
         String sqlFilter = "";
-        String sqlOrder = "";
+        String sqlOrder = "ORDER BY ";
         String startSQL = "SELECT * FROM [DB_A47087_smgroup].[dbo].[Volunteer]";
-        String wholeSQL;
+        String wholeSQL = "";
         
         switch(jcbSort.getSelectedIndex())
         {
@@ -394,11 +393,11 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
                         "\n" +
                         "ORDER BY age";
         }
-        if(jbtnMales.isSelected())
+        else if(jbtnMales.isSelected())
         {
             sqlFilter = " WHERE Gender = 'MA'";
         }
-        if(jbtnFemales.isSelected())
+        else if(jbtnFemales.isSelected())
         {
             sqlFilter = " WHERE Gender = 'FE'";
         }
@@ -416,10 +415,27 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
         {
             wholeSQL = sqlFilter;
         }
+        else if(jcbSort.getSelectedIndex() == 0)
+        {
+            if(jbtnAsc.isSelected())
+            {
+                sqlOrder = " ORDER BY ASC";
+            }
+            else if(jbtnDes.isSelected())
+            {
+                sqlOrder = " ORDER BY DESC";
+            }
+            else
+            {
+                sqlOrder = "";
+            }
+        }
         else
         {
             wholeSQL = startSQL + sqlFilter + sqlSort + sqlOrder;
         }
+        
+        
         
         //get new database table
         
