@@ -58,6 +58,11 @@ public class MainMenu extends javax.swing.JFrame {
 
         btnReportsResident.setText("View Resident Reports");
         btnReportsResident.setToolTipText("");
+        btnReportsResident.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportsResidentActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -112,7 +117,7 @@ public class MainMenu extends javax.swing.JFrame {
                 .addComponent(btnScheduleVolunteers)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnReportsVolunteers)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -160,6 +165,13 @@ public class MainMenu extends javax.swing.JFrame {
         ViewVolunteerReprts volunteerReports = new ViewVolunteerReprts(); 
         volunteerReports.setVisible(true); 
     }//GEN-LAST:event_btnReportsVolunteersActionPerformed
+
+    private void btnReportsResidentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportsResidentActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        ViewResidentReports residentReports = new ViewResidentReports(); 
+        residentReports.setVisible(true);
+    }//GEN-LAST:event_btnReportsResidentActionPerformed
 
     /**
      * @param args the command line arguments
