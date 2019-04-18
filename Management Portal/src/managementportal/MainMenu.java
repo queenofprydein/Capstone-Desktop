@@ -42,6 +42,7 @@ public class MainMenu extends javax.swing.JFrame {
         btnReportsVolunteers = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Main Menu");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Samaritan Ministries Management Portal");
@@ -59,6 +60,11 @@ public class MainMenu extends javax.swing.JFrame {
 
         btnReportsResident.setText("View Resident Reports");
         btnReportsResident.setToolTipText("");
+        btnReportsResident.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportsResidentActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -159,6 +165,13 @@ public class MainMenu extends javax.swing.JFrame {
         ViewVolunteerReprts volunteerReports = new ViewVolunteerReprts(); 
         volunteerReports.setVisible(true); 
     }//GEN-LAST:event_btnReportsVolunteersActionPerformed
+
+    private void btnReportsResidentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportsResidentActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        ViewResidentReports residentReports = new ViewResidentReports(); 
+        residentReports.setVisible(true);
+    }//GEN-LAST:event_btnReportsResidentActionPerformed
 
     /**
      * @param args the command line arguments
