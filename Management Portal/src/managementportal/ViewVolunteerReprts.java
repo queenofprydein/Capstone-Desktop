@@ -316,7 +316,7 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
                 jcbSort.addItem( volunteersMD.getColumnName(i) );
             }
             
-            JOptionPane.showMessageDialog(null, "SQL Data has been entered in the jTable");
+            /*JOptionPane.showMessageDialog(null, "SQL Data has been entered in the jTable");*/
         }
         catch(SQLException ex) 
         {
@@ -463,8 +463,8 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
                 data.add(vector);
             }
             
-            DefaultTableModel volModel = new DefaultTableModel(data, columnNames)
-            {
+            DefaultTableModel volModel = new DefaultTableModel(data, columnNames);
+            /*{
                 @Override
                 public Class getColumnClass(int column)
                 {
@@ -480,7 +480,7 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
 
                     return Object.class;
                 }
-            };
+            };*/
             
             VolunteersTable.setModel(volModel);
         }
