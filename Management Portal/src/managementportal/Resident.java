@@ -378,6 +378,7 @@ public class Resident {
     
     public void AddNewResident(Connection conn, Statement statement, String fName, String lName, String ssn, String gen, String vet, String r, String eth)
     {
+        String sql; 
         
         if(isFirstNameValid(fName) == true)
         {
@@ -410,17 +411,17 @@ public class Resident {
         try
         {
             statement = conn.createStatement();
-            String sql = "INSERT INTO [dbo].[Resident]([Last_Name],[First_Name],[SSN],[Gender],[US_Military_Veteran],[Race],[Ethnicity]) VALUES(?,?,?,?,?,?,?)";
-            PreparedStatement pstatement = conn.prepareStatement(sql);
-            pstatement.setString(1, lastName);
-            pstatement.setString(2, firstName);
-            pstatement.setString(3, socialSN);
-            pstatement.setString(4, gender);
-            pstatement.setString(5, usVet);
-            pstatement.setString(6, race);
-            pstatement.setString(7, ethnicity);
-            pstatement.executeUpdate(sql);
-            pstatement.close();
+            sql = "INSERT INTO [dbo].[Resident]([Last_Name],[First_Name],[SSN],[Gender],[US_Military_Veteran],[Race],[Ethnicity]) VALUES(";
+            sql += "'" + lName + "',";
+            sql += "'" + fName + "',";
+            sql += "'" + ssn + "',";
+            sql += "'" + gen + "',";
+            sql += "'" + vet + "',";
+            sql += "'" + r + "',";
+            sql += "'" + eth + "'";
+            sql +=  ");";
+            JOptionPane.showMessageDialog(null, "SQL Sent: " + sql, "SQL", JOptionPane.INFORMATION_MESSAGE);
+            statement.executeQuery(sql); 
             statement.close();
         }
         catch(SQLException ex)
