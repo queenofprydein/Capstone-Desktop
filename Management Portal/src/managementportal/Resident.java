@@ -6,6 +6,8 @@
 package managementportal;
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
@@ -19,7 +21,6 @@ public class Resident {
     private int residentID;     //NOT null
     private String firstName;   //NOT null
     private String lastName;    //NOT null
-    private String middleName;  //null
     private String addressLn1;  //null
     private String addressLn2;  //null
     private String city;        //null
@@ -41,7 +42,6 @@ public class Resident {
     {
         firstName = "";
         lastName = "";
-        middleName = "";
         addressLn1 = "";
         addressLn2 = "";
         city = "";
@@ -50,7 +50,7 @@ public class Resident {
         phone = "";
         phoneAlt = "";
         res_email = "";
-        birthDate = "";
+        birthDate = null;
         socialSN = "";
         gender = "";
         emContPhone = "";
@@ -63,7 +63,6 @@ public class Resident {
         residentID = rID;
         firstName = "";
         lastName = "";
-        middleName = "";
         addressLn1 = "";
         addressLn2 = "";
         city = "";
@@ -72,7 +71,7 @@ public class Resident {
         phone = "";
         phoneAlt = "";
         res_email = "";
-        birthDate = "";
+        birthDate = null;
         socialSN = "";
         gender = "";
         emContPhone = "";
@@ -181,7 +180,7 @@ public class Resident {
     }
 
     public String getBirthDate() {
-        return birthDate;
+        return birthDate; 
     }
 
     public void setBirthDate(String birthDate) {
@@ -293,22 +292,13 @@ public class Resident {
         return zip.matches("\\d{4}-\\d{5}|\\d{5}");
     }
     
-    public boolean isPhoneValid(String phone)
-    {
-        if(phone.equals(""))
-        {
-            return true;
-        }
-        return phone.matches("[1-9]\\d{2}-[1-9]\\d{2}-\\d{4}");
-    }
-    
     public boolean isFullNameValid(String fullN)
     {
         if(fullN.equals(""))
         {
             return true;
         }
-        return fullN.matches("^[a-zA-Z\\\\s]+");
+        return fullN.matches("[a-zA-Z\\\\s]*");
     }
     
     public boolean isEmailValid(String email)
@@ -322,116 +312,229 @@ public class Resident {
     
     public boolean isBirthDateValid(String birthD)
     {
-        if(birthD.equals(""))
-        {
+        DateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+        if(birthD.equals("")) {
             return true;
+        } else {
+            try {
+                format.parse(birthD);
+                return true; 
+            } catch (ParseException e) {
+                return false; 
+            }
         }
-        //bith date mm/dd/yyyy with leading zeroes
-        return birthD.matches("^[0-3][0-9]/[0-3][0-9]/(?:[0-9][0-9])?[0-9][0-9]$");
-    }
-    
-    public Date turnStringToDate(String bDay)
-    {
-        Date birthD;
-        try 
-        {
-            birthD = (Date) new SimpleDateFormat("MM/dd/yyyy").parse(birthDate);
-        } 
-        catch (ParseException ex) 
-        {
-            birthD = null;
-        }
-        return birthD;
     }
     
     public boolean isSSNValid(String ssn)
     {
-        return ssn.matches("[1-9]\\\\d{2}-[1-9]\\\\d{2}-\\\\d{4}");
+        return (ssn.matches("\\d{3}-\\d{2}-\\d{4}") || ssn.equals("0") || ssn.equals("1"));
     }
     
     public boolean isGenderValid(String gen)
     {
-        //are we just excepting males or not?
-        return gen.equals("Male");
+        // ensure only males are considered valid
+        return gen.equals("MA");
     }
     
-    public boolean isUSVetValid(String vet)
+    public boolean isSelectionFieldValid(String sel)
     {
         //One letter only
-        if(vet.equals("Y") || vet.equals("N"))
-        {
-            return true;
-        }
-        
-        return false;
+        return !sel.trim().equals("");        
     }
+
     
-    public boolean isRaceValid(String race)
-    {
-        return race.matches("[A-Z][a-zA-Z]*");
-    }
-    
-    public boolean isEthnicityValid(String ethnic)
-    {
-        return ethnic.matches("[A-Z][a-zA-Z]*");
-    }
-    
-    public void AddNewResident(Connection conn, Statement statement, String fName, String lName, String ssn, String gen, String vet, String r, String eth)
+    public void AddNewResident(Connection conn, Statement statement, String fName, String lName, String add, String add2, String c, String st, String zp, String phne, String phneAlt, String email, String bDate, String ssn, String gen, String emergencyP, String emergencyN, String vet, String r, String eth)
     {
         String sql; 
+        String error = "The following fields contain an error: "; 
+        int errorCount = 0; 
         
-        if(isFirstNameValid(fName) == true)
-        {
-            firstName = fName;
-        }
-        if(isLastNameValid(lName) == true)
-        {
-            lastName = lName;
-        }
-        if(isSSNValid(ssn) == true)
-        {
-            socialSN = ssn;
-        }
+        // check for invalid gender - if not male, refer to another shelter 
         if(isGenderValid(gen) == true)
         {
-            gender = gen;
-        }
-        if(isUSVetValid(vet) == true)
-        {
-            usVet = vet;
-        }
-        if(isRaceValid(r) == true)
-        {
-            race = r;
-        }
-        if(isEthnicityValid(eth) == true)
-        {
-            ethnicity = eth;
-        }
-        try
-        {
-            statement = conn.createStatement();
-            sql = "INSERT INTO [dbo].[Resident]([Last_Name],[First_Name],[SSN],[Gender],[US_Military_Veteran],[Race],[Ethnicity]) VALUES(";
-            sql += "'" + lName + "',";
-            sql += "'" + fName + "',";
-            sql += "'" + ssn + "',";
-            sql += "'" + gen + "',";
-            sql += "'" + vet + "',";
-            sql += "'" + r + "',";
-            sql += "'" + eth + "'";
-            sql +=  ");";
-            JOptionPane.showMessageDialog(null, "SQL Sent: " + sql, "SQL", JOptionPane.INFORMATION_MESSAGE);
-            statement.executeQuery(sql); 
-            statement.close();
-        }
-        catch(SQLException ex)
-        {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
+            gender = "'" + gen + "'";
+            
+            if(isFirstNameValid(fName) == true)
+            {
+                firstName = "'" + fName + "'";
+            } else {
+                error += "\nFirst Name";
+                errorCount ++;
+            }
+            if(isLastNameValid(lName) == true)
+            {
+                lastName = "'" + lName + "'";
+            } else {
+                error += "\nLast Name";
+                errorCount ++;}
+            if(isAddressValid(add) == true)
+            {
+                if (add.equals("")){
+                    addressLn1 = "NULL";
+                } else {
+                    addressLn1 = "'" + add + "'";
+                }
+            } else {
+                error += "\nAddress Line 1";
+                errorCount ++;
+            }
+            if(isAddressValid(add2) == true)
+            {
+                if (add2.equals("")) {
+                    addressLn2 = "NULL"; 
+                } else {
+                    addressLn2 = "'" + add2 + "'";
+                }
+            } else {
+                error += "\nAddress Line 2";
+                errorCount ++;
+            }
+            if(isCityValid(c) == true)
+            {   if (c.equals("")){
+                    city = "NULL";
+                } else {
+                    city = "'" + c + "'";
+                }
+            } else {
+                error += "\nCity";
+                errorCount ++;
+            }
+            if(isStateValid(st) == true)
+            {
+                if (st.equals("")) {
+                    state = "NULL"; 
+                } else {
+                    state = "'" + st + "'";
+                }
+            } else {
+                error += "\nState";
+                errorCount ++;
+            }    
+            if(isZipValid(zp) == true)
+            {
+                if (zp.equals("")) {
+                    zip = "NULL"; 
+                } else {
+                    zip = "'" + zp + "'";
+                }
+            } else {
+                error += "\nZip Code";
+                errorCount ++;
+            }
+           if (phne.equals("")){
+                phone = "NULL"; 
+            } else {
+                phne = phne.replaceAll("[^0-9]","");
+                phone = "'" + phne + "'";
+            }
+            if (phneAlt.equals("")) {
+                phoneAlt = "NULL"; 
+            } else {
+                phneAlt = phneAlt.replaceAll("[^0-9]","");
+                phoneAlt = "'" + phneAlt + "'";
+            }
+
+            if(isEmailValid(email) == true)
+            {
+                if (email.equals("")){
+                    res_email = "NULL"; 
+                } else {
+                    res_email = "'" + email + "'";
+                }
+            } else {
+                error += "\nEmail Address - Resident";
+                errorCount ++;
+            }
+            if(isBirthDateValid(bDate) == true)
+            {
+                if (bDate.equals("")) {
+                    birthDate = "NULL"; 
+                } else {
+                    birthDate = "'" + bDate + "'";
+                }
+            } else if (bDate.equals("Client doesn't know") || bDate.equals("Client refused")) {
+                birthDate = "NULL"; 
+            } else {
+    //           JOptionPane.showMessageDialog(null, "DOB: " + bDate, "DOB", JOptionPane.INFORMATION_MESSAGE);
+                error += "\nDate of Birth";
+                errorCount ++;
+            }
+            if(isSSNValid(ssn) == true)
+            {
+                if (ssn.equals("") || ssn.equals("Client doesn't know") || ssn.equals("Client refused")) {
+                    socialSN = "NULL";
+                } else {
+                    socialSN = "'" + ssn.replaceAll("-", "") + "'";
+                }
+            } else {
+                error += "\nSSN";
+                errorCount ++;
+            }
+
+            if (emergencyP.equals("")) {
+                emContPhone = "NULL"; 
+            } else {
+                emergencyP = emergencyP.replaceAll("[^0-9]","");
+                emContPhone = "'" + emergencyP + "'";
+            }
+            if(isFullNameValid(emergencyN) == true)
+            {
+                if (emergencyN.equals("")){
+                    emContName = "NULL";
+                } else {
+                    emContName = "'" + emergencyN + "'";
+                }
+            } else {
+                error += "\nName - Emergency Contact";
+                errorCount ++;
+            }
+            if(isSelectionFieldValid(vet) == true)
+            {
+                usVet = "'" + vet + "'";
+            } else {
+                error += "\nMilitary Veteran";
+                errorCount ++;
+            }
+            if(isSelectionFieldValid(r) == true)
+            {
+                race = "'" + r + "'";
+            } else {
+                error += "\nRace";
+                errorCount ++;
+            }
+            if(isSelectionFieldValid(eth) == true)
+            {
+                ethnicity = "'" + eth + "'";
+            } else {
+                error += "\nEthnicity";
+                errorCount ++;
+            }
+
+            if (errorCount == 0){
+                try
+                {
+                    statement = conn.createStatement();
+                    sql = "INSERT INTO [dbo].[Resident]([Last_Name],[First_Name],[Address],[AddressLine2],[City],[State],[Zip_Code],[Phone],[Birth_Date],[SSN],[Gender],[Phone_Alternate],[Email],[Emergency_Contact_Phone],[Emergency_Contact_Name],[US_Military_Veteran],[Race],[Ethnicity]) VALUES (" + lastName + "," + firstName + "," + addressLn1 + "," + addressLn2 + "," + city + "," + state + "," + zip + "," + phone + "," + birthDate + "," + socialSN + "," + gender + "," + phoneAlt + "," + res_email + "," + emContPhone + "," + emContName + "," + usVet + "," + race + "," + ethnicity + ")";
+
+                    JOptionPane.showMessageDialog(null, "Sending SQL: " + sql, "SQL", JOptionPane.INFORMATION_MESSAGE);
+                    statement.executeQuery(sql); 
+                    statement.close();
+                }
+                catch(SQLException ex)
+                {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, error, "Invalid entries", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "This shelter can only accept males.  Please refer to another shelter.", "Gender mismatch", JOptionPane.INFORMATION_MESSAGE);
         }
         
+
     }
     
-    public void AddNewResident(Connection conn, Statement statement, String fName, String lName, String add,String add2, String c, String st, String zp, String phne, String phneAlt, String email, String bDate, String ssn, String gen, String emergencyP, String emergencyN, String vet, String r, String eth)
+/*    public void AddNewResident(Connection conn, Statement statement, String fName, String lName, String add,String add2, String c, String st, String zp, String phne, String phneAlt, String email, String bDate, String ssn, String gen, String emergencyP, String emergencyN, String vet, String r, String eth)
     {
         if(isFirstNameValid(fName) == true)
         {
@@ -444,34 +547,50 @@ public class Resident {
         if(isAddressValid(add) == true)
         {
             addressLn1 = add;
+        } else if (add.equals("")){
+            addressLn1 = "NULL";
         }
         if(isAddressValid(add2) == true)
         {
             addressLn2 = add2;
+        } else if (add2.equals("")) {
+            addressLn2 = "NULL"; 
         }
         if(isCityValid(c) == true)
         {
             city = c;
+        } else if (c.equals("")){
+            city = "NULL";
         }
         if(isStateValid(st) == true)
         {
             state = st;
-        }
+        } else if (st.equals("")) {
+            state = "NULL"; 
+        }    
         if(isZipValid(zp) == true)
         {
             zip = zp;
+        } else if (zp.equals("")) {
+            zip = "NULL"; 
         }
         if(isPhoneValid(phne) == true)
         {
             phone = phne;
+        } else if (phne.equals("")){
+            phone = "NULL"; 
         }
         if(isPhoneValid(phneAlt) == true)
         {
             phoneAlt = phneAlt;
+        } else if (phneAlt.equals("")) {
+            phoneAlt = "NULL"; 
         }
         if(isEmailValid(email) == true)
         {
             res_email = email;
+        } else if (email.equals("")) {
+            res_email = "NULL"; 
         }
         if(isBirthDateValid(bDate) == true)
         {
@@ -589,7 +708,7 @@ public class Resident {
         }
         if(isBirthDateValid(bDate) == true)
         {
-            birthDate = bDate;
+            birthDate = turnStringToDate(bDate);
         }
         if(isPhoneValid(emergencyP) == true)
         {
@@ -691,4 +810,5 @@ public class Resident {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
+*/
 }
