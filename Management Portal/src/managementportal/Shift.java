@@ -11,8 +11,7 @@ package managementportal;
  */
 public class Shift {
     private int shiftID;        //NOT null
-    private String last_Name;   //NOT null
-    private String first_Name;  //NOT null
+    private String description;  //NOT null
     private String start_date;  //NOT null
     private String end_date;    //NOT null
     private int max_volunteer;  //null
@@ -22,8 +21,7 @@ public class Shift {
     
     public Shift()
     {
-        last_Name = "";
-        first_Name = "";
+        description = "";
         start_date = "";
         end_date = "";
         max_volunteer = 1;
@@ -35,8 +33,7 @@ public class Shift {
     public Shift(int sID)
     {
         shiftID = sID;
-        last_Name = "";
-        first_Name = "";
+        description = "";
         start_date = "";
         end_date = "";
         max_volunteer = 1;
@@ -45,11 +42,10 @@ public class Shift {
         min_age = 13;
     }
     
-    public Shift(int sID, String lName, String fName, String sDate, String eDate, int minVol, int minAge)
+    public Shift(int sID, String des, String sDate, String eDate, int minVol, int minAge)
     {
         shiftID = sID;
-        last_Name = lName;
-        first_Name = fName;
+        description = des;
         start_date = sDate;
         end_date = eDate;
         max_volunteer = minVol + 5;
@@ -66,20 +62,12 @@ public class Shift {
         this.shiftID = shiftID;
     }
 
-    public String getLast_Name() {
-        return last_Name;
+    public String getDescription() {
+        return description;
     }
 
-    public void setLast_Name(String last_Name) {
-        this.last_Name = last_Name;
-    }
-
-    public String getFirst_Name() {
-        return first_Name;
-    }
-
-    public void setFirst_Name(String first_Name) {
-        this.first_Name = first_Name;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getStart_date() {
