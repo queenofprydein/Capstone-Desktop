@@ -103,6 +103,11 @@ public class MainMenu extends javax.swing.JFrame {
         });
 
         btnCreateShift.setText("Create Volunteer Shift");
+        btnCreateShift.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateShiftActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -178,6 +183,13 @@ public class MainMenu extends javax.swing.JFrame {
         ViewResidentReports residentReports = new ViewResidentReports(); 
         residentReports.setVisible(true);
     }//GEN-LAST:event_btnReportsResidentActionPerformed
+
+    private void btnCreateShiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateShiftActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        CreateVolunteerShift shift = new CreateVolunteerShift();
+        shift.setVisible(true);
+    }//GEN-LAST:event_btnCreateShiftActionPerformed
 
     /**
      * @param args the command line arguments
