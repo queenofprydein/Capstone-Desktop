@@ -21,7 +21,7 @@ public class CreateVolunteerShift extends javax.swing.JFrame {
     final String myDBURL = "jdbc:sqlserver://sql5008.site4now.net:1433;DatabaseName=DB_A47087_smgroup;user=DB_A47087_smgroup_admin;password=ftccgroup1";
     private static Connection conn = null;
     private static Statement statement = null;
-    String dateformat = "MM/dd/yyyy hh:mm:ss";
+    String dateformat = "yyyy-mm-dd hh:mm:ss";
     /**
      * Creates new form CreateVolunteerShift
      */
@@ -92,12 +92,14 @@ public class CreateVolunteerShift extends javax.swing.JFrame {
         jrbMalesY.setText("Yes");
 
         bgMales.add(jrbMalesN);
+        jrbMalesN.setSelected(true);
         jrbMalesN.setText("No");
 
         bgAge.add(jrb18);
         jrb18.setText("18");
 
         bgAge.add(jrb13);
+        jrb13.setSelected(true);
         jrb13.setText("13");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -263,8 +265,8 @@ public class CreateVolunteerShift extends javax.swing.JFrame {
         if(Validate() == true)
         {
             
-            java.sql.Date startDate = Date.valueOf(jtxtStart.getText());
-            java.sql.Date endDate = Date.valueOf(jtxtEnd.getText());
+            java.sql.Timestamp startDate = java.sql.Timestamp.valueOf(jtxtStart.getText());
+            java.sql.Timestamp endDate = java.sql.Timestamp.valueOf(jtxtEnd.getText());
             int max = Integer.parseInt(jtxtMax.getText());
             int min = Integer.parseInt(jtxtMin.getText());
             String males = "";
@@ -291,8 +293,8 @@ public class CreateVolunteerShift extends javax.swing.JFrame {
                 
                 PreparedStatement insert = conn.prepareStatement("INSERT INTO [DB_A47087_smgroup].[dbo].[Shift] VALUES (?,?,?,?,?,?,?)");
                 insert.setString(1, jtxtDes.getText());
-                insert.setDate(2, startDate);
-                insert.setDate(3, endDate);
+                insert.setTimestamp(2, startDate);
+                insert.setTimestamp(3, endDate);
                 insert.setInt(4, max);
                 insert.setInt(5, min);
                 insert.setString(6, males);
@@ -322,11 +324,8 @@ public class CreateVolunteerShift extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        String current = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss").format(Calendar.getInstance().getTime());
+        String current = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss").format(Calendar.getInstance().getTime());
         jtxtCurrent.setText(current);
-        
-        jrb18.isSelected();
-        jrbMalesN.isSelected();
     }//GEN-LAST:event_formWindowOpened
 
     /**
