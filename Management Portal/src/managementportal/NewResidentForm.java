@@ -7,9 +7,14 @@ package managementportal;
 
 import java.sql.*;
 import java.text.DateFormat;
+import java.text.Format;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Vector;
 import java.util.logging.*;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 
 
 /**
@@ -50,8 +55,12 @@ public class NewResidentForm extends javax.swing.JFrame {
         grpRace = new javax.swing.ButtonGroup();
         grpEthnicity = new javax.swing.ButtonGroup();
         grpMilitary = new javax.swing.ButtonGroup();
+        grpHomelessStatus = new javax.swing.ButtonGroup();
+        grpLength = new javax.swing.ButtonGroup();
+        grpTimesHomeless = new javax.swing.ButtonGroup();
+        grpHousingStatus = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
-        tbsAllTabs = new javax.swing.JTabbedPane();
+        tabs = new javax.swing.JTabbedPane();
         pnlDemo = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -59,10 +68,7 @@ public class NewResidentForm extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtLastName = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        DateFormat format = new SimpleDateFormat("MM/DD/YYYY");
-        txtDateOfBirth = new javax.swing.JFormattedTextField(format);
         jLabel5 = new javax.swing.JLabel();
-        txtSSN = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         radFirstNameNoSay = new javax.swing.JRadioButton();
@@ -89,6 +95,63 @@ public class NewResidentForm extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         radMilitaryNoSay = new javax.swing.JRadioButton();
         radMilitaryUnknown = new javax.swing.JRadioButton();
+        MaskFormatter dateMask = null;
+        try {
+            // Create a MaskFormatter for accepting phone number, the # symbol accept
+            // only a number. We can also set the empty value with a place holder
+            // character.
+            dateMask = new MaskFormatter("##/##/####");
+            dateMask.setPlaceholderCharacter('_');
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        txtDateOfBirth = new javax.swing.JFormattedTextField(dateMask);
+        MaskFormatter SSNMask = null;
+        try {
+            // Create a MaskFormatter for accepting phone number, the # symbol accept
+            // only a number. We can also set the empty value with a place holder
+            // character.
+            SSNMask = new MaskFormatter("###-##-####");
+            SSNMask.setPlaceholderCharacter('_');
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        txtSSN = new javax.swing.JFormattedTextField(SSNMask);
+        pnlContact = new javax.swing.JPanel();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel17 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jlblPhone = new javax.swing.JLabel();
+        jlblPhoneAlt = new javax.swing.JLabel();
+        jlblEmail = new javax.swing.JLabel();
+        jtxtEmail = new javax.swing.JTextField();
+        MaskFormatter phoneMask = null;
+        try {
+            // Create a MaskFormatter for accepting phone number, the # symbol accept
+            // only a number. We can also set the empty value with a place holder
+            // character.
+            phoneMask = new MaskFormatter("(###) ###-####");
+            phoneMask.setPlaceholderCharacter('_');
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        txtPhone = new javax.swing.JFormattedTextField(phoneMask);
+        txtPhoneAlt = new javax.swing.JFormattedTextField(phoneMask);
+        jPanel3 = new javax.swing.JPanel();
+        jlblEmName = new javax.swing.JLabel();
+        jtxtEmName = new javax.swing.JTextField();
+        jlblAdd = new javax.swing.JLabel();
+        jlblAdd2 = new javax.swing.JLabel();
+        jlblCity = new javax.swing.JLabel();
+        jtxtCity = new javax.swing.JTextField();
+        jtxtZip = new javax.swing.JTextField();
+        jlblZip = new javax.swing.JLabel();
+        jtxtState = new javax.swing.JTextField();
+        jlblState = new javax.swing.JLabel();
+        jlblEmPhone = new javax.swing.JLabel();
+        jtxtAdd2 = new javax.swing.JFormattedTextField();
+        jtxtAdd = new javax.swing.JFormattedTextField();
+        txtEmPhone = new javax.swing.JFormattedTextField(phoneMask);
         pnlDisability = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
@@ -103,34 +166,50 @@ public class NewResidentForm extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         lstInsuranceTypes = new javax.swing.JList<>();
         jLabel16 = new javax.swing.JLabel();
-        txtAdditionalInsuranceTypes = new javax.swing.JTextField();
-        btnAddInsuranceType = new javax.swing.JButton();
-        lblAdditionalInsuranceTypes = new javax.swing.JLabel();
-        pnlContact = new javax.swing.JPanel();
-        jPanel8 = new javax.swing.JPanel();
-        jLabel17 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jtxtPhone = new javax.swing.JTextField();
-        jlblPhone = new javax.swing.JLabel();
-        jlblPhoneAlt = new javax.swing.JLabel();
-        jtxtPhoneAlt = new javax.swing.JTextField();
-        jlblEmail = new javax.swing.JLabel();
-        jtxtEmail = new javax.swing.JTextField();
-        jPanel3 = new javax.swing.JPanel();
-        jlblEmName = new javax.swing.JLabel();
-        jtxtEmName = new javax.swing.JTextField();
-        jlblAdd = new javax.swing.JLabel();
-        jtxtAdd = new javax.swing.JTextField();
-        jtxtAdd2 = new javax.swing.JTextField();
-        jlblAdd2 = new javax.swing.JLabel();
-        jlblCity = new javax.swing.JLabel();
-        jtxtCity = new javax.swing.JTextField();
-        jtxtZip = new javax.swing.JTextField();
-        jlblZip = new javax.swing.JLabel();
-        jtxtState = new javax.swing.JTextField();
-        jlblState = new javax.swing.JLabel();
-        jtxtEmPhone = new javax.swing.JTextField();
-        jlblEmPhone = new javax.swing.JLabel();
+        pnlIncome = new javax.swing.JPanel();
+        jLabel24 = new javax.swing.JLabel();
+        cboHealthInsurance1 = new javax.swing.JComboBox<>();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        pnlMonthlyIncome = new javax.swing.JScrollPane();
+        tblIncome = new javax.swing.JTable();
+        pnlNonCashIncome = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblNonCashIncome = new javax.swing.JTable();
+        jLabel27 = new javax.swing.JLabel();
+        cboHealthInsurance2 = new javax.swing.JComboBox<>();
+        pnlHistory = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        cboHomelessHistory = new javax.swing.JComboBox<>();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        radHomelessStatusNoSay = new javax.swing.JRadioButton();
+        radHomelessStatusUnknown = new javax.swing.JRadioButton();
+        jLabel26 = new javax.swing.JLabel();
+        cboLengthOfStay = new javax.swing.JComboBox<>();
+        cboLengthNoSay = new javax.swing.JRadioButton();
+        radLengthUnknown = new javax.swing.JRadioButton();
+        jLabel29 = new javax.swing.JLabel();
+        txtHomelessStart = new javax.swing.JFormattedTextField(dateMask);
+        jLabel30 = new javax.swing.JLabel();
+        cboTimesHomeless = new javax.swing.JComboBox<>();
+        cboLengthNoSay1 = new javax.swing.JRadioButton();
+        cboLengthNoSay2 = new javax.swing.JRadioButton();
+        jLabel31 = new javax.swing.JLabel();
+        cboHousingStatus = new javax.swing.JComboBox<>();
+        cboLengthNoSay3 = new javax.swing.JRadioButton();
+        cboLengthNoSay4 = new javax.swing.JRadioButton();
+        jLabel32 = new javax.swing.JLabel();
+        MaskFormatter dateTimeMask = null;
+        try {
+            // Create a MaskFormatter for accepting phone number, the # symbol accept
+            // only a number. We can also set the empty value with a place holder
+            // character.
+            dateTimeMask = new MaskFormatter("##/##/#### ##:##:##");
+            dateTimeMask.setPlaceholderCharacter('_');
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        txtCheckInDateTime = new javax.swing.JFormattedTextField(dateTimeMask);
         pnlHMIS = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
@@ -138,13 +217,11 @@ public class NewResidentForm extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
         jtxtLastZip = new javax.swing.JTextField();
         jtxtCOCCode = new javax.swing.JTextField();
         jtxtNCCountServ = new javax.swing.JTextField();
         jtxtCountRes = new javax.swing.JTextField();
         jtxtCityRes = new javax.swing.JTextField();
-        jtxtShelterCat = new javax.swing.JTextField();
         btnNextPage = new javax.swing.JButton();
         btnPrevPage = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
@@ -160,9 +237,14 @@ public class NewResidentForm extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("New Resident Entry");
 
-        tbsAllTabs.addFocusListener(new java.awt.event.FocusAdapter() {
+        tabs.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                tabsStateChanged(evt);
+            }
+        });
+        tabs.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                tbsAllTabsFocusGained(evt);
+                tabsFocusGained(evt);
             }
         });
 
@@ -189,20 +271,8 @@ public class NewResidentForm extends javax.swing.JFrame {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel4.setText("Date of Birth");
 
-        txtDateOfBirth.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtDateOfBirthKeyTyped(evt);
-            }
-        });
-
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel5.setText("SSN");
-
-        txtSSN.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtSSNKeyTyped(evt);
-            }
-        });
 
         jLabel6.setText("Prefers not to say");
 
@@ -227,7 +297,6 @@ public class NewResidentForm extends javax.swing.JFrame {
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel8.setText("Gender");
 
-        cboGender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboGender.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cboGenderItemStateChanged(evt);
@@ -241,7 +310,6 @@ public class NewResidentForm extends javax.swing.JFrame {
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel9.setText("Race");
 
-        cboRace.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboRace.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cboRaceItemStateChanged(evt);
@@ -255,7 +323,6 @@ public class NewResidentForm extends javax.swing.JFrame {
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel10.setText("Ethnicity");
 
-        cboEthnicity.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboEthnicity.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cboEthnicityItemStateChanged(evt);
@@ -266,7 +333,6 @@ public class NewResidentForm extends javax.swing.JFrame {
 
         grpEthnicity.add(radEthnicityUnknown);
 
-        cboMilitary.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboMilitary.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cboMilitaryItemStateChanged(evt);
@@ -278,6 +344,18 @@ public class NewResidentForm extends javax.swing.JFrame {
         grpMilitary.add(radMilitaryNoSay);
 
         grpMilitary.add(radMilitaryUnknown);
+
+        txtDateOfBirth.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDateOfBirthKeyTyped(evt);
+            }
+        });
+
+        txtSSN.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtSSNKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -298,18 +376,18 @@ public class NewResidentForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(cboMilitary, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cboMilitary, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cboRace, 0, 224, Short.MAX_VALUE)
-                            .addComponent(cboEthnicity, 0, 224, Short.MAX_VALUE)
-                            .addComponent(txtDateOfBirth, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
-                            .addComponent(txtSSN, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
-                            .addComponent(cboGender, 0, 224, Short.MAX_VALUE)
-                            .addComponent(txtLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
-                            .addComponent(txtFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 255, Short.MAX_VALUE)
+                            .addComponent(cboRace, 0, 370, Short.MAX_VALUE)
+                            .addComponent(cboEthnicity, 0, 370, Short.MAX_VALUE)
+                            .addComponent(cboGender, 0, 370, Short.MAX_VALUE)
+                            .addComponent(txtLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
+                            .addComponent(txtFirstName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
+                            .addComponent(txtDateOfBirth, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtSSN, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
@@ -352,39 +430,40 @@ public class NewResidentForm extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(jLabel7))
                 .addGap(24, 24, 24)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2))
-                    .addComponent(radFirstNameNoSay)
-                    .addComponent(radFirstNameUnknown))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel2))
+                            .addComponent(radFirstNameNoSay)
+                            .addComponent(radFirstNameUnknown))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel3))
+                            .addComponent(radLastNameNoSay)
+                            .addComponent(radLastNameUnknown))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel5)
+                                .addComponent(txtSSN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(radSSNNoSay)
+                            .addComponent(radSSNUnknown))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(radDateOfBirthNoSay)
+                            .addComponent(radDateOfBirthUnknown)))
+                    .addComponent(txtDateOfBirth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel3))
-                    .addComponent(radLastNameNoSay)
-                    .addComponent(radLastNameUnknown))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtSSN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel5))
-                    .addComponent(radSSNNoSay)
-                    .addComponent(radSSNUnknown))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtDateOfBirth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel4))
-                    .addComponent(radDateOfBirthNoSay)
-                    .addComponent(radDateOfBirthUnknown))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cboGender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
                     .addComponent(radGenderUnknown)
-                    .addComponent(radGenderNoSay))
+                    .addComponent(radGenderNoSay)
+                    .addComponent(cboGender, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -406,7 +485,7 @@ public class NewResidentForm extends javax.swing.JFrame {
                         .addComponent(radMilitaryNoSay)
                         .addComponent(jLabel13))
                     .addComponent(radMilitaryUnknown))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlDemoLayout = new javax.swing.GroupLayout(pnlDemo);
@@ -419,11 +498,231 @@ public class NewResidentForm extends javax.swing.JFrame {
             pnlDemoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDemoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(119, Short.MAX_VALUE))
         );
 
-        tbsAllTabs.addTab("Demographics", pnlDemo);
+        tabs.addTab("Demographics", pnlDemo);
+
+        jLabel17.setText("Any section may be left blank if resident does not know or if they prefer not to say");
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Resident Contact Methods", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
+
+        jlblPhone.setText("Phone");
+
+        jlblPhoneAlt.setText("Alternate Phone");
+
+        jlblEmail.setText("Email");
+
+        jtxtEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtEmailActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jlblPhoneAlt)
+                            .addComponent(jlblPhone))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtPhoneAlt)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jlblEmail)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtxtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlblPhone)
+                    .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlblPhoneAlt)
+                    .addComponent(txtPhoneAlt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtxtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlblEmail))
+                .addContainerGap(88, Short.MAX_VALUE))
+        );
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Emergency Contact Information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
+
+        jlblEmName.setText("Full Name");
+
+        jtxtEmName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtEmNameActionPerformed(evt);
+            }
+        });
+
+        jlblAdd.setText("Address");
+
+        jlblAdd2.setText("Address Ln2");
+
+        jlblCity.setText("City");
+
+        jtxtCity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtCityActionPerformed(evt);
+            }
+        });
+
+        jtxtZip.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtZipActionPerformed(evt);
+            }
+        });
+
+        jlblZip.setText("Zip");
+
+        jtxtState.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtStateActionPerformed(evt);
+            }
+        });
+        jtxtState.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxtStateKeyTyped(evt);
+            }
+        });
+
+        jlblState.setText("State");
+
+        jlblEmPhone.setText("Emergency Phone");
+
+        txtEmPhone.setToolTipText("");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(jlblAdd)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtxtAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(jlblAdd2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtxtAdd2, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(jlblCity)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtxtCity, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(jlblState)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtxtState, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37)
+                        .addComponent(jlblZip)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtxtZip, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(jlblEmPhone)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtEmPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(jlblEmName)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtxtEmName, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(24, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtxtEmName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlblEmName))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlblAdd)
+                    .addComponent(jtxtAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlblAdd2)
+                    .addComponent(jtxtAdd2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtxtCity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlblCity))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtxtZip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlblZip)
+                    .addComponent(jtxtState, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlblState))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlblEmPhone)
+                    .addComponent(txtEmPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(97, 97, 97)
+                        .addComponent(jLabel17))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addComponent(jLabel17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(157, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout pnlContactLayout = new javax.swing.GroupLayout(pnlContact);
+        pnlContact.setLayout(pnlContactLayout);
+        pnlContactLayout.setHorizontalGroup(
+            pnlContactLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlContactLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        pnlContactLayout.setVerticalGroup(
+            pnlContactLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlContactLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(63, Short.MAX_VALUE))
+        );
+
+        tabs.addTab("Contact Information", pnlContact);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Disability Details"));
 
@@ -456,7 +755,7 @@ public class NewResidentForm extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -482,7 +781,7 @@ public class NewResidentForm extends javax.swing.JFrame {
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cboDisablingCondition, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(260, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlDisabilityLayout.setVerticalGroup(
             pnlDisabilityLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -496,7 +795,7 @@ public class NewResidentForm extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        tbsAllTabs.addTab("Disability", pnlDisability);
+        tabs.addTab("Disability", pnlDisability);
 
         jLabel15.setText("Is the resident currently covered by health insurance? ");
 
@@ -520,10 +819,6 @@ public class NewResidentForm extends javax.swing.JFrame {
         jLabel16.setText("Please select all that apply:");
         jLabel16.setToolTipText("");
 
-        btnAddInsuranceType.setText("Add");
-
-        lblAdditionalInsuranceTypes.setText("Please enter any other types that apply:");
-
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -531,16 +826,10 @@ public class NewResidentForm extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel16)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtAdditionalInsuranceTypes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblAdditionalInsuranceTypes)
-                            .addComponent(btnAddInsuranceType))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -549,15 +838,7 @@ public class NewResidentForm extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(lblAdditionalInsuranceTypes)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtAdditionalInsuranceTypes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAddInsuranceType)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -566,15 +847,15 @@ public class NewResidentForm extends javax.swing.JFrame {
         pnlInsuranceLayout.setHorizontalGroup(
             pnlInsuranceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlInsuranceLayout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(jLabel15)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cboHealthInsurance, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(287, Short.MAX_VALUE))
-            .addGroup(pnlInsuranceLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(pnlInsuranceLayout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(jLabel15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cboHealthInsurance, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlInsuranceLayout.setVerticalGroup(
             pnlInsuranceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -588,248 +869,249 @@ public class NewResidentForm extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        tbsAllTabs.addTab("Health Insurance", pnlInsurance);
+        tabs.addTab("Health Insurance", pnlInsurance);
 
-        jLabel17.setText("Any section may be left blank if resident does not know or if they prefer not to say");
+        jLabel24.setText("Is the resident currently receiving monthly income? ");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Resident Contact Methods", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
-
-        jtxtPhone.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtxtPhoneActionPerformed(evt);
+        cboHealthInsurance1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboHealthInsurance1ItemStateChanged(evt);
             }
         });
 
-        jlblPhone.setText("Phone");
+        tblIncome.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        jlblPhoneAlt.setText("Alternate Phone");
+            },
+            new String [] {
+                "Source of Income (Monthly)", "Amount from Source"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true
+            };
 
-        jtxtPhoneAlt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtxtPhoneAltActionPerformed(evt);
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        pnlMonthlyIncome.setViewportView(tblIncome);
+
+        jTabbedPane1.addTab("Monthly Income Sources", pnlMonthlyIncome);
+
+        tblNonCashIncome.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Source of Non-Cash Benefit", "Amount (if applicable)"
+            }
+        ));
+        jScrollPane3.setViewportView(tblNonCashIncome);
+
+        javax.swing.GroupLayout pnlNonCashIncomeLayout = new javax.swing.GroupLayout(pnlNonCashIncome);
+        pnlNonCashIncome.setLayout(pnlNonCashIncomeLayout);
+        pnlNonCashIncomeLayout.setHorizontalGroup(
+            pnlNonCashIncomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
+        );
+        pnlNonCashIncomeLayout.setVerticalGroup(
+            pnlNonCashIncomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Non-Cash Benefit Sources", pnlNonCashIncome);
+
+        jLabel27.setText("Is the resident currently receiving any non-cash benefits?");
+
+        cboHealthInsurance2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboHealthInsurance2ItemStateChanged(evt);
             }
         });
 
-        jlblEmail.setText("Email");
-
-        jtxtEmail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtxtEmailActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlIncomeLayout = new javax.swing.GroupLayout(pnlIncome);
+        pnlIncome.setLayout(pnlIncomeLayout);
+        pnlIncomeLayout.setHorizontalGroup(
+            pnlIncomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlIncomeLayout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addGroup(pnlIncomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlIncomeLayout.createSequentialGroup()
+                        .addGroup(pnlIncomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel27)
+                            .addComponent(jLabel24))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnlIncomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cboHealthInsurance1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboHealthInsurance2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 773, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(63, Short.MAX_VALUE))
+        );
+        pnlIncomeLayout.setVerticalGroup(
+            pnlIncomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlIncomeLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jlblPhoneAlt)
-                    .addComponent(jlblPhone))
+                .addGroup(pnlIncomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel24)
+                    .addComponent(cboHealthInsurance1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jtxtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtxtPhoneAlt, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jlblEmail)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jtxtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlIncomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel27)
+                    .addComponent(cboHealthInsurance2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(72, Short.MAX_VALUE))
+        );
+
+        tabs.addTab("Income", pnlIncome);
+
+        jLabel14.setText("Homeless Status");
+
+        jLabel18.setText("Prefers not to say");
+
+        jLabel25.setText("Doesn't know");
+
+        grpHomelessStatus.add(radHomelessStatusNoSay);
+
+        grpHomelessStatus.add(radHomelessStatusUnknown);
+
+        jLabel26.setText("Length of Stay in Prior Living Situation");
+
+        grpLength.add(cboLengthNoSay);
+
+        grpLength.add(radLengthUnknown);
+
+        jLabel29.setText("Start Date of Homelessness");
+
+        jLabel30.setText("Number of Times Homeless");
+
+        grpTimesHomeless.add(cboLengthNoSay1);
+
+        grpTimesHomeless.add(cboLengthNoSay2);
+
+        jLabel31.setText("Housing Status");
+
+        grpHousingStatus.add(cboLengthNoSay3);
+
+        grpHousingStatus.add(cboLengthNoSay4);
+
+        jLabel32.setText("Check In Date and Time");
+
+        javax.swing.GroupLayout pnlHistoryLayout = new javax.swing.GroupLayout(pnlHistory);
+        pnlHistory.setLayout(pnlHistoryLayout);
+        pnlHistoryLayout.setHorizontalGroup(
+            pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlHistoryLayout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlHistoryLayout.createSequentialGroup()
+                        .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel14)
+                            .addGroup(pnlHistoryLayout.createSequentialGroup()
+                                .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtHomelessStart)
+                                    .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel32)
+                                    .addComponent(txtCheckInDateTime, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(cboHomelessHistory, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(cboLengthOfStay, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel26, javax.swing.GroupLayout.Alignment.LEADING)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlHistoryLayout.createSequentialGroup()
+                                .addComponent(jLabel18)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel25))
+                            .addGroup(pnlHistoryLayout.createSequentialGroup()
+                                .addGap(51, 51, 51)
+                                .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(pnlHistoryLayout.createSequentialGroup()
+                                        .addComponent(cboLengthNoSay3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(cboLengthNoSay4))
+                                    .addGroup(pnlHistoryLayout.createSequentialGroup()
+                                        .addComponent(cboLengthNoSay1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(cboLengthNoSay2))
+                                    .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(pnlHistoryLayout.createSequentialGroup()
+                                            .addComponent(cboLengthNoSay)
+                                            .addGap(76, 76, 76)
+                                            .addComponent(radLengthUnknown))
+                                        .addGroup(pnlHistoryLayout.createSequentialGroup()
+                                            .addComponent(radHomelessStatusNoSay)
+                                            .addGap(76, 76, 76)
+                                            .addComponent(radHomelessStatusUnknown)))))))
+                    .addGroup(pnlHistoryLayout.createSequentialGroup()
+                        .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel31)
+                            .addComponent(cboTimesHomeless, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel30)
+                            .addComponent(cboHousingStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtxtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlblPhone))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlblPhoneAlt)
-                    .addComponent(jtxtPhoneAlt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtxtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlblEmail))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Emergency Contact Information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
-
-        jlblEmName.setText("Full Name");
-
-        jtxtEmName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtxtEmNameActionPerformed(evt);
-            }
-        });
-
-        jlblAdd.setText("Address");
-
-        jtxtAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtxtAddActionPerformed(evt);
-            }
-        });
-
-        jtxtAdd2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtxtAdd2ActionPerformed(evt);
-            }
-        });
-
-        jlblAdd2.setText("Address Ln2");
-
-        jlblCity.setText("City");
-
-        jtxtCity.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtxtCityActionPerformed(evt);
-            }
-        });
-
-        jtxtZip.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtxtZipActionPerformed(evt);
-            }
-        });
-
-        jlblZip.setText("Zip");
-
-        jtxtState.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtxtStateActionPerformed(evt);
-            }
-        });
-
-        jlblState.setText("State");
-
-        jtxtEmPhone.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtxtEmPhoneActionPerformed(evt);
-            }
-        });
-
-        jlblEmPhone.setText("Emergency Phone");
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jlblAdd)
+        pnlHistoryLayout.setVerticalGroup(
+            pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlHistoryLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pnlHistoryLayout.createSequentialGroup()
+                        .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel18)
+                            .addComponent(jLabel25))
+                        .addGap(52, 52, 52)
+                        .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(radHomelessStatusNoSay)
+                            .addComponent(radHomelessStatusUnknown))
+                        .addGap(44, 44, 44)
+                        .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cboLengthNoSay)
+                            .addComponent(radLengthUnknown)))
+                    .addGroup(pnlHistoryLayout.createSequentialGroup()
+                        .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlHistoryLayout.createSequentialGroup()
+                                .addComponent(jLabel29)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtHomelessStart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlHistoryLayout.createSequentialGroup()
+                                .addComponent(jLabel32)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtCheckInDateTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtxtAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jlblAdd2)
+                        .addComponent(cboHomelessHistory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabel26)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtxtAdd2, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jlblCity)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtxtCity, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jlblState)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtxtState, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(43, 43, 43)
-                        .addComponent(jlblZip)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtxtZip, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jlblEmPhone)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtxtEmPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jlblEmName)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtxtEmName, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(24, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtxtEmName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlblEmName))
+                        .addComponent(cboLengthOfStay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel30)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtxtAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlblAdd))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtxtAdd2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlblAdd2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtxtCity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlblCity))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jtxtState, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jlblState))
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jtxtZip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jlblZip)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlblEmPhone)
-                    .addComponent(jtxtEmPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cboTimesHomeless, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboLengthNoSay1)
+                    .addComponent(cboLengthNoSay2))
+                .addGap(18, 18, 18)
+                .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pnlHistoryLayout.createSequentialGroup()
+                        .addComponent(jLabel31)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cboHousingStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cboLengthNoSay3)
+                    .addComponent(cboLengthNoSay4))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGap(97, 97, 97)
-                        .addComponent(jLabel17)))
-                .addContainerGap(114, Short.MAX_VALUE))
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addComponent(jLabel17)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(163, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout pnlContactLayout = new javax.swing.GroupLayout(pnlContact);
-        pnlContact.setLayout(pnlContactLayout);
-        pnlContactLayout.setHorizontalGroup(
-            pnlContactLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlContactLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        pnlContactLayout.setVerticalGroup(
-            pnlContactLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlContactLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        tbsAllTabs.addTab("Contact Information", pnlContact);
+        tabs.addTab("History & Check In", pnlHistory);
 
         jLabel19.setText("Last Zip");
 
@@ -837,11 +1119,9 @@ public class NewResidentForm extends javax.swing.JFrame {
 
         jLabel21.setText("NC County of Service");
 
-        jLabel22.setText("County of Resident");
+        jLabel22.setText("County of Residence");
 
-        jLabel23.setText("City of Resident");
-
-        jLabel24.setText("Shelter Category");
+        jLabel23.setText("City of Residence");
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -849,23 +1129,20 @@ public class NewResidentForm extends javax.swing.JFrame {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel24)
-                    .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel20)
-                        .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.TRAILING)))
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel20)
+                    .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jtxtLastZip, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtxtCOCCode, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtxtNCCountServ, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtxtCountRes, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtxtCityRes, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtxtShelterCat, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(421, Short.MAX_VALUE))
+                    .addComponent(jtxtCityRes, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(490, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -890,11 +1167,7 @@ public class NewResidentForm extends javax.swing.JFrame {
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel23)
                     .addComponent(jtxtCityRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel24)
-                    .addComponent(jtxtShelterCat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(267, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlHMISLayout = new javax.swing.GroupLayout(pnlHMIS);
@@ -914,7 +1187,7 @@ public class NewResidentForm extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        tbsAllTabs.addTab("HMIS Info", pnlHMIS);
+        tabs.addTab("HMIS Info", pnlHMIS);
 
         btnNextPage.setText("Next >");
         btnNextPage.addActionListener(new java.awt.event.ActionListener() {
@@ -945,22 +1218,20 @@ public class NewResidentForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(224, 224, 224)
+                .addComponent(jLabel1)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tabs)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(tbsAllTabs))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(224, 224, 224)
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(btnCancel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnPrevPage)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnNextPage)
-                        .addGap(235, 235, 235)
+                        .addGap(148, 148, 148)
                         .addComponent(btnSaveResident)))
                 .addContainerGap())
         );
@@ -968,69 +1239,25 @@ public class NewResidentForm extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tabs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnCancel)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(tbsAllTabs, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btnNextPage)
-                                .addComponent(btnSaveResident))
-                            .addComponent(btnPrevPage))))
-                .addContainerGap(58, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnNextPage)
+                        .addComponent(btnSaveResident))
+                    .addComponent(btnPrevPage))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     
-    private void jtxtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtAddActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtxtAddActionPerformed
-
-    private void jtxtAdd2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtAdd2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtxtAdd2ActionPerformed
-
-    private void jtxtCityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtCityActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtxtCityActionPerformed
-
-    private void jtxtStateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtStateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtxtStateActionPerformed
-
-    private void jtxtZipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtZipActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtxtZipActionPerformed
-
-    private void jtxtPhoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtPhoneActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtxtPhoneActionPerformed
-
-    private void jtxtPhoneAltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtPhoneAltActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtxtPhoneAltActionPerformed
-
-    private void jtxtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtEmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtxtEmailActionPerformed
-
-    private void jtxtEmPhoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtEmPhoneActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtxtEmPhoneActionPerformed
-
-    private void jtxtEmNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtEmNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtxtEmNameActionPerformed
-
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        txtAdditionalInsuranceTypes.setVisible(false);
-        btnAddInsuranceType.setVisible(false);
-        lblAdditionalInsuranceTypes.setVisible(false);
+        String sql = "";
         
         // Declare arrays for options from database to populate selection controls on the form
         String result = ""; 
@@ -1050,7 +1277,7 @@ public class NewResidentForm extends javax.swing.JFrame {
             cboGender.removeAllItems();
                         
             // populate Gender combo box
-            String sql = "select Gender_Description from Gender";
+            sql = "select Gender_Description from Gender";
 
             custResultsOfQuery = statement.executeQuery(sql); //Remember to tell them its Execute Query like Fig 28.23
 
@@ -1237,6 +1464,38 @@ public class NewResidentForm extends javax.swing.JFrame {
                 }
             }
 
+            // **************************************************
+            // *******   populate Monthly Income Table    *******
+            // **************************************************
+            // clear result set 
+            Vector<Object> data = new Vector<Object>();
+            Vector<String> columnNames = new Vector<String>();
+            custResultsOfQuery = null;
+                        
+            // populate Gender combo box
+            sql = "SELECT Source_Income_Name FROM [DB_A47087_smgroup].[dbo].[Visit_Source_Of_Income_Monthly_Option]";
+
+            custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
+            
+            columnNames.addElement("Source of Income (Monthly)");
+            columnNames.addElement("Amount from Source");
+            
+            while(custResultsOfQuery.next()) {
+                result = custResultsOfQuery.getObject(1).toString();
+                data.add(result);
+                
+            }
+            while (custResultsOfQuery.next()) 
+            {
+                Vector<Object> vector = new Vector<Object>();
+                vector.addElement(custResultsOfQuery.getObject(1));
+                vector.addElement(0);
+                data.add(vector);
+            }
+            
+            DefaultTableModel incomeModel = new DefaultTableModel(data,columnNames);
+            tblIncome.setModel(incomeModel);
+            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "" + "Error Loading Data", JOptionPane.INFORMATION_MESSAGE);
             
@@ -1247,37 +1506,104 @@ public class NewResidentForm extends javax.swing.JFrame {
                 Logger.getLogger(ManagementPortal.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
-        
     }//GEN-LAST:event_formWindowOpened
 
-    private void txtFirstNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFirstNameKeyTyped
-        // disable the radio buttons if there's text entered into the text field 
-        if (txtFirstName.getText().equals("")){
-            radFirstNameUnknown.setEnabled(true);
-            radFirstNameNoSay.setEnabled(true);
-        } else {
-            grpFirstName.clearSelection();
-            radFirstNameUnknown.setEnabled(false);
-            radFirstNameNoSay.setEnabled(false);
+    
+    private void btnNextPageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextPageActionPerformed
+        //move to the next panel
+        tabs.setSelectedIndex(tabs.getSelectedIndex()+1);
+        if (tabs.getSelectedIndex() == tabs.getTabCount()-1) {
+            btnNextPage.setEnabled(false);
         }
         
-    }//GEN-LAST:event_txtFirstNameKeyTyped
-
-    private void txtLastNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLastNameKeyTyped
-        // disable the radio buttons if there's text entered into the text field 
-        if (txtLastName.getText().equals("")){
-            radLastNameUnknown.setEnabled(true);
-            radLastNameNoSay.setEnabled(true);
-        } else {
-            grpLastName.clearSelection();
-            radLastNameUnknown.setEnabled(false);
-            radLastNameNoSay.setEnabled(false);
+        if (!btnPrevPage.isEnabled()) { 
+            btnPrevPage.setEnabled(true);
         }
-    }//GEN-LAST:event_txtLastNameKeyTyped
+    }//GEN-LAST:event_btnNextPageActionPerformed
+
+    private void btnPrevPageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevPageActionPerformed
+        // move to the previous panel 
+        tabs.setSelectedIndex(tabs.getSelectedIndex()-1);
+        if (tabs.getSelectedIndex() == 0) {
+            btnPrevPage.setEnabled(false);
+        }
+        
+        if (!btnNextPage.isEnabled()) { 
+            btnNextPage.setEnabled(true);
+        }        
+    }//GEN-LAST:event_btnPrevPageActionPerformed
+
+    private void btnSaveResidentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveResidentActionPerformed
+        saveResident();
+        // saveVisit();
+    }//GEN-LAST:event_btnSaveResidentActionPerformed
+
+    private void tabsFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tabsFocusGained
+        if (tabs.getSelectedIndex() == 0) {
+            btnPrevPage.setEnabled(false);
+        } else {
+            btnPrevPage.setEnabled(true);
+        }
+
+        if (tabs.getSelectedIndex() == tabs.getTabCount()-1) {
+            btnNextPage.setEnabled(false);
+        } else {
+            btnNextPage.setEnabled(true);
+        }
+    }//GEN-LAST:event_tabsFocusGained
+
+    private void cboDisablingConditionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboDisablingConditionItemStateChanged
+        // disable the list box if the combo box is not set to "Yes"
+        if (cboDisablingCondition.getItemCount() > 0){
+            if (cboDisablingCondition.getSelectedItem().equals("Yes")){
+                lstDisabilityTypes.setEnabled(true);
+            } else {
+                lstDisabilityTypes.setEnabled(false);
+                lstDisabilityTypes.clearSelection();
+            }
+        }
+    }//GEN-LAST:event_cboDisablingConditionItemStateChanged
+
+    private void cboHealthInsuranceItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboHealthInsuranceItemStateChanged
+        // disable the list box if the combo box is not set to "Yes"
+        if (cboHealthInsurance.getItemCount() > 0){
+            if (cboHealthInsurance.getSelectedItem().equals("Yes")){
+                lstInsuranceTypes.setEnabled(true);
+            } else {
+                lstInsuranceTypes.setEnabled(false);
+                lstInsuranceTypes.clearSelection();
+            }
+        }
+    }//GEN-LAST:event_cboHealthInsuranceItemStateChanged
+
+    private void jtxtStateKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtStateKeyTyped
+        if (jtxtState.getText().length() > 2) {
+            jtxtState.setText(jtxtState.getText().length() < 2 ? jtxtState.getText() : jtxtState.getText().substring(0, 2));
+        }
+    }//GEN-LAST:event_jtxtStateKeyTyped
+
+    private void jtxtStateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtStateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtStateActionPerformed
+
+    private void jtxtZipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtZipActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtZipActionPerformed
+
+    private void jtxtCityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtCityActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtCityActionPerformed
+
+    private void jtxtEmNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtEmNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtEmNameActionPerformed
+
+    private void jtxtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtEmailActionPerformed
 
     private void txtSSNKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSSNKeyTyped
-        // disable the radio buttons if there's text entered into the text field 
+        // disable the radio buttons if there's text entered into the text field
         if (txtSSN.getText().equals("")){
             radSSNUnknown.setEnabled(true);
             radSSNNoSay.setEnabled(true);
@@ -1289,7 +1615,7 @@ public class NewResidentForm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtSSNKeyTyped
 
     private void txtDateOfBirthKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDateOfBirthKeyTyped
-        // disable the radio buttons if there's text entered into the text field 
+        // disable the radio buttons if there's text entered into the text field
         if (txtDateOfBirth.getText().equals("")){
             radDateOfBirthUnknown.setEnabled(true);
             radDateOfBirthNoSay.setEnabled(true);
@@ -1300,36 +1626,22 @@ public class NewResidentForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtDateOfBirthKeyTyped
 
-    private void cboGenderItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboGenderItemStateChanged
-        // disable the radio buttons if the combo box has a value selected 
-        if (cboGender.getItemCount() > 0){
-            if (cboGender.getSelectedItem().equals("")){
-                radGenderUnknown.setEnabled(true);
-                radGenderNoSay.setEnabled(true);
+    private void cboMilitaryItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboMilitaryItemStateChanged
+        // disable the radio buttons if the combo box has a value selected
+        if (cboMilitary.getItemCount() > 0){
+            if (cboMilitary.getSelectedItem().equals("")){
+                radMilitaryUnknown.setEnabled(true);
+                radMilitaryNoSay.setEnabled(true);
             } else {
-                grpGender.clearSelection();
-                radGenderUnknown.setEnabled(false);
-                radGenderNoSay.setEnabled(false);
+                grpMilitary.clearSelection();
+                radMilitaryUnknown.setEnabled(false);
+                radMilitaryNoSay.setEnabled(false);
             }
         }
-    }//GEN-LAST:event_cboGenderItemStateChanged
-
-    private void cboRaceItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboRaceItemStateChanged
-        // disable the radio buttons if the combo box has a value selected 
-        if (cboRace.getItemCount() > 0){
-            if (cboRace.getSelectedItem().equals("")){
-                radRaceUnknown.setEnabled(true);
-                radRaceNoSay.setEnabled(true);
-            } else {
-                grpRace.clearSelection();
-                radRaceUnknown.setEnabled(false);
-                radRaceNoSay.setEnabled(false);
-            }
-        }
-    }//GEN-LAST:event_cboRaceItemStateChanged
+    }//GEN-LAST:event_cboMilitaryItemStateChanged
 
     private void cboEthnicityItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboEthnicityItemStateChanged
-        // disable the radio buttons if the combo box has a value selected 
+        // disable the radio buttons if the combo box has a value selected
         if (cboEthnicity.getItemCount() > 0){
             if (cboEthnicity.getSelectedItem().equals("")){
                 radEthnicityUnknown.setEnabled(true);
@@ -1342,85 +1654,205 @@ public class NewResidentForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cboEthnicityItemStateChanged
 
-    private void cboDisablingConditionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboDisablingConditionItemStateChanged
-        // disable the list box if the combo box is not set to "Yes" 
-        if (cboDisablingCondition.getItemCount() > 0){
-            if (cboDisablingCondition.getSelectedItem().equals("Yes")){
-                lstDisabilityTypes.setEnabled(true);
+    private void cboRaceItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboRaceItemStateChanged
+        // disable the radio buttons if the combo box has a value selected
+        if (cboRace.getItemCount() > 0){
+            if (cboRace.getSelectedItem().equals("")){
+                radRaceUnknown.setEnabled(true);
+                radRaceNoSay.setEnabled(true);
             } else {
-                lstDisabilityTypes.setEnabled(false);
-                lstDisabilityTypes.clearSelection();
+                grpRace.clearSelection();
+                radRaceUnknown.setEnabled(false);
+                radRaceNoSay.setEnabled(false);
             }
         }
-    }//GEN-LAST:event_cboDisablingConditionItemStateChanged
+    }//GEN-LAST:event_cboRaceItemStateChanged
 
-    private void cboHealthInsuranceItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboHealthInsuranceItemStateChanged
-        // disable the list box if the combo box is not set to "Yes" 
-        if (cboHealthInsurance.getItemCount() > 0){
-            if (cboHealthInsurance.getSelectedItem().equals("Yes")){
-                lstInsuranceTypes.setEnabled(true);
+    private void cboGenderItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboGenderItemStateChanged
+        // disable the radio buttons if the combo box has a value selected
+        if (cboGender.getItemCount() > 0){
+            if (cboGender.getSelectedItem().equals("")){
+                radGenderUnknown.setEnabled(true);
+                radGenderNoSay.setEnabled(true);
             } else {
-                lstInsuranceTypes.setEnabled(false);
-                lstInsuranceTypes.clearSelection();
+                grpGender.clearSelection();
+                radGenderUnknown.setEnabled(false);
+                radGenderNoSay.setEnabled(false);
             }
         }
-    }//GEN-LAST:event_cboHealthInsuranceItemStateChanged
+    }//GEN-LAST:event_cboGenderItemStateChanged
 
-    private void tbsAllTabsFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tbsAllTabsFocusGained
+    private void txtLastNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLastNameKeyTyped
+        // disable the radio buttons if there's text entered into the text field
+        if (txtLastName.getText().equals("")){
+            radLastNameUnknown.setEnabled(true);
+            radLastNameNoSay.setEnabled(true);
+        } else {
+            grpLastName.clearSelection();
+            radLastNameUnknown.setEnabled(false);
+            radLastNameNoSay.setEnabled(false);
+        }
+    }//GEN-LAST:event_txtLastNameKeyTyped
+
+    private void txtFirstNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFirstNameKeyTyped
+        // disable the radio buttons if there's text entered into the text field
+        if (txtFirstName.getText().equals("")){
+            radFirstNameUnknown.setEnabled(true);
+            radFirstNameNoSay.setEnabled(true);
+        } else {
+            grpFirstName.clearSelection();
+            radFirstNameUnknown.setEnabled(false);
+            radFirstNameNoSay.setEnabled(false);
+        }
+
+    }//GEN-LAST:event_txtFirstNameKeyTyped
+
+    private void cboHealthInsurance1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboHealthInsurance1ItemStateChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_tbsAllTabsFocusGained
+    }//GEN-LAST:event_cboHealthInsurance1ItemStateChanged
 
-    private void btnNextPageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextPageActionPerformed
-        //move to the next panel
-        tbsAllTabs.setSelectedIndex(tbsAllTabs.getSelectedIndex()+1);
-        if (tbsAllTabs.getSelectedIndex() == tbsAllTabs.getTabCount()-1) {
-            btnNextPage.setEnabled(false);
-        }
-        
-        if (!btnPrevPage.isEnabled()) { 
+    private void cboHealthInsurance2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboHealthInsurance2ItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboHealthInsurance2ItemStateChanged
+
+    private void tabsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabsStateChanged
+        if (tabs.getSelectedIndex() == 0) {
+            btnPrevPage.setEnabled(false);
+        } else {
             btnPrevPage.setEnabled(true);
         }
-    }//GEN-LAST:event_btnNextPageActionPerformed
 
-    private void btnPrevPageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevPageActionPerformed
-        // move to the previous panel 
-        tbsAllTabs.setSelectedIndex(tbsAllTabs.getSelectedIndex()-1);
-        if (tbsAllTabs.getSelectedIndex() == 0) {
-            btnPrevPage.setEnabled(false);
-        }
-        
-        if (!btnNextPage.isEnabled()) { 
+        if (tabs.getSelectedIndex() == tabs.getTabCount()-1) {
+            btnNextPage.setEnabled(false);
+        } else {
             btnNextPage.setEnabled(true);
-        }        
-    }//GEN-LAST:event_btnPrevPageActionPerformed
+        }
+    }//GEN-LAST:event_tabsStateChanged
+  
+    private String getGenderLookupValue(String g) {
+        String gender = ""; 
+        String sql = ""; 
+        
+        try {
+            conn = DriverManager.getConnection(myDBURL);
+            statement = conn.createStatement();
+            
+            //create result set for query results 
+            ResultSet custResultsOfQuery = null;            
+            
+            // populate Gender combo box
+            
+            sql = "select Gender from Gender where Gender_Description = '" + g + "';";
+            //JOptionPane.showMessageDialog(null, "SQL Sent: " + sql, "SQL", JOptionPane.INFORMATION_MESSAGE);
+            custResultsOfQuery = statement.executeQuery(sql); 
+            custResultsOfQuery.next();
+            gender = custResultsOfQuery.getObject(1).toString();
+            
+            
+        } catch (SQLException ex) {
+            gender = ex.getMessage();
+        }
+        return gender;
+    }
+       
+    private String getRaceLookupValue(String r) {
+        String race; 
+        String sql; 
 
-    private void btnSaveResidentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveResidentActionPerformed
+        try {
+            conn = DriverManager.getConnection(myDBURL);
+            statement = conn.createStatement();
+
+            //create result set for query results 
+            ResultSet custResultsOfQuery = null;            
+
+            // populate Gender combo box
+            sql = "select Race_Name from Resident_Race where Race_Description = '" + r + "'";
+            custResultsOfQuery = statement.executeQuery(sql); //Remember to tell them its Execute Query like Fig 28.23
+            custResultsOfQuery.next();
+            race = custResultsOfQuery.getObject(1).toString();
+            JOptionPane.showMessageDialog(null, "SQL Sent: " + sql + "/nRace retrieved: " + race, "SQL", JOptionPane.INFORMATION_MESSAGE);
+        } catch (SQLException ex) {
+            race = ex.getMessage();
+        }
+        return race;
+    }
+        
+    private String getEthnicityLookupValue(String eth) {
+        String ethnicity = ""; 
+        String sql = ""; 
+        
+        try {
+            conn = DriverManager.getConnection(myDBURL);
+            statement = conn.createStatement();
+            
+            //create result set for query results 
+            ResultSet custResultsOfQuery = null;            
+            
+            // populate Gender combo box
+            sql = "select Ethnicity_Name from Resident_Ethnicity where Ethnicity_Description = '" + eth + "'";
+
+            custResultsOfQuery = statement.executeQuery(sql); //Remember to tell them its Execute Query like Fig 28.23
+            custResultsOfQuery.next();
+            ethnicity = custResultsOfQuery.getObject(1).toString();
+            
+        } catch (SQLException ex) {
+            ethnicity = ex.getMessage();
+        }
+        return ethnicity;
+    }
+        
+    private String getMilitaryLookupValue(String mil) {
+        String military = ""; 
+        String sql = ""; 
+        
+        try {
+            conn = DriverManager.getConnection(myDBURL);
+            statement = conn.createStatement();
+            
+            //create result set for query results 
+            ResultSet custResultsOfQuery = null;            
+            
+            // populate Gender combo box
+            sql = "select US_Military_Veteran_Name from Resident_US_Military_Veteran_Status where US_Military_Description = '" + mil + "'";
+
+            custResultsOfQuery = statement.executeQuery(sql); //Remember to tell them its Execute Query like Fig 28.23
+            custResultsOfQuery.next();
+            military = custResultsOfQuery.getObject(1).toString();
+            
+        } catch (SQLException ex) {
+            military = ex.getMessage();
+        }
+        return military;
+    }    
+    
+    private void saveResident(){
         // Check for valid resident information
         String fName = "";
         Boolean fNameError = false; 
         String lName = ""; 
         Boolean lNameError = false; 
-        String add = jtxtAdd.getText();  
-        String add2 = jtxtAdd2.getText(); 
-        String c = jtxtCity.getText(); 
-        String st = jtxtState.getText(); 
-        String zp = jtxtZip.getText(); 
-        String phne = jtxtPhone.getText();
-        String phneAlt = jtxtPhoneAlt.getText();  
-        String email = jtxtEmail.getText(); 
-        String bDate = txtDateOfBirth.getText(); 
+        String add = jtxtAdd.getText().trim();  
+        String add2 = jtxtAdd2.getText().trim(); 
+        String c = jtxtCity.getText().trim(); 
+        String st = jtxtState.getText().trim(); 
+        String zp = jtxtZip.getText().trim(); 
+        String phne = txtPhone.getText().trim();
+        String phneAlt = txtPhoneAlt.getText().trim();  
+        String email = jtxtEmail.getText().trim(); 
+        String bDate = txtDateOfBirth.getText().trim(); 
         Boolean bDateError = false; 
-        String ssn = txtSSN.getText(); 
+        String ssn = txtSSN.getText().trim(); 
         Boolean ssnError = false; 
-        String gen = cboGender.getSelectedItem().toString(); 
+        String gen = cboGender.getSelectedItem().toString().trim(); 
         Boolean genError = false; 
-        String emergencyP = jtxtEmPhone.getText(); 
-        String emergencyN = jtxtEmName.getText(); 
-        String vet = cboMilitary.getSelectedItem().toString(); 
+        String emergencyP = txtEmPhone.getText().trim(); 
+        String emergencyN = jtxtEmName.getText().trim(); 
+        String vet = cboMilitary.getSelectedItem().toString().trim(); 
         Boolean vetError = false; 
-        String r = cboRace.getSelectedItem().toString();
+        String r = cboRace.getSelectedItem().toString().trim();
         Boolean rError = false; 
-        String eth = cboEthnicity.getSelectedItem().toString(); 
+        String eth = cboEthnicity.getSelectedItem().toString().trim(); 
         Boolean ethError = false; 
         
         //get first name from form (no lookup table needed)
@@ -1428,10 +1860,10 @@ public class NewResidentForm extends javax.swing.JFrame {
             fName = "Client refused";
         } else if (radFirstNameUnknown.isSelected()) {
             fName = "Client doesn't know";
-        } else if (txtFirstName.getText().isEmpty()) {
+        } else if (txtFirstName.getText().trim().isEmpty()) {
             fNameError = true; 
         } else {
-            fName = txtFirstName.getText();
+            fName = txtFirstName.getText().trim();
         }
         
         //get last name from form (no lookup table needed)
@@ -1439,88 +1871,131 @@ public class NewResidentForm extends javax.swing.JFrame {
             lName = "Client refused";
         } else if (radLastNameUnknown.isSelected()) {
             lName = "Client doesn't know";
-        } else if (txtLastName.getText().isEmpty()) {
+        } else if (txtLastName.getText().trim().isEmpty()) {
             lNameError = true; 
         } else {
-            lName = txtLastName.getText();
+            lName = txtLastName.getText().trim();
         }
-        
         
         //get birth date from form (no lookup table needed)
         if (radDateOfBirthNoSay.isSelected()) {
-            bDate = "Client refused";
+            bDate = "01/01/1901";
         } else if (radDateOfBirthUnknown.isSelected()) {
-            bDate = "Client doesn't know";
-        } else if (txtDateOfBirth.getText().isEmpty()) {
+            bDate = "01/01/1900";
+        } else if (txtDateOfBirth.getText().trim().isEmpty()) {
             bDateError = true; 
         } else {
-            bDate = txtLastName.getText();
+            bDate = txtDateOfBirth.getText().trim();
         }
         
         //get social from form (no lookup table needed)
         if (radSSNNoSay.isSelected()) {
-            ssn = "Client refused";
+            ssn = "1";
         } else if (radSSNUnknown.isSelected()) {
-            ssn = "Client doesn't know";
-        } else if (txtSSN.getText().isEmpty()) {
+            ssn = "0";
+        } else if (txtSSN.getText().trim().isEmpty()) {
             ssnError = true; 
         } else {
-            ssn = txtSSN.getText();
+            ssn = txtSSN.getText().trim();
         }
         
         //get gender from form (get lookup value) 
         if (radGenderNoSay.isSelected()) {
-            gen = "Client refused";
-        } else if (radLastNameUnknown.isSelected()) {
-            gen = "Client doesn't know";
-        } else if (txtLastName.getText().isEmpty()) {
+            gen = getGenderLookupValue("Client refused");
+        } else if (radGenderUnknown.isSelected()) {
+            gen = getGenderLookupValue("Client doesn''t know");
+        } else if (cboGender.getSelectedItem().toString().equals("")) {
             genError = true; 
         } else {
-            gen = cboGender.getSelectedItem().toString();
+            //JOptionPane.showMessageDialog(null, "Gender: " + cboGender.getSelectedItem(), "Gender Info", JOptionPane.INFORMATION_MESSAGE);
+            gen = getGenderLookupValue(cboGender.getSelectedItem().toString());
+            //JOptionPane.showMessageDialog(null, "Gender Lookup: " + gen, "Gender Info", JOptionPane.INFORMATION_MESSAGE);
         }
         
         //get military status from form (get lookup value) 
         if (radMilitaryNoSay.isSelected()) {
-            vet = "Client refused";
+            vet = getMilitaryLookupValue("Client refused");
         } else if (radMilitaryUnknown.isSelected()) {
-            vet = "Client doesn't know";
+            vet = getMilitaryLookupValue("Client doesn''t know");
         } else if (cboMilitary.getSelectedItem().toString().equals("")) {
             vetError = true; 
         } else {
-            vet = cboMilitary.getSelectedItem().toString();
+            vet = getMilitaryLookupValue(cboMilitary.getSelectedItem().toString());
         }
         
         //get race from form (get lookup value) 
         if (radRaceNoSay.isSelected()) {
-            r = "Client refused";
+            r = getRaceLookupValue("Client refused");
         } else if (radRaceUnknown.isSelected()) {
-            r = "Client doesn't know";
+            r = getRaceLookupValue("Client doesn''t know");
         } else if (cboRace.getSelectedItem().toString().equals("")) {
             rError = true; 
         } else {
-            r = cboRace.getSelectedItem().toString();
+            r = getRaceLookupValue(cboRace.getSelectedItem().toString());
         }
         
         //get ethnicity from form
         if (radEthnicityNoSay.isSelected()) {
-            eth = "Client refused";
+            eth = getEthnicityLookupValue("Client refused");
         } else if (radEthnicityUnknown.isSelected()) {
-            eth = "Client doesn't know";
+            eth = getEthnicityLookupValue("Client doesn''t know");
         } else if (cboEthnicity.getSelectedItem().toString().equals("")) {
             ethError = true; 
         } else {
-            eth = cboEthnicity.getSelectedItem().toString();
+            eth = getEthnicityLookupValue(cboEthnicity.getSelectedItem().toString());
+        }
+        
+        // cleanse phone number 
+        if (phne.equals("(___) ___-____")) {
+            phne = "";
+        }
+        // cleanse phone number - alternate
+        if (phneAlt.equals("(___) ___-____")) {
+            phneAlt = "";
+        }
+        // cleanse emergency contact phone number 
+        if (emergencyP.equals("(___) ___-____")) {
+            emergencyP = "";
+        }
+        // cleanse social security number
+        if (ssn.equals("___-__-____")) {
+            ssn = "";
+        }
+        // cleanse date of birth
+        if (bDate.equals("__/__/____")) {
+            bDate = "";
         }
         
         
         try {
             conn = DriverManager.getConnection(myDBURL);
             statement = conn.createStatement();
+            String values = "Sending SQL with values: "; 
+            values += "\nFirst Name: " + fName; 
+            values += "\nLast Name: " + lName; 
+            values += "\nAddress: " + add; 
+            values += "\nAddress Line 2: " + add2; 
+            values += "\nCity: " + c; 
+            values += "\nState: " + st; 
+            values += "\nZip: " + zp; 
+            values += "\nPhone: " + phne; 
+            values += "\nPhone Alt: " + phneAlt; 
+            values += "\nEmail: " + email; 
+            values += "\nBirth Date: " + bDate; 
+            values += "\nSocial: " + ssn; 
+            values += "\nGender: " + gen; 
+            values += "\nEmergency Phone: " + emergencyP; 
+            values += "\nEmergency Name: " + emergencyN; 
+            values += "\nVeteran Status: " + vet; 
+            values += "\nRace: " + r; 
+            values += "\nEthnicity: " + eth;
+            
+            JOptionPane.showMessageDialog(null, values, "Values", JOptionPane.INFORMATION_MESSAGE);
             
             Resident newRes = new Resident();
             
+            newRes.AddNewResident(conn,statement,fName,lName,add,add2,c,st,zp,phne,phneAlt,email,bDate,ssn,gen,emergencyP,emergencyN,vet,r,eth);
             
-            newRes.AddNewResident(conn, statement, fName, lName, add, add2, c, st, zp, phne, phneAlt,  email,  bDate,  ssn,  gen, emergencyP, emergencyN, vet, r,  eth);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "" + "Error Loading Data", JOptionPane.INFORMATION_MESSAGE);
             
@@ -1531,26 +2006,192 @@ public class NewResidentForm extends javax.swing.JFrame {
                 Logger.getLogger(ManagementPortal.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+    
+    /*
+    private void saveVisit(){
+        // Check for valid visit information
+        String date_CheckIn;        
+        String refer_other_org;     
+        String relationship_head = "SELF";  
+        String disability_con;      
+        String disabilityType;      
+        String disability_longT;    
+        String disability_dep;      
+        String recieve_disab;       
+        String insurance_con;       
+        String insuranceType;       
+        String homeless_history;    
+        String length_stay_prior;   
+        String homeless_start;      
+        int numOfTimes_homeless;    
+        String house_status;        
+        String last_zip;            
+        String coc_code;            
+        String NC_county_serv;      
+        String residentCounty;      
+        String residentCity;        
+        String shelter_cat;         
+        String recieving_income;    
+        String source_income;       
+        String source_nonIncome_name;
+        String form_sharingPlan;        
+        
+        //get first name from form (no lookup table needed)
+        if (radFirstNameNoSay.isSelected()) {
+            fName = "Client refused";
+        } else if (radFirstNameUnknown.isSelected()) {
+            fName = "Client doesn't know";
+        } else if (txtFirstName.getText().trim().isEmpty()) {
+            fNameError = true; 
+        } else {
+            fName = txtFirstName.getText().trim();
+        }
+        
+        //get last name from form (no lookup table needed)
+        if (radLastNameNoSay.isSelected()) {
+            lName = "Client refused";
+        } else if (radLastNameUnknown.isSelected()) {
+            lName = "Client doesn't know";
+        } else if (txtLastName.getText().trim().isEmpty()) {
+            lNameError = true; 
+        } else {
+            lName = txtLastName.getText().trim();
+        }
+        
+        //get birth date from form (no lookup table needed)
+        if (radDateOfBirthNoSay.isSelected()) {
+            bDate = "01/01/1901";
+        } else if (radDateOfBirthUnknown.isSelected()) {
+            bDate = "01/01/1900";
+        } else if (txtDateOfBirth.getText().trim().isEmpty()) {
+            bDateError = true; 
+        } else {
+            bDate = txtDateOfBirth.getText().trim();
+        }
+        
+        //get social from form (no lookup table needed)
+        if (radSSNNoSay.isSelected()) {
+            ssn = "1";
+        } else if (radSSNUnknown.isSelected()) {
+            ssn = "0";
+        } else if (txtSSN.getText().trim().isEmpty()) {
+            ssnError = true; 
+        } else {
+            ssn = txtSSN.getText().trim();
+        }
+        
+        //get gender from form (get lookup value) 
+        if (radGenderNoSay.isSelected()) {
+            gen = getGenderLookupValue("Client refused");
+        } else if (radGenderUnknown.isSelected()) {
+            gen = getGenderLookupValue("Client doesn''t know");
+        } else if (cboGender.getSelectedItem().toString().equals("")) {
+            genError = true; 
+        } else {
+            //JOptionPane.showMessageDialog(null, "Gender: " + cboGender.getSelectedItem(), "Gender Info", JOptionPane.INFORMATION_MESSAGE);
+            gen = getGenderLookupValue(cboGender.getSelectedItem().toString());
+            //JOptionPane.showMessageDialog(null, "Gender Lookup: " + gen, "Gender Info", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
+        //get military status from form (get lookup value) 
+        if (radMilitaryNoSay.isSelected()) {
+            vet = getMilitaryLookupValue("Client refused");
+        } else if (radMilitaryUnknown.isSelected()) {
+            vet = getMilitaryLookupValue("Client doesn''t know");
+        } else if (cboMilitary.getSelectedItem().toString().equals("")) {
+            vetError = true; 
+        } else {
+            vet = getMilitaryLookupValue(cboMilitary.getSelectedItem().toString());
+        }
+        
+        //get race from form (get lookup value) 
+        if (radRaceNoSay.isSelected()) {
+            r = getRaceLookupValue("Client refused");
+        } else if (radRaceUnknown.isSelected()) {
+            r = getRaceLookupValue("Client doesn''t know");
+        } else if (cboRace.getSelectedItem().toString().equals("")) {
+            rError = true; 
+        } else {
+            r = getRaceLookupValue(cboRace.getSelectedItem().toString());
+        }
+        
+        //get ethnicity from form
+        if (radEthnicityNoSay.isSelected()) {
+            eth = getEthnicityLookupValue("Client refused");
+        } else if (radEthnicityUnknown.isSelected()) {
+            eth = getEthnicityLookupValue("Client doesn''t know");
+        } else if (cboEthnicity.getSelectedItem().toString().equals("")) {
+            ethError = true; 
+        } else {
+            eth = getEthnicityLookupValue(cboEthnicity.getSelectedItem().toString());
+        }
+        
+        // cleanse phone number 
+        if (phne.equals("(___) ___-____")) {
+            phne = "";
+        }
+        // cleanse phone number - alternate
+        if (phneAlt.equals("(___) ___-____")) {
+            phneAlt = "";
+        }
+        // cleanse emergency contact phone number 
+        if (emergencyP.equals("(___) ___-____")) {
+            emergencyP = "";
+        }
+        // cleanse social security number
+        if (ssn.equals("___-__-____")) {
+            ssn = "";
+        }
+        // cleanse date of birth
+        if (bDate.equals("__/__/____")) {
+            bDate = "";
+        }
         
         
-    }//GEN-LAST:event_btnSaveResidentActionPerformed
-
-    private void cboMilitaryItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboMilitaryItemStateChanged
-        // disable the radio buttons if the combo box has a value selected 
-        if (cboMilitary.getItemCount() > 0){
-            if (cboMilitary.getSelectedItem().equals("")){
-                radMilitaryUnknown.setEnabled(true);
-                radMilitaryNoSay.setEnabled(true);
-            } else {
-                grpMilitary.clearSelection();
-                radMilitaryUnknown.setEnabled(false);
-                radMilitaryNoSay.setEnabled(false);
+        try {
+            conn = DriverManager.getConnection(myDBURL);
+            statement = conn.createStatement();
+            String values = "Sending SQL with values: "; 
+            values += "\nFirst Name: " + fName; 
+            values += "\nLast Name: " + lName; 
+            values += "\nAddress: " + add; 
+            values += "\nAddress Line 2: " + add2; 
+            values += "\nCity: " + c; 
+            values += "\nState: " + st; 
+            values += "\nZip: " + zp; 
+            values += "\nPhone: " + phne; 
+            values += "\nPhone Alt: " + phneAlt; 
+            values += "\nEmail: " + email; 
+            values += "\nBirth Date: " + bDate; 
+            values += "\nSocial: " + ssn; 
+            values += "\nGender: " + gen; 
+            values += "\nEmergency Phone: " + emergencyP; 
+            values += "\nEmergency Name: " + emergencyN; 
+            values += "\nVeteran Status: " + vet; 
+            values += "\nRace: " + r; 
+            values += "\nEthnicity: " + eth;
+            
+            JOptionPane.showMessageDialog(null, values, "Values", JOptionPane.INFORMATION_MESSAGE);
+            
+            Resident newRes = new Resident();
+            
+            newRes.AddNewResident(conn,statement,fName,lName,add,add2,c,st,zp,phne,phneAlt,email,bDate,ssn,gen,emergencyP,emergencyN,vet,r,eth);
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "" + "Error Loading Data", JOptionPane.INFORMATION_MESSAGE);
+            
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ManagementPortal.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }//GEN-LAST:event_cboMilitaryItemStateChanged
-  
+    }
+    */
     
-    /**
+        /**
      * @param args the command line arguments
      */
     
@@ -1590,7 +2231,6 @@ public class NewResidentForm extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddInsuranceType;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnNextPage;
     private javax.swing.JButton btnPrevPage;
@@ -1599,24 +2239,41 @@ public class NewResidentForm extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cboEthnicity;
     private javax.swing.JComboBox<String> cboGender;
     private javax.swing.JComboBox<String> cboHealthInsurance;
+    private javax.swing.JComboBox<String> cboHealthInsurance1;
+    private javax.swing.JComboBox<String> cboHealthInsurance2;
+    private javax.swing.JComboBox<String> cboHomelessHistory;
+    private javax.swing.JComboBox<String> cboHousingStatus;
+    private javax.swing.JRadioButton cboLengthNoSay;
+    private javax.swing.JRadioButton cboLengthNoSay1;
+    private javax.swing.JRadioButton cboLengthNoSay2;
+    private javax.swing.JRadioButton cboLengthNoSay3;
+    private javax.swing.JRadioButton cboLengthNoSay4;
+    private javax.swing.JComboBox<String> cboLengthOfStay;
     private javax.swing.JComboBox<String> cboMilitary;
     private javax.swing.JComboBox<String> cboRace;
+    private javax.swing.JComboBox<String> cboTimesHomeless;
     private javax.swing.ButtonGroup grpDateOfBirth;
     private javax.swing.ButtonGroup grpEthnicity;
     private javax.swing.ButtonGroup grpFirstName;
     private javax.swing.ButtonGroup grpGender;
+    private javax.swing.ButtonGroup grpHomelessStatus;
+    private javax.swing.ButtonGroup grpHousingStatus;
     private javax.swing.ButtonGroup grpLastName;
+    private javax.swing.ButtonGroup grpLength;
     private javax.swing.ButtonGroup grpMilitary;
     private javax.swing.ButtonGroup grpRace;
     private javax.swing.ButtonGroup grpSSN;
+    private javax.swing.ButtonGroup grpTimesHomeless;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
@@ -1624,7 +2281,14 @@ public class NewResidentForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1640,6 +2304,8 @@ public class NewResidentForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel jlblAdd;
     private javax.swing.JLabel jlblAdd2;
     private javax.swing.JLabel jlblCity;
@@ -1650,30 +2316,29 @@ public class NewResidentForm extends javax.swing.JFrame {
     private javax.swing.JLabel jlblPhoneAlt;
     private javax.swing.JLabel jlblState;
     private javax.swing.JLabel jlblZip;
-    private javax.swing.JTextField jtxtAdd;
-    private javax.swing.JTextField jtxtAdd2;
+    private javax.swing.JFormattedTextField jtxtAdd;
+    private javax.swing.JFormattedTextField jtxtAdd2;
     private javax.swing.JTextField jtxtCOCCode;
     private javax.swing.JTextField jtxtCity;
     private javax.swing.JTextField jtxtCityRes;
     private javax.swing.JTextField jtxtCountRes;
     private javax.swing.JTextField jtxtEmName;
-    private javax.swing.JTextField jtxtEmPhone;
     private javax.swing.JTextField jtxtEmail;
     private javax.swing.JTextField jtxtLastZip;
     private javax.swing.JTextField jtxtNCCountServ;
-    private javax.swing.JTextField jtxtPhone;
-    private javax.swing.JTextField jtxtPhoneAlt;
-    private javax.swing.JTextField jtxtShelterCat;
     private javax.swing.JTextField jtxtState;
     private javax.swing.JTextField jtxtZip;
-    private javax.swing.JLabel lblAdditionalInsuranceTypes;
     private javax.swing.JList<String> lstDisabilityTypes;
     private javax.swing.JList<String> lstInsuranceTypes;
     private javax.swing.JPanel pnlContact;
     private javax.swing.JPanel pnlDemo;
     private javax.swing.JPanel pnlDisability;
     private javax.swing.JPanel pnlHMIS;
+    private javax.swing.JPanel pnlHistory;
+    private javax.swing.JPanel pnlIncome;
     private javax.swing.JPanel pnlInsurance;
+    private javax.swing.JScrollPane pnlMonthlyIncome;
+    private javax.swing.JPanel pnlNonCashIncome;
     private javax.swing.JRadioButton radDateOfBirthNoSay;
     private javax.swing.JRadioButton radDateOfBirthUnknown;
     private javax.swing.JRadioButton radEthnicityNoSay;
@@ -1682,20 +2347,29 @@ public class NewResidentForm extends javax.swing.JFrame {
     private javax.swing.JRadioButton radFirstNameUnknown;
     private javax.swing.JRadioButton radGenderNoSay;
     private javax.swing.JRadioButton radGenderUnknown;
+    private javax.swing.JRadioButton radHomelessStatusNoSay;
+    private javax.swing.JRadioButton radHomelessStatusUnknown;
     private javax.swing.JRadioButton radLastNameNoSay;
     private javax.swing.JRadioButton radLastNameUnknown;
+    private javax.swing.JRadioButton radLengthUnknown;
     private javax.swing.JRadioButton radMilitaryNoSay;
     private javax.swing.JRadioButton radMilitaryUnknown;
     private javax.swing.JRadioButton radRaceNoSay;
     private javax.swing.JRadioButton radRaceUnknown;
     private javax.swing.JRadioButton radSSNNoSay;
     private javax.swing.JRadioButton radSSNUnknown;
-    private javax.swing.JTabbedPane tbsAllTabs;
-    private javax.swing.JTextField txtAdditionalInsuranceTypes;
+    private javax.swing.JTabbedPane tabs;
+    private javax.swing.JTable tblIncome;
+    private javax.swing.JTable tblNonCashIncome;
+    private javax.swing.JFormattedTextField txtCheckInDateTime;
     private javax.swing.JFormattedTextField txtDateOfBirth;
+    private javax.swing.JFormattedTextField txtEmPhone;
     private javax.swing.JTextField txtFirstName;
+    private javax.swing.JFormattedTextField txtHomelessStart;
     private javax.swing.JTextField txtLastName;
-    private javax.swing.JTextField txtSSN;
+    private javax.swing.JFormattedTextField txtPhone;
+    private javax.swing.JFormattedTextField txtPhoneAlt;
+    private javax.swing.JFormattedTextField txtSSN;
     // End of variables declaration//GEN-END:variables
 
 
