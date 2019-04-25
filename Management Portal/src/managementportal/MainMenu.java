@@ -94,6 +94,11 @@ public class MainMenu extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Volunteer Options"));
 
         btnScheduleVolunteers.setText("Volunteer Schedule");
+        btnScheduleVolunteers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnScheduleVolunteersActionPerformed(evt);
+            }
+        });
 
         btnReportsVolunteers.setText("View Volunteer Reports");
         btnReportsVolunteers.addActionListener(new java.awt.event.ActionListener() {
@@ -190,6 +195,13 @@ public class MainMenu extends javax.swing.JFrame {
         CreateVolunteerShift shift = new CreateVolunteerShift();
         shift.setVisible(true);
     }//GEN-LAST:event_btnCreateShiftActionPerformed
+
+    private void btnScheduleVolunteersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScheduleVolunteersActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        VolunteerSchedule schedule = new VolunteerSchedule();
+        schedule.setVisible(true);
+    }//GEN-LAST:event_btnScheduleVolunteersActionPerformed
 
     /**
      * @param args the command line arguments
