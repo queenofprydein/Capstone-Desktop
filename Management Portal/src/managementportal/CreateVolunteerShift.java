@@ -80,7 +80,7 @@ public class CreateVolunteerShift extends javax.swing.JFrame {
 
         jLabel4.setText("End Date and Time:");
 
-        jLabel5.setText("Volunteer Maxiimum:");
+        jLabel5.setText("Volunteer Maximum:");
 
         jLabel6.setText("Volunteer Needed:");
 
@@ -107,7 +107,7 @@ public class CreateVolunteerShift extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
+                .addContainerGap(18, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
