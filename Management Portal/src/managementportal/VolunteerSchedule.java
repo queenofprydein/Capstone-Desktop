@@ -122,10 +122,17 @@ public class VolunteerSchedule extends javax.swing.JFrame {
                 sql = "SELECT * FROM [DB_A47087_smgroup].[dbo].[Volunteer]";
                 break;
             case 2:
-                sql = "SELECT Shift.Shift_Description, Shift.Start_DateTime, Shift.End_DateTime, COUNT(Volunteer_Schedule.Shift_ID), Shift.Volunteer_Needed\n" +
-                        "FROM [DB_A47087_smgroup].[dbo].[Shift] INNER JOIN [DB_A47087_smgroup].[dbo].[Volunteer_Schedule] ON [DB_A47087_smgroup].[dbo].[Shift].Shift_ID = [DB_A47087_smgroup].[dbo].[Volunteer_Schedule].Shift_ID\n" +
-                        "GROUP BY Shift.Start_DateTime\n" +
-                        "HAVING COUNT(Volunteer_Schedule.Shift_ID) < Shift.Volunteer_Needed";
+                sql = "SELECT SHIFT.SHIFT_ID, SHIFT_DESCRIPTION, START_DATETIME, END_DATETIME, VOLUNTEER_NEEDED, COUNT(VOLUNTEER_ID) AS 'CURRENT_VOLUNTEERS', MALES_ONLY, MINIMUM_AGE\n" +
+                        "\n" +
+                        "FROM SHIFT\n" +
+                        "\n" +
+                        "LEFT JOIN VOLUNTEER_SCHEDULE VOL ON VOL.SHIFT_ID = SHIFT.SHIFT_ID\n" +
+                        "\n" +
+                        "WHERE START_DATETIME > GETDATE()\n" +
+                        "\n" +
+                        "GROUP BY SHIFT.SHIFT_ID, SHIFT_DESCRIPTION, START_DATETIME, END_DATETIME, VOLUNTEER_NEEDED, MALES_ONLY, MINIMUM_AGE\n" +
+                        "\n" +
+                        "HAVING COUNT(VOLUNTEER_ID) < VOLUNTEER_NEEDED";
                 break;
         }
         
