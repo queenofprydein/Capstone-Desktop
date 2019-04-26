@@ -232,8 +232,15 @@
         <Component class="javax.swing.JTextField" name="jtxtDes">
         </Component>
         <Component class="javax.swing.JTextField" name="jtxtStart">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(dateTimeMask)"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="MaskFormatter dateTimeMask = null;&#xa;        try {&#xa;            // Create a MaskFormatter for accepting phone number, the # symbol accept&#xa;            // only a number. We can also set the empty value with a place holder&#xa;            // character.&#xa;            dateTimeMask = new MaskFormatter(&quot;####-##-## ##:##:## UU&quot;);&#xa;            dateTimeMask.setPlaceholderCharacter(&apos;_&apos;);&#xa;        } catch (ParseException e) {&#xa;            e.printStackTrace();&#xa;        }"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="jtxtEnd">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(dateTimeMask)"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="jtxtMax">
         </Component>
@@ -289,6 +296,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jtxtCurrent">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(dateTimeMask)"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

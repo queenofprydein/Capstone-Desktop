@@ -12,6 +12,7 @@ import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.text.MaskFormatter;
 /**
  *
  * @author Lupe
@@ -21,7 +22,7 @@ public class CreateVolunteerShift extends javax.swing.JFrame {
     final String myDBURL = "jdbc:sqlserver://sql5008.site4now.net:1433;DatabaseName=DB_A47087_smgroup;user=DB_A47087_smgroup_admin;password=ftccgroup1";
     private static Connection conn = null;
     private static Statement statement = null;
-    String dateformat = "yyyy-mm-dd hh:mm:ss";
+    String dateformat = "yyyy-mm-dd hh:mm:ss a";
     /**
      * Creates new form CreateVolunteerShift
      */
@@ -50,8 +51,18 @@ public class CreateVolunteerShift extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jtxtDes = new javax.swing.JTextField();
-        jtxtStart = new javax.swing.JTextField();
-        jtxtEnd = new javax.swing.JTextField();
+        MaskFormatter dateTimeMask = null;
+        try {
+            // Create a MaskFormatter for accepting phone number, the # symbol accept
+            // only a number. We can also set the empty value with a place holder
+            // character.
+            dateTimeMask = new MaskFormatter("####-##-## ##:##:## UU");
+            dateTimeMask.setPlaceholderCharacter('_');
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        jtxtStart = new javax.swing.JFormattedTextField(dateTimeMask);
+        jtxtEnd = new javax.swing.JFormattedTextField(dateTimeMask);
         jtxtMax = new javax.swing.JTextField();
         jtxtMin = new javax.swing.JTextField();
         jrbMalesY = new javax.swing.JRadioButton();
@@ -60,7 +71,7 @@ public class CreateVolunteerShift extends javax.swing.JFrame {
         jrb13 = new javax.swing.JRadioButton();
         jbtnCreate = new javax.swing.JButton();
         jlblCurrent = new javax.swing.JLabel();
-        jtxtCurrent = new javax.swing.JTextField();
+        jtxtCurrent = new javax.swing.JFormattedTextField(dateTimeMask);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Create a Shift");
@@ -265,8 +276,8 @@ public class CreateVolunteerShift extends javax.swing.JFrame {
         if(Validate() == true)
         {
             
-            java.sql.Timestamp startDate = java.sql.Timestamp.valueOf(jtxtStart.getText());
-            java.sql.Timestamp endDate = java.sql.Timestamp.valueOf(jtxtEnd.getText());
+            /*java.sql.Timestamp startDate = java.sql.Timestamp.valueOf(jtxtStart.getText());
+            java.sql.Timestamp endDate = java.sql.Timestamp.valueOf(jtxtEnd.getText());*/
             int max = Integer.parseInt(jtxtMax.getText());
             int min = Integer.parseInt(jtxtMin.getText());
             String males = "";
@@ -293,8 +304,8 @@ public class CreateVolunteerShift extends javax.swing.JFrame {
                 
                 PreparedStatement insert = conn.prepareStatement("INSERT INTO [DB_A47087_smgroup].[dbo].[Shift] VALUES (?,?,?,?,?,?,?)");
                 insert.setString(1, jtxtDes.getText());
-                insert.setTimestamp(2, startDate);
-                insert.setTimestamp(3, endDate);
+                insert.setString(2, jtxtStart.getText());
+                insert.setString(3, jtxtEnd.getText());
                 insert.setInt(4, max);
                 insert.setInt(5, min);
                 insert.setString(6, males);
@@ -324,7 +335,7 @@ public class CreateVolunteerShift extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        String current = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss").format(Calendar.getInstance().getTime());
+        String current = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss a").format(Calendar.getInstance().getTime());
         jtxtCurrent.setText(current);
     }//GEN-LAST:event_formWindowOpened
 
