@@ -72,6 +72,7 @@ public class CreateVolunteerShift extends javax.swing.JFrame {
         jbtnCreate = new javax.swing.JButton();
         jlblCurrent = new javax.swing.JLabel();
         jtxtCurrent = new javax.swing.JFormattedTextField(dateTimeMask);
+        btnMain = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Create a Shift");
@@ -197,6 +198,13 @@ public class CreateVolunteerShift extends javax.swing.JFrame {
 
         jlblCurrent.setText("Current Date and time:");
 
+        btnMain.setText("Back to Main Menu");
+        btnMain.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMainActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -221,6 +229,10 @@ public class CreateVolunteerShift extends javax.swing.JFrame {
                                 .addComponent(jbtnCreate)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(171, 171, 171)
+                .addComponent(btnMain)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -235,7 +247,9 @@ public class CreateVolunteerShift extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jbtnCreate)
-                .addGap(83, 83, 83))
+                .addGap(30, 30, 30)
+                .addComponent(btnMain)
+                .addGap(30, 30, 30))
         );
 
         pack();
@@ -348,6 +362,13 @@ public class CreateVolunteerShift extends javax.swing.JFrame {
         jtxtCurrent.setText(current);
     }//GEN-LAST:event_formWindowOpened
 
+    private void btnMainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMainActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        MainMenu main = new MainMenu();
+        main.setVisible(true);
+    }//GEN-LAST:event_btnMainActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -386,6 +407,7 @@ public class CreateVolunteerShift extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup bgAge;
     private javax.swing.ButtonGroup bgMales;
+    private javax.swing.JButton btnMain;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
