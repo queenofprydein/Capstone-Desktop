@@ -232,7 +232,7 @@ public class MainMenu extends javax.swing.JFrame {
 
         try {
             // set up the theme for the Look and Feel
-            com.jtattoo.plaf.smart.SmartLookAndFeel.setTheme("Large-Font", "", "Samaritan Ministries");
+            com.jtattoo.plaf.smart.SmartLookAndFeel.setTheme("Giant-Font", "", "Samaritan Ministries");
             
             // Select the Look and Feel
             UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
