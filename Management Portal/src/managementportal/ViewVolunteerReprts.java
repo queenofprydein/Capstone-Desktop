@@ -91,6 +91,11 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
         jLabel2.setText("Sort By");
 
         jcbSort.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcbSort.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jcbSortItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelSortLayout = new javax.swing.GroupLayout(jPanelSort);
         jPanelSort.setLayout(jPanelSortLayout);
@@ -129,6 +134,7 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
         jbtnDes.setText("Descending");
 
         jbgOrder.add(jbtnNone);
+        jbtnNone.setSelected(true);
         jbtnNone.setText("None");
 
         javax.swing.GroupLayout jPanelOrderLayout = new javax.swing.GroupLayout(jPanelOrder);
@@ -343,6 +349,8 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
                 Logger.getLogger(ManagementPortal.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
+        jPanelOrder.setVisible(false);
     }//GEN-LAST:event_formWindowOpened
 
     private void jbtnDisplayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDisplayActionPerformed
@@ -350,7 +358,7 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
         // Get info from sort, filter, order
         String sqlSort = "";
         String sqlFilter = "";
-        String sqlOrder = "ORDER BY ";
+        String sqlOrder = "";
         String startSQL = "SELECT * FROM [DB_A47087_smgroup].[dbo].[Volunteer]";
         String wholeSQL = "";
         
@@ -395,6 +403,23 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
             case 12:
                 sqlSort = " ORDER BY Community_Service";
                 break;
+            case 13:
+                sqlSort = " ORDER BY Login_Name";
+                break;
+        }
+        
+        
+        if(jbtnAsc.isSelected())
+        {
+            sqlOrder = " ASC";
+        }
+        else if(jbtnDes.isSelected())
+        {
+            sqlOrder = " DESC";
+        }
+        if(jcbSort.getSelectedIndex() == 0)
+        {
+            sqlOrder = "";
         }
         
         if(jbtnOlder13.isSelected())
@@ -417,40 +442,18 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
             sqlFilter = " WHERE Gender = 'FE'";
         }
         
-        if(jbtnAsc.isSelected())
-        {
-            sqlOrder = " ASC";
-        }
-        if(jbtnDes.isSelected())
-        {
-            sqlOrder = " DESC";
-        }
         
+        
+        
+        wholeSQL = startSQL + sqlFilter + sqlSort + sqlOrder;
         if(jbtnOlder13.isSelected())
         {
             wholeSQL = sqlFilter;
         }
-        else if(jcbSort.getSelectedIndex() == 0)
-        {
-            if(jbtnAsc.isSelected())
-            {
-                sqlOrder = " ORDER BY ASC";
-            }
-            else if(jbtnDes.isSelected())
-            {
-                sqlOrder = " ORDER BY DESC";
-            }
-            else
-            {
-                sqlOrder = "";
-            }
-        }
-        else
-        {
-            wholeSQL = startSQL + sqlFilter + sqlSort + sqlOrder;
-        }
         
         
+        
+        JOptionPane.showMessageDialog(null, wholeSQL);
         
         //get new database table
         
@@ -520,6 +523,11 @@ public class ViewVolunteerReprts extends javax.swing.JFrame {
         MainMenu main = new MainMenu();
         main.setVisible(true);
     }//GEN-LAST:event_btnMainActionPerformed
+
+    private void jcbSortItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcbSortItemStateChanged
+        // TODO add your handling code here:
+        jPanelOrder.setVisible(true);
+    }//GEN-LAST:event_jcbSortItemStateChanged
 
     /**
      * @param args the command line arguments
