@@ -43,6 +43,7 @@ public class ViewResidentReports extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jcbResReports = new javax.swing.JComboBox<>();
         jbtnReports = new javax.swing.JButton();
+        btnMain = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Viewing Resident Reports");
@@ -106,6 +107,13 @@ public class ViewResidentReports extends javax.swing.JFrame {
                 .addComponent(jbtnReports))
         );
 
+        btnMain.setText("Back to Main Menu");
+        btnMain.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMainActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -124,6 +132,10 @@ public class ViewResidentReports extends javax.swing.JFrame {
                 .addGap(350, 350, 350)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 350, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnMain)
+                .addGap(434, 434, 434))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,7 +146,9 @@ public class ViewResidentReports extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnMain)
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
@@ -260,6 +274,13 @@ public class ViewResidentReports extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jbtnReportsActionPerformed
 
+    private void btnMainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMainActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        MainMenu main = new MainMenu();
+        main.setVisible(true);
+    }//GEN-LAST:event_btnMainActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -297,6 +318,7 @@ public class ViewResidentReports extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable ResidentTable;
+    private javax.swing.JButton btnMain;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
