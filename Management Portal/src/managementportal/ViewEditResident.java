@@ -132,7 +132,7 @@ public class ViewEditResident extends javax.swing.JFrame {
                 .addComponent(btnEdit)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(resID)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
@@ -190,7 +190,11 @@ public class ViewEditResident extends javax.swing.JFrame {
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
-        resID.setText(ids.get(ResidentList.getSelectedIndex()).toString());
+       /* resID.setText(ids.get(ResidentList.getSelectedIndex()).toString());*/
+       int num = ids.get(ResidentList.getSelectedIndex());
+       this.setVisible(false);
+       CheckIn in = new CheckIn(num);
+       in.setVisible(true);
     }//GEN-LAST:event_btnEditActionPerformed
 
     /**
