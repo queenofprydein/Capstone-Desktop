@@ -243,11 +243,11 @@ public class CreateVolunteerShift extends javax.swing.JFrame {
 
     private boolean Validate()
     {
-        SimpleDateFormat datef = new SimpleDateFormat(dateformat);
+        SimpleDateFormat datef = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
         try
         {
-            java.util.Date startDate = datef.parse(jtxtStart.getText());
-            java.util.Date endDate = datef.parse(jtxtEnd.getText());
+            java.util.Date startDate = datef.parse(jtxtStart.getText().substring(0, 19));
+            java.util.Date endDate = datef.parse(jtxtEnd.getText().substring(0, 19));
         }
         catch(ParseException ex)
         {
@@ -276,8 +276,17 @@ public class CreateVolunteerShift extends javax.swing.JFrame {
         if(Validate() == true)
         {
             
-            /*java.sql.Timestamp startDate = java.sql.Timestamp.valueOf(jtxtStart.getText());
-            java.sql.Timestamp endDate = java.sql.Timestamp.valueOf(jtxtEnd.getText());*/
+            java.sql.Timestamp startDate = java.sql.Timestamp.valueOf(jtxtStart.getText().substring(0,18));
+            java.sql.Timestamp endDate = java.sql.Timestamp.valueOf(jtxtEnd.getText().substring(0, 18));
+            if(jtxtStart.getText().substring(21).equals("PM"))
+            {
+                startDate.setTime(startDate.getTime() + (12*3600000));
+            }
+            if(jtxtEnd.getText().substring(21).equals("PM"))
+            {
+                endDate.setTime(endDate.getTime() + 12*3600000);
+            }
+            
             int max = Integer.parseInt(jtxtMax.getText());
             int min = Integer.parseInt(jtxtMin.getText());
             String males = "";
