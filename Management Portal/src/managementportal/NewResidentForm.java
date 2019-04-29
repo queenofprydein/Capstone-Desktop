@@ -5,16 +5,19 @@
  */
 package managementportal;
 
+import java.awt.Component;
 import java.sql.*;
-import java.text.DateFormat;
-import java.text.Format;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Vector;
+import java.util.Locale;
 import java.util.logging.*;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.*;
 import javax.swing.text.MaskFormatter;
+import javax.swing.text.NumberFormatter;
 
 
 /**
@@ -58,7 +61,6 @@ public class NewResidentForm extends javax.swing.JFrame {
         grpHomelessStatus = new javax.swing.ButtonGroup();
         grpLength = new javax.swing.ButtonGroup();
         grpTimesHomeless = new javax.swing.ButtonGroup();
-        grpHousingStatus = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         tabs = new javax.swing.JTabbedPane();
         pnlDemo = new javax.swing.JPanel();
@@ -71,10 +73,6 @@ public class NewResidentForm extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        radFirstNameNoSay = new javax.swing.JRadioButton();
-        radFirstNameUnknown = new javax.swing.JRadioButton();
-        radLastNameNoSay = new javax.swing.JRadioButton();
-        radLastNameUnknown = new javax.swing.JRadioButton();
         radSSNNoSay = new javax.swing.JRadioButton();
         radSSNUnknown = new javax.swing.JRadioButton();
         radDateOfBirthNoSay = new javax.swing.JRadioButton();
@@ -137,6 +135,8 @@ public class NewResidentForm extends javax.swing.JFrame {
         }
         txtPhone = new javax.swing.JFormattedTextField(phoneMask);
         txtPhoneAlt = new javax.swing.JFormattedTextField(phoneMask);
+        jLabel19 = new javax.swing.JLabel();
+        jtxtLastZip = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jlblEmName = new javax.swing.JLabel();
         jtxtEmName = new javax.swing.JTextField();
@@ -152,6 +152,15 @@ public class NewResidentForm extends javax.swing.JFrame {
         jtxtAdd2 = new javax.swing.JFormattedTextField();
         jtxtAdd = new javax.swing.JFormattedTextField();
         txtEmPhone = new javax.swing.JFormattedTextField(phoneMask);
+        jPanel5 = new javax.swing.JPanel();
+        jLabel20 = new javax.swing.JLabel();
+        jtxtCOCCode = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        jtxtNCCountServ = new javax.swing.JTextField();
+        jLabel22 = new javax.swing.JLabel();
+        jtxtCountRes = new javax.swing.JTextField();
+        jLabel23 = new javax.swing.JLabel();
+        jtxtCityRes = new javax.swing.JTextField();
         pnlDisability = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
@@ -168,60 +177,35 @@ public class NewResidentForm extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         pnlIncome = new javax.swing.JPanel();
         jLabel24 = new javax.swing.JLabel();
-        cboHealthInsurance1 = new javax.swing.JComboBox<>();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        cboIncome = new javax.swing.JComboBox<>();
+        pnlIncomeTabs = new javax.swing.JTabbedPane();
         pnlMonthlyIncome = new javax.swing.JScrollPane();
         tblIncome = new javax.swing.JTable();
         pnlNonCashIncome = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblNonCashIncome = new javax.swing.JTable();
-        jLabel27 = new javax.swing.JLabel();
-        cboHealthInsurance2 = new javax.swing.JComboBox<>();
+        txtMonthlyIncome = new javax.swing.JTextField();
+        txtNonCashIncome = new javax.swing.JTextField();
         pnlHistory = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
-        cboHomelessHistory = new javax.swing.JComboBox<>();
+        cboHomelessStatus = new javax.swing.JComboBox<>();
         jLabel18 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         radHomelessStatusNoSay = new javax.swing.JRadioButton();
         radHomelessStatusUnknown = new javax.swing.JRadioButton();
         jLabel26 = new javax.swing.JLabel();
         cboLengthOfStay = new javax.swing.JComboBox<>();
-        cboLengthNoSay = new javax.swing.JRadioButton();
+        radLengthNoSay = new javax.swing.JRadioButton();
         radLengthUnknown = new javax.swing.JRadioButton();
-        jLabel29 = new javax.swing.JLabel();
-        txtHomelessStart = new javax.swing.JFormattedTextField(dateMask);
         jLabel30 = new javax.swing.JLabel();
         cboTimesHomeless = new javax.swing.JComboBox<>();
-        cboLengthNoSay1 = new javax.swing.JRadioButton();
-        cboLengthNoSay2 = new javax.swing.JRadioButton();
+        radTimesHomelessNoSay = new javax.swing.JRadioButton();
+        radTimesHomelessUnknown = new javax.swing.JRadioButton();
         jLabel31 = new javax.swing.JLabel();
         cboHousingStatus = new javax.swing.JComboBox<>();
-        cboLengthNoSay3 = new javax.swing.JRadioButton();
-        cboLengthNoSay4 = new javax.swing.JRadioButton();
-        jLabel32 = new javax.swing.JLabel();
-        MaskFormatter dateTimeMask = null;
-        try {
-            // Create a MaskFormatter for accepting phone number, the # symbol accept
-            // only a number. We can also set the empty value with a place holder
-            // character.
-            dateTimeMask = new MaskFormatter("##/##/#### ##:##:##");
-            dateTimeMask.setPlaceholderCharacter('_');
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        txtCheckInDateTime = new javax.swing.JFormattedTextField(dateTimeMask);
-        pnlHMIS = new javax.swing.JPanel();
-        jPanel10 = new javax.swing.JPanel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
-        jtxtLastZip = new javax.swing.JTextField();
-        jtxtCOCCode = new javax.swing.JTextField();
-        jtxtNCCountServ = new javax.swing.JTextField();
-        jtxtCountRes = new javax.swing.JTextField();
-        jtxtCityRes = new javax.swing.JTextField();
+        jLabel29 = new javax.swing.JLabel();
+        txtHomelessStart = new javax.swing.JFormattedTextField(dateMask);
         btnNextPage = new javax.swing.JButton();
         btnPrevPage = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
@@ -252,21 +236,9 @@ public class NewResidentForm extends javax.swing.JFrame {
         jLabel2.setText("First Name");
         jLabel2.setToolTipText("");
 
-        txtFirstName.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtFirstNameKeyTyped(evt);
-            }
-        });
-
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Last Name");
         jLabel3.setToolTipText("");
-
-        txtLastName.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtLastNameKeyTyped(evt);
-            }
-        });
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel4.setText("Date of Birth");
@@ -277,14 +249,6 @@ public class NewResidentForm extends javax.swing.JFrame {
         jLabel6.setText("Prefers not to say");
 
         jLabel7.setText("Doesn't know");
-
-        grpFirstName.add(radFirstNameNoSay);
-
-        grpFirstName.add(radFirstNameUnknown);
-
-        grpLastName.add(radLastNameNoSay);
-
-        grpLastName.add(radLastNameUnknown);
 
         grpSSN.add(radSSNNoSay);
 
@@ -339,6 +303,7 @@ public class NewResidentForm extends javax.swing.JFrame {
             }
         });
 
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel13.setText("Military Veteran");
 
         grpMilitary.add(radMilitaryNoSay);
@@ -362,144 +327,145 @@ public class NewResidentForm extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(58, 58, 58)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jLabel13))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)))
+                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cboMilitary, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cboEthnicity, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cboRace, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cboGender, javax.swing.GroupLayout.Alignment.TRAILING, 0, 370, Short.MAX_VALUE)
+                    .addComponent(txtDateOfBirth, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtSSN, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtLastName, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtFirstName, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(249, 249, 249)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(radSSNNoSay)
+                        .addGap(76, 76, 76)
+                        .addComponent(radSSNUnknown))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(cboMilitary, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(radDateOfBirthNoSay)
+                        .addGap(76, 76, 76)
+                        .addComponent(radDateOfBirthUnknown))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cboRace, 0, 370, Short.MAX_VALUE)
-                            .addComponent(cboEthnicity, 0, 370, Short.MAX_VALUE)
-                            .addComponent(cboGender, 0, 370, Short.MAX_VALUE)
-                            .addComponent(txtLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
-                            .addComponent(txtFirstName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
-                            .addComponent(txtDateOfBirth, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtSSN, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel7))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(43, 43, 43)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(radGenderNoSay)
-                                        .addGap(76, 76, 76)
-                                        .addComponent(radGenderUnknown))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(radRaceNoSay)
-                                        .addGap(76, 76, 76)
-                                        .addComponent(radRaceUnknown))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(radEthnicityNoSay)
-                                                .addComponent(radDateOfBirthNoSay)
-                                                .addComponent(radSSNNoSay)
-                                                .addComponent(radLastNameNoSay)
-                                                .addComponent(radFirstNameNoSay))
-                                            .addComponent(radMilitaryNoSay))
-                                        .addGap(76, 76, 76)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(radMilitaryUnknown)
-                                            .addComponent(radFirstNameUnknown)
-                                            .addComponent(radLastNameUnknown)
-                                            .addComponent(radSSNUnknown)
-                                            .addComponent(radDateOfBirthUnknown)
-                                            .addComponent(radEthnicityUnknown))))))
-                        .addGap(34, 34, 34))))
+                        .addComponent(radGenderNoSay)
+                        .addGap(76, 76, 76)
+                        .addComponent(radGenderUnknown))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(radRaceNoSay)
+                        .addGap(76, 76, 76)
+                        .addComponent(radRaceUnknown))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(radEthnicityNoSay)
+                        .addGap(76, 76, 76)
+                        .addComponent(radEthnicityUnknown))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(radMilitaryNoSay)
+                        .addGap(76, 76, 76)
+                        .addComponent(radMilitaryUnknown)))
+                .addGap(509, 509, 509))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel6)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel7)
+                .addGap(471, 471, 471))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(24, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(jLabel7))
-                .addGap(24, 24, 24)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(txtSSN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtDateOfBirth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cboGender, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel2))
-                            .addComponent(radFirstNameNoSay)
-                            .addComponent(radFirstNameUnknown))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel3))
-                            .addComponent(radLastNameNoSay)
-                            .addComponent(radLastNameUnknown))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel5)
-                                .addComponent(txtSSN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(radSSNNoSay)
                             .addComponent(radSSNUnknown))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
                             .addComponent(radDateOfBirthNoSay)
-                            .addComponent(radDateOfBirthUnknown)))
-                    .addComponent(txtDateOfBirth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(radDateOfBirthUnknown))
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(radGenderUnknown)
+                            .addComponent(radGenderNoSay))))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cboRace, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cboEthnicity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(radRaceUnknown)
+                            .addComponent(radRaceNoSay))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(radEthnicityNoSay)
+                            .addComponent(radEthnicityUnknown))))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
-                    .addComponent(radGenderUnknown)
-                    .addComponent(radGenderNoSay)
-                    .addComponent(cboGender, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cboRace, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel9))
-                    .addComponent(radRaceUnknown)
-                    .addComponent(radRaceNoSay))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cboEthnicity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel10))
-                    .addComponent(radEthnicityNoSay)
-                    .addComponent(radEthnicityUnknown))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(cboMilitary, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(radMilitaryNoSay)
                         .addComponent(jLabel13))
-                    .addComponent(radMilitaryUnknown))
-                .addContainerGap(49, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(radMilitaryNoSay)
+                        .addComponent(radMilitaryUnknown)))
+                .addGap(34, 34, 34))
         );
 
         javax.swing.GroupLayout pnlDemoLayout = new javax.swing.GroupLayout(pnlDemo);
         pnlDemo.setLayout(pnlDemoLayout);
         pnlDemoLayout.setHorizontalGroup(
             pnlDemoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1125, Short.MAX_VALUE)
         );
         pnlDemoLayout.setVerticalGroup(
             pnlDemoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDemoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(119, Short.MAX_VALUE))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
 
         tabs.addTab("Demographics", pnlDemo);
@@ -520,28 +486,26 @@ public class NewResidentForm extends javax.swing.JFrame {
             }
         });
 
+        jLabel19.setText("Last Zip");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jlblPhoneAlt)
-                            .addComponent(jlblPhone))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(txtPhoneAlt)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jlblEmail)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtxtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jlblPhoneAlt)
+                    .addComponent(jlblPhone)
+                    .addComponent(jlblEmail)
+                    .addComponent(jLabel19))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jtxtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPhoneAlt)
+                    .addComponent(jtxtLastZip, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -551,15 +515,19 @@ public class NewResidentForm extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlblPhone)
                     .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlblPhoneAlt)
                     .addComponent(txtPhoneAlt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtxtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlblEmail))
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel19)
+                    .addComponent(jtxtLastZip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Emergency Contact Information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
@@ -614,36 +582,33 @@ public class NewResidentForm extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jlblAdd)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtxtAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jlblAdd2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtxtAdd2, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jlblCity)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtxtCity, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jlblState)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtxtState, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(jlblZip)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtxtZip, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jlblEmPhone)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtEmPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jlblEmName)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtxtEmName, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(24, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jlblEmName)
+                            .addComponent(jlblAdd)
+                            .addComponent(jlblAdd2)
+                            .addComponent(jlblCity)
+                            .addComponent(jlblState)))
+                    .addComponent(jlblEmPhone))
+                .addGap(23, 23, 23)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jtxtEmName, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jtxtAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jtxtAdd2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jtxtState, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jlblZip)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jtxtZip, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jtxtCity, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(txtEmPhone, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(133, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -652,29 +617,86 @@ public class NewResidentForm extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtxtEmName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlblEmName))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlblAdd)
                     .addComponent(jtxtAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlblAdd2)
                     .addComponent(jtxtAdd2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtxtCity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlblCity))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtxtZip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlblZip)
                     .addComponent(jtxtState, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlblState))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jtxtZip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlblState)
+                    .addComponent(jlblZip))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlblEmPhone)
                     .addComponent(txtEmPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "HMIS Information"));
+
+        jLabel20.setText("Continuum of Care Code");
+
+        jLabel21.setText("NC County of Service");
+
+        jLabel22.setText("County of Residence");
+
+        jLabel23.setText("City of Residence");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap(41, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel22)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtxtCountRes, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel23)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtxtCityRes, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel21)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtxtNCCountServ, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel20)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtxtCOCCode, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel20)
+                    .addComponent(jtxtCOCCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel21)
+                    .addComponent(jtxtNCCountServ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel22)
+                    .addComponent(jtxtCountRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel23)
+                    .addComponent(jtxtCityRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -682,27 +704,31 @@ public class NewResidentForm extends javax.swing.JFrame {
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGap(97, 97, 97)
-                        .addComponent(jLabel17))
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(97, 97, 97)
+                .addComponent(jLabel17)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(26, 26, 26))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(11, 11, 11)
                 .addComponent(jLabel17)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(157, Short.MAX_VALUE))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout pnlContactLayout = new javax.swing.GroupLayout(pnlContact);
@@ -719,7 +745,7 @@ public class NewResidentForm extends javax.swing.JFrame {
             .addGroup(pnlContactLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         tabs.addTab("Contact Information", pnlContact);
@@ -755,7 +781,7 @@ public class NewResidentForm extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -838,7 +864,7 @@ public class NewResidentForm extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -865,46 +891,27 @@ public class NewResidentForm extends javax.swing.JFrame {
                     .addComponent(jLabel15)
                     .addComponent(cboHealthInsurance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         tabs.addTab("Health Insurance", pnlInsurance);
 
-        jLabel24.setText("Is the resident currently receiving monthly income? ");
+        jLabel24.setText("Is the resident currently receiving income from any source? ");
 
-        cboHealthInsurance1.addItemListener(new java.awt.event.ItemListener() {
+        cboIncome.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cboHealthInsurance1ItemStateChanged(evt);
+                cboIncomeItemStateChanged(evt);
             }
         });
 
-        tblIncome.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Source of Income (Monthly)", "Amount from Source"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, true
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
         pnlMonthlyIncome.setViewportView(tblIncome);
 
-        jTabbedPane1.addTab("Monthly Income Sources", pnlMonthlyIncome);
+        pnlIncomeTabs.addTab("Monthly Income Sources", pnlMonthlyIncome);
 
         tblNonCashIncome.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "Source of Non-Cash Benefit", "Amount (if applicable)"
@@ -916,40 +923,43 @@ public class NewResidentForm extends javax.swing.JFrame {
         pnlNonCashIncome.setLayout(pnlNonCashIncomeLayout);
         pnlNonCashIncomeLayout.setHorizontalGroup(
             pnlNonCashIncomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1016, Short.MAX_VALUE)
         );
         pnlNonCashIncomeLayout.setVerticalGroup(
             pnlNonCashIncomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Non-Cash Benefit Sources", pnlNonCashIncome);
+        pnlIncomeTabs.addTab("Non-Cash Benefit Sources", pnlNonCashIncome);
 
-        jLabel27.setText("Is the resident currently receiving any non-cash benefits?");
+        txtMonthlyIncome.setEditable(false);
+        txtMonthlyIncome.setText("Total Income from Monthly Income Sources: $0.00");
 
-        cboHealthInsurance2.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cboHealthInsurance2ItemStateChanged(evt);
-            }
-        });
+        txtNonCashIncome.setEditable(false);
+        txtNonCashIncome.setText("Total Income from Non-Cash Benefit Sources: $0.00");
 
         javax.swing.GroupLayout pnlIncomeLayout = new javax.swing.GroupLayout(pnlIncome);
         pnlIncome.setLayout(pnlIncomeLayout);
         pnlIncomeLayout.setHorizontalGroup(
             pnlIncomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlIncomeLayout.createSequentialGroup()
-                .addGap(45, 45, 45)
                 .addGroup(pnlIncomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlIncomeLayout.createSequentialGroup()
-                        .addGroup(pnlIncomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel27)
-                            .addComponent(jLabel24))
+                        .addContainerGap()
+                        .addComponent(pnlIncomeTabs))
+                    .addGroup(pnlIncomeLayout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addComponent(jLabel24)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlIncomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cboHealthInsurance1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cboHealthInsurance2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 773, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(63, Short.MAX_VALUE))
+                        .addComponent(cboIncome, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(pnlIncomeLayout.createSequentialGroup()
+                .addGap(68, 68, 68)
+                .addComponent(txtMonthlyIncome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(74, 74, 74)
+                .addComponent(txtNonCashIncome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlIncomeLayout.setVerticalGroup(
             pnlIncomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -957,19 +967,27 @@ public class NewResidentForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlIncomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel24)
-                    .addComponent(cboHealthInsurance1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlIncomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel27)
-                    .addComponent(cboHealthInsurance2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(72, Short.MAX_VALUE))
+                    .addComponent(cboIncome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pnlIncomeTabs, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlIncomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtMonthlyIncome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNonCashIncome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         tabs.addTab("Income", pnlIncome);
 
+        jPanel7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
         jLabel14.setText("Homeless Status");
+
+        cboHomelessStatus.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboHomelessStatusItemStateChanged(evt);
+            }
+        });
 
         jLabel18.setText("Prefers not to say");
 
@@ -981,213 +999,137 @@ public class NewResidentForm extends javax.swing.JFrame {
 
         jLabel26.setText("Length of Stay in Prior Living Situation");
 
-        grpLength.add(cboLengthNoSay);
+        cboLengthOfStay.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboLengthOfStayItemStateChanged(evt);
+            }
+        });
+
+        grpLength.add(radLengthNoSay);
 
         grpLength.add(radLengthUnknown);
 
-        jLabel29.setText("Start Date of Homelessness");
-
         jLabel30.setText("Number of Times Homeless");
 
-        grpTimesHomeless.add(cboLengthNoSay1);
+        cboTimesHomeless.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboTimesHomelessItemStateChanged(evt);
+            }
+        });
 
-        grpTimesHomeless.add(cboLengthNoSay2);
+        grpTimesHomeless.add(radTimesHomelessNoSay);
+
+        grpTimesHomeless.add(radTimesHomelessUnknown);
 
         jLabel31.setText("Housing Status");
 
-        grpHousingStatus.add(cboLengthNoSay3);
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cboHomelessStatus, 0, 370, Short.MAX_VALUE)
+                    .addComponent(cboLengthOfStay, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel26, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cboTimesHomeless, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel30, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel31, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cboHousingStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                            .addComponent(radHomelessStatusNoSay)
+                            .addGap(72, 72, 72)
+                            .addComponent(radHomelessStatusUnknown)
+                            .addGap(64, 64, 64))
+                        .addGroup(jPanel7Layout.createSequentialGroup()
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(radLengthNoSay)
+                                .addComponent(radTimesHomelessNoSay))
+                            .addGap(72, 72, 72)
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(radTimesHomelessUnknown)
+                                .addComponent(radLengthUnknown))
+                            .addContainerGap()))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                        .addComponent(jLabel18)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel25)
+                        .addGap(37, 37, 37))))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap(60, Short.MAX_VALUE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel18)
+                        .addComponent(jLabel31))
+                    .addComponent(jLabel25))
+                .addGap(18, 18, 18)
+                .addComponent(cboHousingStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(cboHomelessStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel26))
+                    .addComponent(radHomelessStatusNoSay)
+                    .addComponent(radHomelessStatusUnknown))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(cboLengthOfStay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel30))
+                    .addComponent(radLengthUnknown)
+                    .addComponent(radLengthNoSay))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(radTimesHomelessUnknown)
+                    .addComponent(radTimesHomelessNoSay)
+                    .addComponent(cboTimesHomeless, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(143, 143, 143))
+        );
 
-        grpHousingStatus.add(cboLengthNoSay4);
-
-        jLabel32.setText("Check In Date and Time");
+        jLabel29.setText("Start Date of Homelessness");
 
         javax.swing.GroupLayout pnlHistoryLayout = new javax.swing.GroupLayout(pnlHistory);
         pnlHistory.setLayout(pnlHistoryLayout);
         pnlHistoryLayout.setHorizontalGroup(
             pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHistoryLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
                 .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlHistoryLayout.createSequentialGroup()
-                        .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel14)
-                            .addGroup(pnlHistoryLayout.createSequentialGroup()
-                                .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtHomelessStart)
-                                    .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel32)
-                                    .addComponent(txtCheckInDateTime, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(cboHomelessHistory, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(cboLengthOfStay, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel26, javax.swing.GroupLayout.Alignment.LEADING)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlHistoryLayout.createSequentialGroup()
-                                .addComponent(jLabel18)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel25))
-                            .addGroup(pnlHistoryLayout.createSequentialGroup()
-                                .addGap(51, 51, 51)
-                                .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(pnlHistoryLayout.createSequentialGroup()
-                                        .addComponent(cboLengthNoSay3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(cboLengthNoSay4))
-                                    .addGroup(pnlHistoryLayout.createSequentialGroup()
-                                        .addComponent(cboLengthNoSay1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(cboLengthNoSay2))
-                                    .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(pnlHistoryLayout.createSequentialGroup()
-                                            .addComponent(cboLengthNoSay)
-                                            .addGap(76, 76, 76)
-                                            .addComponent(radLengthUnknown))
-                                        .addGroup(pnlHistoryLayout.createSequentialGroup()
-                                            .addComponent(radHomelessStatusNoSay)
-                                            .addGap(76, 76, 76)
-                                            .addComponent(radHomelessStatusUnknown)))))))
+                        .addContainerGap()
+                        .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(pnlHistoryLayout.createSequentialGroup()
-                        .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel31)
-                            .addComponent(cboTimesHomeless, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel30)
-                            .addComponent(cboHousingStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(445, 445, 445)
+                        .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtHomelessStart)
+                            .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 429, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlHistoryLayout.setVerticalGroup(
             pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlHistoryLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlHistoryLayout.createSequentialGroup()
-                        .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel18)
-                            .addComponent(jLabel25))
-                        .addGap(52, 52, 52)
-                        .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(radHomelessStatusNoSay)
-                            .addComponent(radHomelessStatusUnknown))
-                        .addGap(44, 44, 44)
-                        .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cboLengthNoSay)
-                            .addComponent(radLengthUnknown)))
-                    .addGroup(pnlHistoryLayout.createSequentialGroup()
-                        .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlHistoryLayout.createSequentialGroup()
-                                .addComponent(jLabel29)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtHomelessStart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlHistoryLayout.createSequentialGroup()
-                                .addComponent(jLabel32)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCheckInDateTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel14)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cboHomelessHistory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22)
-                        .addComponent(jLabel26)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cboLengthOfStay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel30)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHistoryLayout.createSequentialGroup()
+                .addContainerGap(28, Short.MAX_VALUE)
+                .addComponent(jLabel29)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cboTimesHomeless, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cboLengthNoSay1)
-                    .addComponent(cboLengthNoSay2))
+                .addComponent(txtHomelessStart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlHistoryLayout.createSequentialGroup()
-                        .addComponent(jLabel31)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cboHousingStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(cboLengthNoSay3)
-                    .addComponent(cboLengthNoSay4))
-                .addContainerGap(151, Short.MAX_VALUE))
-        );
-
-        tabs.addTab("History & Check In", pnlHistory);
-
-        jLabel19.setText("Last Zip");
-
-        jLabel20.setText("Continuum of Care Code");
-
-        jLabel21.setText("NC County of Service");
-
-        jLabel22.setText("County of Residence");
-
-        jLabel23.setText("City of Residence");
-
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel20)
-                    .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jtxtLastZip, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtxtCOCCode, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtxtNCCountServ, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtxtCountRes, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtxtCityRes, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(490, Short.MAX_VALUE))
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel19)
-                    .addComponent(jtxtLastZip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel20)
-                    .addComponent(jtxtCOCCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel21)
-                    .addComponent(jtxtNCCountServ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel22)
-                    .addComponent(jtxtCountRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel23)
-                    .addComponent(jtxtCityRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(267, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout pnlHMISLayout = new javax.swing.GroupLayout(pnlHMIS);
-        pnlHMIS.setLayout(pnlHMISLayout);
-        pnlHMISLayout.setHorizontalGroup(
-            pnlHMISLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlHMISLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        pnlHMISLayout.setVerticalGroup(
-            pnlHMISLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlHMISLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        tabs.addTab("HMIS Info", pnlHMIS);
+        tabs.addTab("History", pnlHistory);
 
         btnNextPage.setText("Next >");
         btnNextPage.addActionListener(new java.awt.event.ActionListener() {
@@ -1205,6 +1147,11 @@ public class NewResidentForm extends javax.swing.JFrame {
         });
 
         btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
 
         btnSaveResident.setText("Save Resident");
         btnSaveResident.addActionListener(new java.awt.event.ActionListener() {
@@ -1223,17 +1170,17 @@ public class NewResidentForm extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tabs)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnCancel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnPrevPage)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnNextPage)
-                        .addGap(148, 148, 148)
-                        .addComponent(btnSaveResident)))
-                .addContainerGap())
+                        .addGap(329, 329, 329)
+                        .addComponent(btnSaveResident))
+                    .addComponent(tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 1050, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1241,8 +1188,8 @@ public class NewResidentForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tabs)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnCancel)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1257,257 +1204,8 @@ public class NewResidentForm extends javax.swing.JFrame {
 
     
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        String sql = "";
-        
-        // Declare arrays for options from database to populate selection controls on the form
-        String result = ""; 
-        
-        try {
-            conn = DriverManager.getConnection(myDBURL);
-            statement = conn.createStatement();
-
-            // **********************************************
-            // *******    populate Gender Combo Box   *******
-            // **********************************************
-            
-            //create result set for query results 
-            ResultSet custResultsOfQuery = null;
-
-            //clear any current options from Gender combo box
-            cboGender.removeAllItems();
-                        
-            // populate Gender combo box
-            sql = "select Gender_Description from Gender";
-
-            custResultsOfQuery = statement.executeQuery(sql); //Remember to tell them its Execute Query like Fig 28.23
-
-            ResultSetMetaData meta = custResultsOfQuery.getMetaData();
-
-            cboGender.addItem("");
-            while(custResultsOfQuery.next()) {
-                result = custResultsOfQuery.getObject(1).toString();
-                
-                if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
-                    cboGender.addItem(result);
-                }
-            }
-            
-            // **********************************************
-            // *******     populate Race Combo Box    *******
-            // **********************************************
-            
-            // clear result set 
-            custResultsOfQuery = null; 
-                        
-            //clear any current options from Race combo box
-            cboRace.removeAllItems();
-                        
-            // populate Gender combo box
-            sql = "select Race_Description from Resident_Race";
-
-            custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
-
-            cboRace.addItem("");
-            while(custResultsOfQuery.next()) {
-                result = custResultsOfQuery.getObject(1).toString();
-                
-                if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
-                    cboRace.addItem(result);
-                }
-            }
-            
-            
-            // **********************************************
-            // *******  populate Ethnicity Combo Box  *******
-            // **********************************************
-            
-            // clear result set 
-            custResultsOfQuery = null; 
-                        
-            //clear any current options from Ethnicity combo box
-            cboEthnicity.removeAllItems();
-                        
-            // populate Gender combo box
-            sql = "select Ethnicity_Description from Resident_Ethnicity";
-
-            custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
-
-            cboEthnicity.addItem("");
-            while(custResultsOfQuery.next()) {
-                result = custResultsOfQuery.getObject(1).toString();
-                
-                if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
-                    cboEthnicity.addItem(result);
-                }
-            }      
-            
-            
-            // ****************************************************
-            // *******  populate HealthInsurance Combo Box  *******
-            // ****************************************************
-            
-            //clear any current options from Disabling Condition combo box
-            cboHealthInsurance.removeAllItems();
-            
-            // populate DisablingCondition combo box
-            cboHealthInsurance.addItem("");
-            cboHealthInsurance.addItem("Yes");
-            cboHealthInsurance.addItem("No");
-            cboHealthInsurance.addItem("Doesn't know");
-            cboHealthInsurance.addItem("Prefers not to say");
-
-
-            // *******************************************************
-            // *******  populate DisablingCondition Combo Box  *******
-            // *******************************************************
-            
-            //clear any current options from Disabling Condition combo box
-            cboDisablingCondition.removeAllItems();
-            
-            // populate DisablingCondition combo box
-            cboDisablingCondition.addItem("");
-            cboDisablingCondition.addItem("Yes");
-            cboDisablingCondition.addItem("No");
-            cboDisablingCondition.addItem("Doesn't know");
-            cboDisablingCondition.addItem("Prefers not to say");
-
-            // *******************************************************
-            // *******  populate Military Veteran Combo Box  *******
-            // *******************************************************
-            
-            //clear any current options from Disabling Condition combo box
-            cboMilitary.removeAllItems();
-            
-            // populate DisablingCondition combo box
-            cboMilitary.addItem("");
-            cboMilitary.addItem("Yes");
-            cboMilitary.addItem("No");
-
-            // **************************************************
-            // *******  populate DisabilityType List Box  *******
-            // **************************************************
-            
-            lstDisabilityTypes.setSelectionModel(new DefaultListSelectionModel() {
-                @Override
-                public void setSelectionInterval(int index0, int index1) {
-                    if(super.isSelectedIndex(index0)) {
-                        super.removeSelectionInterval(index0, index1);
-                    }
-                    else {
-                        super.addSelectionInterval(index0, index1);
-                    }
-                }
-            });
-            
-            // clear result set 
-            custResultsOfQuery = null; 
-                        
-            DefaultListModel disabilityModel;
-            disabilityModel = new DefaultListModel(); 
-            
-            lstDisabilityTypes.setModel(disabilityModel);
-            
-            //clear any current options from DisabilityType list box
-            disabilityModel.clear();
-                        
-            // populate Gender combo box
-            sql = "	SELECT Disability_Description FROM [DB_A47087_smgroup].[dbo].[Visit_Disability_Option]";
-
-            custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
-
-            while(custResultsOfQuery.next()) {
-                result = custResultsOfQuery.getObject(1).toString();
-                
-                if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
-                    disabilityModel.addElement(result);
-                }
-            }
-            
-            
-            // **************************************************
-            // *******  populate InsuranceTypes List Box  *******
-            // **************************************************
-            lstInsuranceTypes.setSelectionModel(new DefaultListSelectionModel() {
-                @Override
-                public void setSelectionInterval(int index0, int index1) {
-                    if(super.isSelectedIndex(index0)) {
-                        super.removeSelectionInterval(index0, index1);
-                    }
-                    else {
-                        super.addSelectionInterval(index0, index1);
-                    }
-                }
-            });
-            
-            
-            // clear result set 
-            custResultsOfQuery = null; 
-                        
-            DefaultListModel insuranceModel;
-            insuranceModel = new DefaultListModel(); 
-            
-            lstInsuranceTypes.setModel(insuranceModel);
-            
-            //clear any current options from Insurance list box
-            insuranceModel.clear();
-                        
-            // populate Gender combo box
-            sql = "SELECT Insurance_Description FROM [DB_A47087_smgroup].[dbo].[Visit_Health_Insurance_Type_Option]";
-
-            custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
-
-            while(custResultsOfQuery.next()) {
-                result = custResultsOfQuery.getObject(1).toString();
-                
-                if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
-                    insuranceModel.addElement(result);
-                }
-            }
-
-            // **************************************************
-            // *******   populate Monthly Income Table    *******
-            // **************************************************
-            // clear result set 
-            Vector<Object> data = new Vector<Object>();
-            Vector<String> columnNames = new Vector<String>();
-            custResultsOfQuery = null;
-                        
-            // populate Gender combo box
-            sql = "SELECT Source_Income_Name FROM [DB_A47087_smgroup].[dbo].[Visit_Source_Of_Income_Monthly_Option]";
-
-            custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
-            
-            columnNames.addElement("Source of Income (Monthly)");
-            columnNames.addElement("Amount from Source");
-            
-            while(custResultsOfQuery.next()) {
-                result = custResultsOfQuery.getObject(1).toString();
-                data.add(result);
-                
-            }
-            while (custResultsOfQuery.next()) 
-            {
-                Vector<Object> vector = new Vector<Object>();
-                vector.addElement(custResultsOfQuery.getObject(1));
-                vector.addElement(0);
-                data.add(vector);
-            }
-            
-            DefaultTableModel incomeModel = new DefaultTableModel(data,columnNames);
-            tblIncome.setModel(incomeModel);
-            
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "" + "Error Loading Data", JOptionPane.INFORMATION_MESSAGE);
-            
-        } finally {
-            try {
-                conn.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(ManagementPortal.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        populateComponents(); 
     }//GEN-LAST:event_formWindowOpened
-
     
     private void btnNextPageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextPageActionPerformed
         //move to the next panel
@@ -1682,38 +1380,98 @@ public class NewResidentForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cboGenderItemStateChanged
 
-    private void txtLastNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLastNameKeyTyped
-        // disable the radio buttons if there's text entered into the text field
-        if (txtLastName.getText().equals("")){
-            radLastNameUnknown.setEnabled(true);
-            radLastNameNoSay.setEnabled(true);
-        } else {
-            grpLastName.clearSelection();
-            radLastNameUnknown.setEnabled(false);
-            radLastNameNoSay.setEnabled(false);
+    private void cboIncomeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboIncomeItemStateChanged
+        // disable the tabs if the combo box is not set to "Yes"
+        if (cboIncome.getItemCount() > 0){
+            // if the box is set to "Yes" then enable the tabs and pull in values
+            if (cboIncome.getSelectedItem().equals("Yes")){
+                pnlIncomeTabs.setEnabled(true);
+                
+                
+                String sql = "";
+                DefaultTableModel incomeTableModel;
+                DefaultTableModel nonCashTableModel;
+                TableColumnModel incomeColumnModel; 
+                TableColumnModel nonCashColumnModel; 
+                
+                NumberFormat curr = NumberFormat.getCurrencyInstance();
+                
+
+                try {
+                    conn = DriverManager.getConnection(myDBURL);
+                    statement = conn.createStatement();
+
+                    //create result set for query results 
+                    ResultSet custResultsOfQuery = null;
+                    
+
+                    // **************************************************
+                    // *******   populate Monthly Income Table    *******
+                    // **************************************************
+                    // clear result set 
+                    custResultsOfQuery = null;
+
+                    // populate Gender combo box
+                    sql = "SELECT Source_Description FROM [DB_A47087_smgroup].[dbo].[Resident_Source_Of_Income_Monthly_Option]";
+
+                    custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
+
+                    resultSetToTableModel(custResultsOfQuery, tblIncome, "Source of Monthly Income");
+                    incomeTableModel = (DefaultTableModel) tblIncome.getModel();
+                    incomeTableModel.addColumn("Amount from Source");
+                    incomeColumnModel = tblIncome.getColumnModel();
+                    //setUpTable(tblIncome);
+                    
+                    // tblIncome.getColumnModel().getColumn(1).setCellRenderer(new NumberRenderer( NumberFormat.getCurrencyInstance() ));
+                    // incomeColumnModel.getColumn(1).setCellRenderer(NumberRenderer.getCurrencyRenderer());
+                    
+                                        
+                    tblIncome.getModel().addTableModelListener((TableModelEvent e) -> {
+                        txtMonthlyIncome.setText("Total Income from Monthly Income Sources: " + curr.format(getTableSum(tblIncome, 1)));
+                    });
+                    
+                    
+                    // **************************************************
+                    // *******   populate Non-Cash Benefit Table  *******
+                    // **************************************************
+                    // clear result set 
+                    custResultsOfQuery = null;
+
+                    // populate Gender combo box
+                    sql = "SELECT Source_Description FROM [DB_A47087_smgroup].[dbo].[Resident_Source_Of_Non_Cash_Benefit_Monthly_Option]";
+
+                    custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
+
+                    resultSetToTableModel(custResultsOfQuery, tblNonCashIncome, "Source of Monthly Income");
+                    incomeTableModel = (DefaultTableModel) tblNonCashIncome.getModel();
+                    incomeTableModel.addColumn("Amount from Source");
+                    incomeColumnModel = tblNonCashIncome.getColumnModel();
+                    //setUpTable(tblNonCashIncome);
+                    
+                    tblNonCashIncome.getModel().addTableModelListener((TableModelEvent e) -> {
+                        txtNonCashIncome.setText("Total Income from Non-Cash Benefit Sources: " + curr.format(getTableSum(tblNonCashIncome, 1)));
+                    });
+
+                    
+
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "" + "Error Loading Data", JOptionPane.INFORMATION_MESSAGE);
+
+                } finally {
+                    try {
+                        conn.close();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(ManagementPortal.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                
+            // if the box is not set to "Yes" then clear out the tables and disable the tabs
+            } else {
+                pnlIncomeTabs.setSelectedIndex(0);
+                pnlIncomeTabs.setEnabled(false);
+            }
         }
-    }//GEN-LAST:event_txtLastNameKeyTyped
-
-    private void txtFirstNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFirstNameKeyTyped
-        // disable the radio buttons if there's text entered into the text field
-        if (txtFirstName.getText().equals("")){
-            radFirstNameUnknown.setEnabled(true);
-            radFirstNameNoSay.setEnabled(true);
-        } else {
-            grpFirstName.clearSelection();
-            radFirstNameUnknown.setEnabled(false);
-            radFirstNameNoSay.setEnabled(false);
-        }
-
-    }//GEN-LAST:event_txtFirstNameKeyTyped
-
-    private void cboHealthInsurance1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboHealthInsurance1ItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cboHealthInsurance1ItemStateChanged
-
-    private void cboHealthInsurance2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboHealthInsurance2ItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cboHealthInsurance2ItemStateChanged
+    }//GEN-LAST:event_cboIncomeItemStateChanged
 
     private void tabsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabsStateChanged
         if (tabs.getSelectedIndex() == 0) {
@@ -1728,6 +1486,55 @@ public class NewResidentForm extends javax.swing.JFrame {
             btnNextPage.setEnabled(true);
         }
     }//GEN-LAST:event_tabsStateChanged
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        // load Main Menu
+        this.setVisible(false);
+        MainMenu menu = new MainMenu(); 
+        menu.setVisible(true); 
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void cboHomelessStatusItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboHomelessStatusItemStateChanged
+        // disable the radio buttons if the combo box has a value selected
+        if (cboHomelessStatus.getItemCount() > 0){
+            if (cboHomelessStatus.getSelectedItem().equals("")){
+                radHomelessStatusUnknown.setEnabled(true);
+                radHomelessStatusNoSay.setEnabled(true);
+            } else {
+                grpHomelessStatus.clearSelection();
+                radHomelessStatusUnknown.setEnabled(false);
+                radHomelessStatusNoSay.setEnabled(false);
+            }
+        }
+    }//GEN-LAST:event_cboHomelessStatusItemStateChanged
+
+    private void cboLengthOfStayItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboLengthOfStayItemStateChanged
+        // disable the radio buttons if the combo box has a value selected
+        if (cboLengthOfStay.getItemCount() > 0){
+            if (cboLengthOfStay.getSelectedItem().equals("")){
+                radLengthUnknown.setEnabled(true);
+                radLengthNoSay.setEnabled(true);
+            } else {
+                grpLength.clearSelection();
+                radLengthUnknown.setEnabled(false);
+                radLengthNoSay.setEnabled(false);
+            }
+        }
+    }//GEN-LAST:event_cboLengthOfStayItemStateChanged
+
+    private void cboTimesHomelessItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboTimesHomelessItemStateChanged
+        // disable the radio buttons if the combo box has a value selected
+        if (cboTimesHomeless.getItemCount() > 0){
+            if (cboTimesHomeless.getSelectedItem().equals("")){
+                radTimesHomelessUnknown.setEnabled(true);
+                radTimesHomelessNoSay.setEnabled(true);
+            } else {
+                grpTimesHomeless.clearSelection();
+                radTimesHomelessUnknown.setEnabled(false);
+                radTimesHomelessNoSay.setEnabled(false);
+            }
+        }
+    }//GEN-LAST:event_cboTimesHomelessItemStateChanged
   
     private String getGenderLookupValue(String g) {
         String gender = ""; 
@@ -1766,12 +1573,12 @@ public class NewResidentForm extends javax.swing.JFrame {
             //create result set for query results 
             ResultSet custResultsOfQuery = null;            
 
-            // populate Gender combo box
+            // get race code from description
             sql = "select Race_Name from Resident_Race where Race_Description = '" + r + "'";
-            custResultsOfQuery = statement.executeQuery(sql); //Remember to tell them its Execute Query like Fig 28.23
+            custResultsOfQuery = statement.executeQuery(sql); 
             custResultsOfQuery.next();
             race = custResultsOfQuery.getObject(1).toString();
-            JOptionPane.showMessageDialog(null, "SQL Sent: " + sql + "/nRace retrieved: " + race, "SQL", JOptionPane.INFORMATION_MESSAGE);
+            //JOptionPane.showMessageDialog(null, "SQL Sent: " + sql + "/nRace retrieved: " + race, "SQL", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
             race = ex.getMessage();
         }
@@ -1789,7 +1596,7 @@ public class NewResidentForm extends javax.swing.JFrame {
             //create result set for query results 
             ResultSet custResultsOfQuery = null;            
             
-            // populate Gender combo box
+            // populate Ethnicity combo box
             sql = "select Ethnicity_Name from Resident_Ethnicity where Ethnicity_Description = '" + eth + "'";
 
             custResultsOfQuery = statement.executeQuery(sql); //Remember to tell them its Execute Query like Fig 28.23
@@ -1802,8 +1609,57 @@ public class NewResidentForm extends javax.swing.JFrame {
         return ethnicity;
     }
         
-    private String getMilitaryLookupValue(String mil) {
-        String military = ""; 
+    private String getBooleanLookupValue(String sel) {
+        String selection; 
+        String sql; 
+        
+        try {
+            conn = DriverManager.getConnection(myDBURL);
+            statement = conn.createStatement();
+            
+            //create result set for query results 
+            ResultSet custResultsOfQuery = null;            
+            
+            // populate Gender combo box
+            sel = sel.replaceAll("'", "''");
+            sql = "select Client_Choice from Resident_Yes_No_Doesnt_Know_Refused where upper(Client_Choice_Description) = upper('" + sel + "')";
+
+            custResultsOfQuery = statement.executeQuery(sql); 
+            custResultsOfQuery.next();
+            selection = custResultsOfQuery.getObject(1).toString();
+            
+        } catch (SQLException ex) {
+            selection = ex.getMessage();
+        }
+        return selection;
+    }
+    
+    private String getHomelessStatusLookupValue (String hlstat) {
+        String homelessStatus = ""; 
+        String sql = ""; 
+        
+        try {
+            conn = DriverManager.getConnection(myDBURL);
+            statement = conn.createStatement();
+            
+            //create result set for query results 
+            ResultSet custResultsOfQuery = null;
+            
+            // populate Gender combo box
+            sql = "select Homeless_History_Type from Resident_Homeless_History_Type where Homeless_Description = '" + hlstat+ "';";
+
+            custResultsOfQuery = statement.executeQuery(sql); 
+            custResultsOfQuery.next();
+            homelessStatus = custResultsOfQuery.getObject(1).toString();
+            
+        } catch (SQLException ex) {
+            homelessStatus = ex.getMessage();
+        }
+        return homelessStatus;
+    }
+    
+    private String getLengthOfStayLookupValue (String len) {
+        String lengthOfStay = ""; 
         String sql = ""; 
         
         try {
@@ -1814,24 +1670,70 @@ public class NewResidentForm extends javax.swing.JFrame {
             ResultSet custResultsOfQuery = null;            
             
             // populate Gender combo box
-            sql = "select US_Military_Veteran_Name from Resident_US_Military_Veteran_Status where US_Military_Description = '" + mil + "'";
+            sql = "select Length_Name from Resident_Length_Of_Stay_In_Prior_Living_Situation where Length_Of_Stay_Description = '" + len+ "';";
 
-            custResultsOfQuery = statement.executeQuery(sql); //Remember to tell them its Execute Query like Fig 28.23
+            custResultsOfQuery = statement.executeQuery(sql); 
             custResultsOfQuery.next();
-            military = custResultsOfQuery.getObject(1).toString();
+            lengthOfStay = custResultsOfQuery.getObject(1).toString();
             
         } catch (SQLException ex) {
-            military = ex.getMessage();
+            lengthOfStay = ex.getMessage();
         }
-        return military;
-    }    
+        return lengthOfStay;
+    }
+    
+    private String getTimesHomelessLookupValue (String timesh) {
+        String timesHomeless = ""; 
+        String sql = ""; 
+        
+        try {
+            conn = DriverManager.getConnection(myDBURL);
+            statement = conn.createStatement();
+            
+            //create result set for query results 
+            ResultSet custResultsOfQuery = null;
+            
+            // populate Gender combo box
+            sql = "select Number_Of_Time_Homeless from Resident_Number_Of_Times_Homeless where Description = '" + timesh+ "';";
+
+            custResultsOfQuery = statement.executeQuery(sql); 
+            custResultsOfQuery.next();
+            timesHomeless = custResultsOfQuery.getObject(1).toString();
+            
+        } catch (SQLException ex) {
+            timesHomeless = ex.getMessage();
+        }
+        return timesHomeless;
+    }
+    
+    private String getHousingStatusLookupValue (String houstat) {
+        String housingStatus = ""; 
+        String sql = ""; 
+        
+        try {
+            conn = DriverManager.getConnection(myDBURL);
+            statement = conn.createStatement();
+            
+            //create result set for query results 
+            ResultSet custResultsOfQuery = null;
+            
+            // populate Gender combo box
+            sql = "select Housing_Status_Category from Resident_Housing_Status where Housing_Status_Description = '" + houstat+ "';";
+
+            custResultsOfQuery = statement.executeQuery(sql); 
+            custResultsOfQuery.next();
+            housingStatus = custResultsOfQuery.getObject(1).toString();
+            
+        } catch (SQLException ex) {
+            housingStatus = ex.getMessage();
+        }
+        return housingStatus;
+    }
     
     private void saveResident(){
         // Check for valid resident information
         String fName = "";
-        Boolean fNameError = false; 
         String lName = ""; 
-        Boolean lNameError = false; 
         String add = jtxtAdd.getText().trim();  
         String add2 = jtxtAdd2.getText().trim(); 
         String c = jtxtCity.getText().trim(); 
@@ -1841,60 +1743,68 @@ public class NewResidentForm extends javax.swing.JFrame {
         String phneAlt = txtPhoneAlt.getText().trim();  
         String email = jtxtEmail.getText().trim(); 
         String bDate = txtDateOfBirth.getText().trim(); 
-        Boolean bDateError = false; 
         String ssn = txtSSN.getText().trim(); 
-        Boolean ssnError = false; 
-        String gen = cboGender.getSelectedItem().toString().trim(); 
-        Boolean genError = false; 
+        String gen = cboGender.getSelectedItem().toString().trim();
         String emergencyP = txtEmPhone.getText().trim(); 
         String emergencyN = jtxtEmName.getText().trim(); 
-        String vet = cboMilitary.getSelectedItem().toString().trim(); 
-        Boolean vetError = false; 
+        String vet = cboMilitary.getSelectedItem().toString().trim();
         String r = cboRace.getSelectedItem().toString().trim();
-        Boolean rError = false; 
         String eth = cboEthnicity.getSelectedItem().toString().trim(); 
-        Boolean ethError = false; 
-        
+        String dcon = "";
+        String ins = "";
+        String hlstat = "";
+        String len = "";
+        String hlDate; 
+        String timesh = "";
+        String houstat = "";
+        String inc = "";
+        String lzip = jtxtLastZip.getText().trim(); 
+        String coc = jtxtCOCCode.getText().trim(); 
+        String counts = jtxtNCCountServ.getText().trim(); 
+        String countr = jtxtCountRes.getText().trim(); 
+        String cityr = jtxtCityRes.getText().trim(); 
+
+
+
         //get first name from form (no lookup table needed)
-        if (radFirstNameNoSay.isSelected()) {
-            fName = "Client refused";
-        } else if (radFirstNameUnknown.isSelected()) {
-            fName = "Client doesn't know";
-        } else if (txtFirstName.getText().trim().isEmpty()) {
-            fNameError = true; 
+        if (txtFirstName.getText().trim().isEmpty()) {
+            //error message
         } else {
             fName = txtFirstName.getText().trim();
         }
         
         //get last name from form (no lookup table needed)
-        if (radLastNameNoSay.isSelected()) {
-            lName = "Client refused";
-        } else if (radLastNameUnknown.isSelected()) {
-            lName = "Client doesn't know";
-        } else if (txtLastName.getText().trim().isEmpty()) {
-            lNameError = true; 
+        if (txtLastName.getText().trim().isEmpty()) {
+            //error message
         } else {
             lName = txtLastName.getText().trim();
         }
         
         //get birth date from form (no lookup table needed)
         if (radDateOfBirthNoSay.isSelected()) {
-            bDate = "01/01/1901";
+            bDate = "Client doesn't know";
         } else if (radDateOfBirthUnknown.isSelected()) {
-            bDate = "01/01/1900";
+            bDate = "Client refused";
         } else if (txtDateOfBirth.getText().trim().isEmpty()) {
-            bDateError = true; 
+            //error message
         } else {
             bDate = txtDateOfBirth.getText().trim();
         }
         
+        //get birth date from form (no lookup table needed)
+        if (txtHomelessStart.getText().trim().isEmpty()) {
+            hlDate = "";
+        } else {
+            hlDate = txtHomelessStart.getText().trim();
+        }
+        
         //get social from form (no lookup table needed)
         if (radSSNNoSay.isSelected()) {
-            ssn = "1";
+            ssn = "111-11-1111";
         } else if (radSSNUnknown.isSelected()) {
-            ssn = "0";
+            ssn = "000-00-0000";
         } else if (txtSSN.getText().trim().isEmpty()) {
-            ssnError = true; 
+            //error message
         } else {
             ssn = txtSSN.getText().trim();
         }
@@ -1905,7 +1815,7 @@ public class NewResidentForm extends javax.swing.JFrame {
         } else if (radGenderUnknown.isSelected()) {
             gen = getGenderLookupValue("Client doesn''t know");
         } else if (cboGender.getSelectedItem().toString().equals("")) {
-            genError = true; 
+            //error message
         } else {
             //JOptionPane.showMessageDialog(null, "Gender: " + cboGender.getSelectedItem(), "Gender Info", JOptionPane.INFORMATION_MESSAGE);
             gen = getGenderLookupValue(cboGender.getSelectedItem().toString());
@@ -1914,13 +1824,13 @@ public class NewResidentForm extends javax.swing.JFrame {
         
         //get military status from form (get lookup value) 
         if (radMilitaryNoSay.isSelected()) {
-            vet = getMilitaryLookupValue("Client refused");
+            vet = getBooleanLookupValue("Client refused");
         } else if (radMilitaryUnknown.isSelected()) {
-            vet = getMilitaryLookupValue("Client doesn''t know");
+            vet = getBooleanLookupValue("Client doesn't know");
         } else if (cboMilitary.getSelectedItem().toString().equals("")) {
-            vetError = true; 
+            //error message
         } else {
-            vet = getMilitaryLookupValue(cboMilitary.getSelectedItem().toString());
+            vet = getBooleanLookupValue(cboMilitary.getSelectedItem().toString());
         }
         
         //get race from form (get lookup value) 
@@ -1929,7 +1839,7 @@ public class NewResidentForm extends javax.swing.JFrame {
         } else if (radRaceUnknown.isSelected()) {
             r = getRaceLookupValue("Client doesn''t know");
         } else if (cboRace.getSelectedItem().toString().equals("")) {
-            rError = true; 
+            //error message
         } else {
             r = getRaceLookupValue(cboRace.getSelectedItem().toString());
         }
@@ -1940,11 +1850,73 @@ public class NewResidentForm extends javax.swing.JFrame {
         } else if (radEthnicityUnknown.isSelected()) {
             eth = getEthnicityLookupValue("Client doesn''t know");
         } else if (cboEthnicity.getSelectedItem().toString().equals("")) {
-            ethError = true; 
+            //error message
         } else {
             eth = getEthnicityLookupValue(cboEthnicity.getSelectedItem().toString());
         }
         
+        //get Disabling Condition from form
+        if (cboDisablingCondition.getSelectedItem().toString().equals("")) {
+            //error message
+        } else {
+            dcon = getBooleanLookupValue(cboDisablingCondition.getSelectedItem().toString());
+        }
+        
+        //get Health Insurance from form
+        if (cboHealthInsurance.getSelectedItem().toString().equals("")) {
+            //error message
+        } else {
+            ins = getBooleanLookupValue(cboHealthInsurance.getSelectedItem().toString());
+        }
+        
+        //get Homeless History from form
+        if (radHomelessStatusNoSay.isSelected()) {
+            hlstat = getHomelessStatusLookupValue("Client refused");
+        } else if (radHomelessStatusUnknown.isSelected()) {
+            hlstat = getHomelessStatusLookupValue("Client doesn''t know");
+        } else if (cboHomelessStatus.getSelectedItem().toString().equals("")) {
+            //error message
+        } else {
+            hlstat = getHomelessStatusLookupValue(cboHomelessStatus.getSelectedItem().toString());
+        }
+        
+        //get length of stay from form
+        if (radLengthNoSay.isSelected()) {
+            len = getLengthOfStayLookupValue("Client refused");
+        } else if (radLengthUnknown.isSelected()) {
+            len = getLengthOfStayLookupValue("Client doesn''t know");
+        } else if (cboLengthOfStay.getSelectedItem().toString().equals("")) {
+            //error message
+        } else {
+            len = getLengthOfStayLookupValue(cboLengthOfStay.getSelectedItem().toString());
+        }
+        
+        //get Times Homeless from form
+        if (radTimesHomelessNoSay.isSelected()) {
+            timesh = getTimesHomelessLookupValue("Client refused");
+        } else if (radTimesHomelessUnknown.isSelected()) {
+            timesh = getTimesHomelessLookupValue("Client doesn''t know");
+        } else if (cboTimesHomeless.getSelectedItem().toString().equals("")) {
+            //error message
+        } else {
+            timesh = getTimesHomelessLookupValue(cboTimesHomeless.getSelectedItem().toString());
+        }
+        
+        //get Housing Status from form
+        if (cboHousingStatus.getSelectedItem().toString().equals("")) {
+            //error message
+        } else {
+            houstat = getHousingStatusLookupValue(cboHousingStatus.getSelectedItem().toString());
+        }
+        
+        //get Income y/n from form
+        if (cboIncome.getSelectedItem().toString().equals("")) {
+            //error message
+        } else {
+            inc = getBooleanLookupValue(cboIncome.getSelectedItem().toString());
+        }
+                
+
         // cleanse phone number 
         if (phne.equals("(___) ___-____")) {
             phne = "";
@@ -1965,11 +1937,15 @@ public class NewResidentForm extends javax.swing.JFrame {
         if (bDate.equals("__/__/____")) {
             bDate = "";
         }
-        
+        // cleanse homeless start date 
+        if (hlDate.equals("__/__/____")) {
+            hlDate = "";    
+        }
         
         try {
             conn = DriverManager.getConnection(myDBURL);
             statement = conn.createStatement();
+            
             String values = "Sending SQL with values: "; 
             values += "\nFirst Name: " + fName; 
             values += "\nLast Name: " + lName; 
@@ -1989,12 +1965,35 @@ public class NewResidentForm extends javax.swing.JFrame {
             values += "\nVeteran Status: " + vet; 
             values += "\nRace: " + r; 
             values += "\nEthnicity: " + eth;
+            values += "\nCurrent Length of Stay: " + "0";
+            values += "\nDisabling Condition Y/N: " + dcon;
+            values += "\nDisability Type: " + "NULL";
+            values += "\nInsurance Coverage Y/N: " + ins;
+            values += "\nInsurance Type: " + "NULL";
+            values += "\nHomeless History: " + hlstat;
+            values += "\nLength Of Stay In Prior Living Situation: " + len;
+            values += "\nHomeless Start Date: " + hlDate;
+            values += "\nNumber Of Times Homeless: " + timesh;
+            values += "\nHousing Status: " + houstat;
+            values += "\nLast Known Zip Code: " + lzip;
+            values += "\nCOC Code: " + coc;
+            values += "\nNC County Of Service: " + counts;
+            values += "\nCounty Of Residence: " + countr;
+            values += "\nCity Of Residence: " + cityr;
+            values += "\nCurrently receiving income from any Source: " + inc;
+            values += "\nSource Of Income Monthly Name:" + "NULL";
+            values += "\nSource Of Non Cash Benefit Monthly Name: " + "NULL";
             
-            JOptionPane.showMessageDialog(null, values, "Values", JOptionPane.INFORMATION_MESSAGE);
-            
+            //TestOptionPane11 dbg = new TestOptionPane11(values);
+
             Resident newRes = new Resident();
             
-            newRes.AddNewResident(conn,statement,fName,lName,add,add2,c,st,zp,phne,phneAlt,email,bDate,ssn,gen,emergencyP,emergencyN,vet,r,eth);
+            newRes.AddNewResident(conn,statement,fName,lName,add,add2,c,st,zp,phne,phneAlt,email,bDate,ssn,gen,emergencyP,emergencyN,vet,r,eth,dcon,ins,hlstat,len,hlDate,timesh,houstat,lzip,coc,counts,countr,cityr,inc);
+            
+            saveDisability(conn,statement,newRes);
+            saveInsurance(conn,statement, newRes); 
+            saveMonthlyIncome(conn,statement, tblIncome, newRes); 
+            saveNonCashIncome(conn,statement, tblNonCashIncome, newRes); 
             
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "" + "Error Loading Data", JOptionPane.INFORMATION_MESSAGE);
@@ -2008,8 +2007,8 @@ public class NewResidentForm extends javax.swing.JFrame {
         }
     }
     
-    /*
     private void saveVisit(){
+        /*
         // Check for valid visit information
         String date_CheckIn;        
         String refer_other_org;     
@@ -2188,12 +2187,496 @@ public class NewResidentForm extends javax.swing.JFrame {
                 Logger.getLogger(ManagementPortal.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        */
     }
-    */
     
-        /**
-     * @param args the command line arguments
-     */
+    private void populateComponents(){
+        String sql = "";
+        
+        // Declare arrays for options from database to populate selection controls on the form
+        String result = ""; 
+        
+        try {
+            conn = DriverManager.getConnection(myDBURL);
+            statement = conn.createStatement();
+
+            // **********************************************
+            // *******    populate Gender Combo Box   *******
+            // **********************************************
+            
+            //create result set for query results 
+            ResultSet custResultsOfQuery = null;
+
+            //clear any current options from Gender combo box
+            cboGender.removeAllItems();
+                        
+            // populate Gender combo box
+            sql = "select Gender_Description from Gender";
+
+            custResultsOfQuery = statement.executeQuery(sql); //Remember to tell them its Execute Query like Fig 28.23
+
+            ResultSetMetaData meta = custResultsOfQuery.getMetaData();
+
+            cboGender.addItem("");
+            while(custResultsOfQuery.next()) {
+                result = custResultsOfQuery.getObject(1).toString();
+                
+                if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
+                    cboGender.addItem(result);
+                }
+            }
+            //JOptionPane.showMessageDialog(null, "Populated Gender", "" + "Got this one", JOptionPane.INFORMATION_MESSAGE);
+            
+            // **********************************************
+            // *******     populate Race Combo Box    *******
+            // **********************************************
+            
+            // clear result set 
+            custResultsOfQuery = null; 
+                        
+            //clear any current options from Race combo box
+            cboRace.removeAllItems();
+                        
+            // populate Gender combo box
+            sql = "select Race_Description from Resident_Race";
+
+            custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
+
+            cboRace.addItem("");
+            while(custResultsOfQuery.next()) {
+                result = custResultsOfQuery.getObject(1).toString();
+                
+                if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
+                    cboRace.addItem(result);
+                }
+            }
+            //JOptionPane.showMessageDialog(null, "Populated Race", "" + "Got this one", JOptionPane.INFORMATION_MESSAGE);
+            
+            
+            // **********************************************
+            // *******  populate Ethnicity Combo Box  *******
+            // **********************************************
+            
+            // clear result set 
+            custResultsOfQuery = null; 
+                        
+            //clear any current options from Ethnicity combo box
+            cboEthnicity.removeAllItems();
+                        
+            // populate Gender combo box
+            sql = "select Ethnicity_Description from Resident_Ethnicity";
+
+            custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
+
+            cboEthnicity.addItem("");
+            while(custResultsOfQuery.next()) {
+                result = custResultsOfQuery.getObject(1).toString();
+                
+                if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
+                    cboEthnicity.addItem(result);
+                }
+            }
+            //JOptionPane.showMessageDialog(null, "Populated Ethnicity", "" + "Got this one", JOptionPane.INFORMATION_MESSAGE);
+            
+            // **************************************************
+            // *******  populate DisabilityType List Box  *******
+            // **************************************************
+            
+            lstDisabilityTypes.setSelectionModel(new DefaultListSelectionModel() {
+                @Override
+                public void setSelectionInterval(int index0, int index1) {
+                    if(super.isSelectedIndex(index0)) {
+                        super.removeSelectionInterval(index0, index1);
+                    }
+                    else {
+                        super.addSelectionInterval(index0, index1);
+                    }
+                }
+            });
+            
+            // clear result set 
+            custResultsOfQuery = null; 
+                        
+            DefaultListModel disabilityModel;
+            disabilityModel = new DefaultListModel(); 
+            
+            lstDisabilityTypes.setModel(disabilityModel);
+            
+            //clear any current options from DisabilityType list box
+            disabilityModel.clear();
+                        
+            // populate Gender combo box
+            sql = "SELECT Disability_Description FROM [DB_A47087_smgroup].[dbo].[Resident_Disability_Option]";
+
+            custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
+
+            while(custResultsOfQuery.next()) {
+                result = custResultsOfQuery.getObject(1).toString();
+                
+                if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
+                    disabilityModel.addElement(result);
+                }
+            }
+            //JOptionPane.showMessageDialog(null, "Populated Disability Types", "" + "Got this one", JOptionPane.INFORMATION_MESSAGE);
+            
+            // **************************************************
+            // *******  populate InsuranceTypes List Box  *******
+            // **************************************************
+            lstInsuranceTypes.setSelectionModel(new DefaultListSelectionModel() {
+                @Override
+                public void setSelectionInterval(int index0, int index1) {
+                    if(super.isSelectedIndex(index0)) {
+                        super.removeSelectionInterval(index0, index1);
+                    }
+                    else {
+                        super.addSelectionInterval(index0, index1);
+                    }
+                }
+            });
+                        
+            // clear result set 
+            custResultsOfQuery = null; 
+                        
+            DefaultListModel insuranceModel;
+            insuranceModel = new DefaultListModel(); 
+            
+            lstInsuranceTypes.setModel(insuranceModel);
+            
+            //clear any current options from Insurance list box
+            insuranceModel.clear();
+                        
+            // populate Insurance list box
+            sql = "SELECT Insurance_Description FROM [DB_A47087_smgroup].[dbo].[Resident_Health_Insurance_Type_Option]";
+
+            custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
+
+            while(custResultsOfQuery.next()) {
+                result = custResultsOfQuery.getObject(1).toString();
+                insuranceModel.addElement(result);
+            }
+            //JOptionPane.showMessageDialog(null, "Populated Insurance Types", "" + "Got this one", JOptionPane.INFORMATION_MESSAGE);
+            
+            // **********************************************
+            // **** populate Homeless History Combo Box  ****
+            // **********************************************
+            
+            // clear result set 
+            custResultsOfQuery = null; 
+                        
+            //clear any current options from Homeless History combo box
+            cboHomelessStatus.removeAllItems();
+                        
+            // populate Homeless History combo box
+            sql = "select Homeless_Description from Resident_Homeless_History_Type";
+
+            custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
+
+            cboHomelessStatus.addItem("");
+            while(custResultsOfQuery.next()) {
+                result = custResultsOfQuery.getObject(1).toString();
+                
+                if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
+                    cboHomelessStatus.addItem(result);
+                }
+            }
+            //JOptionPane.showMessageDialog(null, "Populated Homeless History", "" + "Got this one", JOptionPane.INFORMATION_MESSAGE);
+            
+            // **********************************************
+            // ***** populate Length of Stay Combo Box  *****
+            // **********************************************
+            
+            // clear result set 
+            custResultsOfQuery = null; 
+                        
+            //clear any current options from Length of Stay combo box
+            cboLengthOfStay.removeAllItems();
+                        
+            // populate Length of Stay combo box
+            sql = "select Length_Of_Stay_Description from Resident_Length_of_Stay_In_Prior_Living_Situation";
+
+            custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
+
+            cboLengthOfStay.addItem("");
+            while(custResultsOfQuery.next()) {
+                result = custResultsOfQuery.getObject(1).toString();
+                
+                if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
+                    cboLengthOfStay.addItem(result);
+                }
+            }
+            //JOptionPane.showMessageDialog(null, "Populated Length of Stay", "" + "Got this one", JOptionPane.INFORMATION_MESSAGE);
+            
+            // **********************************************
+            // ***** populate Times Homeless Combo Box  *****
+            // **********************************************
+            
+            // clear result set 
+            custResultsOfQuery = null; 
+                        
+            //clear any current options from Times Homeless combo box
+            cboTimesHomeless.removeAllItems();
+                        
+            // populate Times Homeless combo box
+            sql = "select Description from Resident_Number_Of_Times_Homeless";
+
+            custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
+
+            cboTimesHomeless.addItem("");
+            while(custResultsOfQuery.next()) {
+                result = custResultsOfQuery.getObject(1).toString();
+                
+                if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
+                    cboTimesHomeless.addItem(result);
+                }
+            }
+            //JOptionPane.showMessageDialog(null, "Populated Times Homeless", "" + "Got this one", JOptionPane.INFORMATION_MESSAGE);
+            
+            // **********************************************
+            // ***** populate Housing Status Combo Box  *****
+            // **********************************************
+            
+            // clear result set 
+            custResultsOfQuery = null; 
+                        
+            //clear any current options from Housing Status combo box
+            cboHousingStatus.removeAllItems();
+                        
+            // populate Housing Status combo box
+            sql = "select Housing_Status_Description from Resident_Housing_Status";
+
+            custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
+
+            cboHousingStatus.addItem("");
+            while(custResultsOfQuery.next()) {
+                result = custResultsOfQuery.getObject(1).toString();
+                
+                if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
+                    cboHousingStatus.addItem(result);
+                }
+            }
+            //JOptionPane.showMessageDialog(null, "Populated Housing Status", "" + "Got this one", JOptionPane.INFORMATION_MESSAGE);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "" + "Error Loading Data", JOptionPane.INFORMATION_MESSAGE);
+            
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ManagementPortal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        // ****************************************************
+        // *******  populate HealthInsurance Combo Box  *******
+        // ****************************************************
+
+        //clear any current options from Health Insurance combo box
+        cboHealthInsurance.removeAllItems();
+
+        // populate DisablingCondition combo box
+        getBooleanDropdownValues(cboHealthInsurance, false);
+        //JOptionPane.showMessageDialog(null, "Populated Health Insurance", "" + "Got this one", JOptionPane.INFORMATION_MESSAGE);
+
+
+        // *******************************************************
+        // *******  populate DisablingCondition Combo Box  *******
+        // *******************************************************
+
+        //clear any current options from Disabling Condition combo box
+        cboDisablingCondition.removeAllItems();
+
+        // populate DisablingCondition combo box
+        getBooleanDropdownValues(cboDisablingCondition, false);
+        //JOptionPane.showMessageDialog(null, "Populated Disabling Condition", "" + "Got this one", JOptionPane.INFORMATION_MESSAGE);
+
+        // *******************************************************
+        // *******  populate Military Veteran Combo Box  *******
+        // *******************************************************
+
+        //clear any current options from Military combo box
+        cboMilitary.removeAllItems();
+
+        // populate Military Veteran combo box
+        getBooleanDropdownValues(cboMilitary, true);
+        //JOptionPane.showMessageDialog(null, "Populated Military", "" + "Got this one", JOptionPane.INFORMATION_MESSAGE);
+
+        // *******************************************
+        // *******  populate Income Combo Box  *******
+        // *******************************************
+
+        //clear any current options from Income combo box
+        cboIncome.removeAllItems();
+
+        // populate Income combo box
+        getBooleanDropdownValues(cboIncome, false);
+        //JOptionPane.showMessageDialog(null, "Populated Income", "" + "Got this one", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    private void getBooleanDropdownValues(JComboBox box, Boolean rad) {
+        // clear result set 
+        ResultSet custResultsOfQuery = null; 
+        String sql; 
+        String result = ""; 
+        
+        //clear any current options from Housing Status combo box
+        box.removeAllItems();
+
+        try {
+            conn = DriverManager.getConnection(myDBURL);
+            statement = conn.createStatement();
+            
+            // populate Housing Status combo box
+            sql = "select Client_Choice_Description from Resident_Yes_No_Doesnt_Know_Refused order by Client_Choice_Description desc";
+
+            custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
+
+            box.addItem("");
+            while(custResultsOfQuery.next()) {
+                result = custResultsOfQuery.getObject(1).toString();
+                // add the value to the combo box if this combo box doesn't have radio buttons for "doesn't know" and "refused" 
+                // or if it does have radio buttons, but the value found isn't "client doesn't know" or "client refused" 
+                if (!rad ) {
+                    box.addItem(result);
+                } else if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
+                    box.addItem(result);
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage() , "" + "Error Loading Data", JOptionPane.INFORMATION_MESSAGE);
+            
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ManagementPortal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    private void resultSetToTableModel(ResultSet rs, JTable table, String colName) throws SQLException{
+        /*
+        //Create new table model
+        DefaultTableModel tableModel = new DefaultTableModel();
+
+        //Retrieve meta data from ResultSet
+        ResultSetMetaData metaData = rs.getMetaData();
+
+        //Get number of columns from meta data
+        int columnCount = metaData.getColumnCount();
+
+        // set column name
+        tableModel.addColumn(colName);
+
+        //Create array of Objects with size of column count from meta data
+        Object[] row = new Object[columnCount];
+
+        //Scroll through result set
+        while (rs.next()){
+            //Get object from column with specific index of result set to array of objects
+            for (int i = 0; i < columnCount; i++){
+                row[i] = rs.getObject(i+1);
+            }
+            //add row to table model with that array of objects as an argument
+            tableModel.addRow(row);
+        }
+        
+        // create object array of column names 
+        Object[] colNames = new Object[2]; 
+        for (int i = 0; i< columnCount; i++) {
+            colNames[i] = tableModel.getColumnName(i);
+        }
+        
+        //add table model to table
+        table.setModel(tableModel);
+        */
+    }
+    
+    protected boolean isCellEditable(int row, int col) {
+        return col >= 1; //column 0 is not editable everything else is
+    }
+    
+    private double getTableSum(JTable tbl, int col)  {
+        
+        double sum = 0D; 
+        for (int i = 0; i < tbl.getRowCount(); i++){
+            if (tbl.getValueAt(i,col) != null) {
+                sum += Double.parseDouble(tbl.getValueAt(i, col)+""); 
+            }
+        }
+        return sum; 
+        
+    }
+    
+    protected void setUpTable(JTable tbl) {
+
+        NumberFormat format = NumberFormat.getCurrencyInstance();
+        NumberRenderer renderer = new NumberRenderer(format);
+        TableColumnModel model = tbl.getColumnModel();
+        TableColumn column = model.getColumn(1);
+        column.setCellRenderer(renderer);
+        
+
+        NumberFormatter formatter = new NumberFormatter(format);
+        JFormattedTextField field = new JFormattedTextField(formatter);
+        CurrencyCellEditor editor = new CurrencyCellEditor(field, format);
+        column.setCellEditor(editor);
+    }
+    
+    private void saveDisability(Connection conn, Statement statement, Resident r) {
+        // lstDisabilityTypes holds values - need to send them to their tables 
+        
+        // Get the index of all the selected items
+        int[] selectedIx = lstDisabilityTypes.getSelectedIndices();
+        
+        if (selectedIx.length > 0) {
+            String[] dis = new String[selectedIx.length];
+            for (int i = 0; i < selectedIx.length; i++) {
+                dis[i] = lstDisabilityTypes.getModel().getElementAt(selectedIx[i]);    
+            }
+            r.AddDisability(conn, statement, dis);
+        }
+        
+    }
+    
+    private void saveInsurance(Connection conn, Statement statement, Resident r) {
+        // lstInsuranceTypes holds values - need to send them to their tables 
+        // Get the index of all the selected items
+        int[] selectedIx = lstInsuranceTypes.getSelectedIndices();
+        
+        if (selectedIx.length > 0) {
+            String[] ins = new String[selectedIx.length];
+            for (int i = 0; i < selectedIx.length; i++) {
+                ins[i] = lstInsuranceTypes.getModel().getElementAt(selectedIx[i]);    
+            }
+            r.AddInsurance(conn, statement, ins);
+        }
+    }
+    
+    private void saveMonthlyIncome(Connection conn, Statement statement, JTable tbl, Resident r) {
+        // tblIncome holds values - need to send them to their tables 
+        double[] inc = new double[tbl.getRowCount()];
+        String[] col = new String[tbl.getRowCount()];
+        
+        for (int i = 0; i < tbl.getRowCount(); i++){
+            inc[i] = (Double) (tbl.getValueAt(i,1));
+            col[i] = tbl.getValueAt(i,0).toString(); 
+        }
+        
+        String msg = "Amounts: "; 
+        for (int i = 0; i < tbl.getRowCount(); i++) {
+            msg += "\n" + col[i] + ": $" + inc[i];
+        }
+        TestOptionPane11 dbg = new TestOptionPane11(msg); 
+        
+    }
+    
+    private void saveNonCashIncome(Connection conn, Statement statement, JTable tblNonCash, Resident r) {
+        // tblNonCashIncome holds values - need to send them to their tables 
+    }
+    
+    /**
+    * @param args the command line arguments
+    */
     
     
     public static void main(String args[]) {
@@ -2239,15 +2722,9 @@ public class NewResidentForm extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cboEthnicity;
     private javax.swing.JComboBox<String> cboGender;
     private javax.swing.JComboBox<String> cboHealthInsurance;
-    private javax.swing.JComboBox<String> cboHealthInsurance1;
-    private javax.swing.JComboBox<String> cboHealthInsurance2;
-    private javax.swing.JComboBox<String> cboHomelessHistory;
+    private javax.swing.JComboBox<String> cboHomelessStatus;
     private javax.swing.JComboBox<String> cboHousingStatus;
-    private javax.swing.JRadioButton cboLengthNoSay;
-    private javax.swing.JRadioButton cboLengthNoSay1;
-    private javax.swing.JRadioButton cboLengthNoSay2;
-    private javax.swing.JRadioButton cboLengthNoSay3;
-    private javax.swing.JRadioButton cboLengthNoSay4;
+    private javax.swing.JComboBox<String> cboIncome;
     private javax.swing.JComboBox<String> cboLengthOfStay;
     private javax.swing.JComboBox<String> cboMilitary;
     private javax.swing.JComboBox<String> cboRace;
@@ -2257,7 +2734,6 @@ public class NewResidentForm extends javax.swing.JFrame {
     private javax.swing.ButtonGroup grpFirstName;
     private javax.swing.ButtonGroup grpGender;
     private javax.swing.ButtonGroup grpHomelessStatus;
-    private javax.swing.ButtonGroup grpHousingStatus;
     private javax.swing.ButtonGroup grpLastName;
     private javax.swing.ButtonGroup grpLength;
     private javax.swing.ButtonGroup grpMilitary;
@@ -2283,12 +2759,10 @@ public class NewResidentForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -2296,16 +2770,16 @@ public class NewResidentForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel jlblAdd;
     private javax.swing.JLabel jlblAdd2;
     private javax.swing.JLabel jlblCity;
@@ -2333,9 +2807,9 @@ public class NewResidentForm extends javax.swing.JFrame {
     private javax.swing.JPanel pnlContact;
     private javax.swing.JPanel pnlDemo;
     private javax.swing.JPanel pnlDisability;
-    private javax.swing.JPanel pnlHMIS;
     private javax.swing.JPanel pnlHistory;
     private javax.swing.JPanel pnlIncome;
+    private javax.swing.JTabbedPane pnlIncomeTabs;
     private javax.swing.JPanel pnlInsurance;
     private javax.swing.JScrollPane pnlMonthlyIncome;
     private javax.swing.JPanel pnlNonCashIncome;
@@ -2343,14 +2817,11 @@ public class NewResidentForm extends javax.swing.JFrame {
     private javax.swing.JRadioButton radDateOfBirthUnknown;
     private javax.swing.JRadioButton radEthnicityNoSay;
     private javax.swing.JRadioButton radEthnicityUnknown;
-    private javax.swing.JRadioButton radFirstNameNoSay;
-    private javax.swing.JRadioButton radFirstNameUnknown;
     private javax.swing.JRadioButton radGenderNoSay;
     private javax.swing.JRadioButton radGenderUnknown;
     private javax.swing.JRadioButton radHomelessStatusNoSay;
     private javax.swing.JRadioButton radHomelessStatusUnknown;
-    private javax.swing.JRadioButton radLastNameNoSay;
-    private javax.swing.JRadioButton radLastNameUnknown;
+    private javax.swing.JRadioButton radLengthNoSay;
     private javax.swing.JRadioButton radLengthUnknown;
     private javax.swing.JRadioButton radMilitaryNoSay;
     private javax.swing.JRadioButton radMilitaryUnknown;
@@ -2358,20 +2829,51 @@ public class NewResidentForm extends javax.swing.JFrame {
     private javax.swing.JRadioButton radRaceUnknown;
     private javax.swing.JRadioButton radSSNNoSay;
     private javax.swing.JRadioButton radSSNUnknown;
+    private javax.swing.JRadioButton radTimesHomelessNoSay;
+    private javax.swing.JRadioButton radTimesHomelessUnknown;
     private javax.swing.JTabbedPane tabs;
     private javax.swing.JTable tblIncome;
     private javax.swing.JTable tblNonCashIncome;
-    private javax.swing.JFormattedTextField txtCheckInDateTime;
     private javax.swing.JFormattedTextField txtDateOfBirth;
     private javax.swing.JFormattedTextField txtEmPhone;
     private javax.swing.JTextField txtFirstName;
     private javax.swing.JFormattedTextField txtHomelessStart;
     private javax.swing.JTextField txtLastName;
+    private javax.swing.JTextField txtMonthlyIncome;
+    private javax.swing.JTextField txtNonCashIncome;
     private javax.swing.JFormattedTextField txtPhone;
     private javax.swing.JFormattedTextField txtPhoneAlt;
     private javax.swing.JFormattedTextField txtSSN;
     // End of variables declaration//GEN-END:variables
 
-
-
 }
+/*
+class MyTableModel extends DefaultTableModel {
+ 
+    public MyTableModel(Object rowData[][], Object columnNames[]) {
+         super(rowData, columnNames);
+      }
+    
+    @Override
+      public Class getColumnClass(int col) {
+        if (col == 1)       //second column accepts only Double values
+            return Double.class;
+        else return String.class;  //other columns accept String values
+    }
+ 
+    @Override
+      public boolean isCellEditable(int row, int col) {
+        return col != 0; //first column will be uneditable
+      }
+      
+    @Override
+      public Object getValueAt (int row , int column ) {
+          Object s=super.getValueAt(row,column);
+          if(s==null) {
+            s=0;
+        }
+        return s;
+    }
+}
+*/
+
