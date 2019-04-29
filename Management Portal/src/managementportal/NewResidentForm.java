@@ -1991,8 +1991,8 @@ public class NewResidentForm extends javax.swing.JFrame {
             
             saveDisability(conn,statement,newRes);
             saveInsurance(conn,statement, newRes); 
-            saveMonthlyIncome(conn,statement, newRes); 
-            saveNonCashIncome(conn,statement, newRes); 
+            saveMonthlyIncome(conn,statement, tblIncome, newRes); 
+            saveNonCashIncome(conn,statement, tblNonCashIncome, newRes); 
             
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "" + "Error Loading Data", JOptionPane.INFORMATION_MESSAGE);
@@ -2645,7 +2645,7 @@ public class NewResidentForm extends javax.swing.JFrame {
         }
     }
     
-    private void saveMonthlyIncome(Connection conn, Statement statement, Resident r) {
+    private void saveMonthlyIncome(Connection conn, Statement statement, JTable tblIncome, Resident r) {
         // tblIncome holds values - need to send them to their tables 
         
         // Get the index of all the selected items
@@ -2660,7 +2660,7 @@ public class NewResidentForm extends javax.swing.JFrame {
         }
     }
     
-    private void saveNonCashIncome(Connection conn, Statement statement, Resident r) {
+    private void saveNonCashIncome(Connection conn, Statement statement, JTable tblNonCash, Resident r) {
         // tblNonCashIncome holds values - need to send them to their tables 
     }
     
