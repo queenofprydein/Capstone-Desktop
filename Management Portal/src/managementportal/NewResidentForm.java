@@ -1387,13 +1387,15 @@ public class NewResidentForm extends javax.swing.JFrame {
             if (cboIncome.getSelectedItem().equals("Yes")){
                 pnlIncomeTabs.setEnabled(true);
                 
+                
                 String sql = "";
                 DefaultTableModel incomeTableModel;
                 DefaultTableModel nonCashTableModel;
                 TableColumnModel incomeColumnModel; 
                 TableColumnModel nonCashColumnModel; 
+                
                 NumberFormat curr = NumberFormat.getCurrencyInstance();
-
+                
 
                 try {
                     conn = DriverManager.getConnection(myDBURL);
@@ -1401,6 +1403,7 @@ public class NewResidentForm extends javax.swing.JFrame {
 
                     //create result set for query results 
                     ResultSet custResultsOfQuery = null;
+                    
 
                     // **************************************************
                     // *******   populate Monthly Income Table    *******
@@ -1445,12 +1448,10 @@ public class NewResidentForm extends javax.swing.JFrame {
                     incomeColumnModel = tblNonCashIncome.getColumnModel();
                     //setUpTable(tblNonCashIncome);
                     
-                    // tblIncome.getColumnModel().getColumn(1).setCellRenderer(new NumberRenderer( NumberFormat.getCurrencyInstance() ));
-                    // incomeColumnModel.getColumn(1).setCellRenderer(NumberRenderer.getCurrencyRenderer());
-                    
                     tblNonCashIncome.getModel().addTableModelListener((TableModelEvent e) -> {
                         txtNonCashIncome.setText("Total Income from Non-Cash Benefit Sources: " + curr.format(getTableSum(tblNonCashIncome, 1)));
                     });
+
                     
 
                 } catch (SQLException ex) {
@@ -2553,6 +2554,7 @@ public class NewResidentForm extends javax.swing.JFrame {
     }
     
     private void resultSetToTableModel(ResultSet rs, JTable table, String colName) throws SQLException{
+        /*
         //Create new table model
         DefaultTableModel tableModel = new DefaultTableModel();
 
@@ -2586,6 +2588,7 @@ public class NewResidentForm extends javax.swing.JFrame {
         
         //add table model to table
         table.setModel(tableModel);
+        */
     }
     
     protected boolean isCellEditable(int row, int col) {
@@ -2593,6 +2596,7 @@ public class NewResidentForm extends javax.swing.JFrame {
     }
     
     private double getTableSum(JTable tbl, int col)  {
+        
         double sum = 0D; 
         for (int i = 0; i < tbl.getRowCount(); i++){
             if (tbl.getValueAt(i,col) != null) {
@@ -2600,14 +2604,17 @@ public class NewResidentForm extends javax.swing.JFrame {
             }
         }
         return sum; 
+        
     }
     
     protected void setUpTable(JTable tbl) {
+
         NumberFormat format = NumberFormat.getCurrencyInstance();
         NumberRenderer renderer = new NumberRenderer(format);
         TableColumnModel model = tbl.getColumnModel();
         TableColumn column = model.getColumn(1);
         column.setCellRenderer(renderer);
+        
 
         NumberFormatter formatter = new NumberFormatter(format);
         JFormattedTextField field = new JFormattedTextField(formatter);
@@ -2645,19 +2652,22 @@ public class NewResidentForm extends javax.swing.JFrame {
         }
     }
     
-    private void saveMonthlyIncome(Connection conn, Statement statement, JTable tblIncome, Resident r) {
+    private void saveMonthlyIncome(Connection conn, Statement statement, JTable tbl, Resident r) {
         // tblIncome holds values - need to send them to their tables 
+        double[] inc = new double[tbl.getRowCount()];
+        String[] col = new String[tbl.getRowCount()];
         
-        // Get the index of all the selected items
-        int[] selectedIx = lstInsuranceTypes.getSelectedIndices();
-        
-        if (selectedIx.length > 0) {
-            String[] ins = new String[selectedIx.length];
-            for (int i = 0; i < selectedIx.length; i++) {
-                ins[i] = lstInsuranceTypes.getModel().getElementAt(selectedIx[i]);    
-            }
-            r.AddInsurance(conn, statement, ins);
+        for (int i = 0; i < tbl.getRowCount(); i++){
+            inc[i] = (Double) (tbl.getValueAt(i,1));
+            col[i] = tbl.getValueAt(i,0).toString(); 
         }
+        
+        String msg = "Amounts: "; 
+        for (int i = 0; i < tbl.getRowCount(); i++) {
+            msg += "\n" + col[i] + ": $" + inc[i];
+        }
+        TestOptionPane11 dbg = new TestOptionPane11(msg); 
+        
     }
     
     private void saveNonCashIncome(Connection conn, Statement statement, JTable tblNonCash, Resident r) {
@@ -2836,10 +2846,34 @@ public class NewResidentForm extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField txtSSN;
     // End of variables declaration//GEN-END:variables
 
-     
-
-
-
-
-
 }
+/*
+class MyTableModel extends DefaultTableModel {
+ 
+    public MyTableModel(Object rowData[][], Object columnNames[]) {
+         super(rowData, columnNames);
+      }
+    
+    @Override
+      public Class getColumnClass(int col) {
+        if (col == 1)       //second column accepts only Double values
+            return Double.class;
+        else return String.class;  //other columns accept String values
+    }
+ 
+    @Override
+      public boolean isCellEditable(int row, int col) {
+        return col != 0; //first column will be uneditable
+      }
+      
+    @Override
+      public Object getValueAt (int row , int column ) {
+          Object s=super.getValueAt(row,column);
+          if(s==null) {
+            s=0;
+        }
+        return s;
+    }
+}
+*/
+
