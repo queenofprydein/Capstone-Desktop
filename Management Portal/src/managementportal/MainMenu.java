@@ -51,6 +51,11 @@ public class MainMenu extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Resident Options"));
 
         btnEditResident.setText("View / Edit Resident Info");
+        btnEditResident.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditResidentActionPerformed(evt);
+            }
+        });
 
         btnAddResident.setText("Add New Resident");
         btnAddResident.addActionListener(new java.awt.event.ActionListener() {
@@ -202,6 +207,13 @@ public class MainMenu extends javax.swing.JFrame {
         VolunteerSchedule schedule = new VolunteerSchedule();
         schedule.setVisible(true);
     }//GEN-LAST:event_btnScheduleVolunteersActionPerformed
+
+    private void btnEditResidentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditResidentActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        ViewEditResident edit = new ViewEditResident();
+        edit.setVisible(true);
+    }//GEN-LAST:event_btnEditResidentActionPerformed
 
     /**
      * @param args the command line arguments
