@@ -5,49 +5,53 @@
  */
 package managementportal;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Lupe
  */
 public class Bed {
     private int bedID;              //NOT null
-    private int visitID;            //NOT null
-    Visit visit;
-    private int lockerID;           //NOT null
-    Locker locker;
     private String typeOfBed;       //NOT null
     private String bed_description; //null
     
     public Bed()
     {
+        // create new bed (find first available) 
         typeOfBed = "";
         bed_description = "";
+        
+        
     }
-    /*public Bed(int bID)
-    {
-        bedID = bID;
-        typeOfBed = "";
-        bed_description = "";
+
+    // get bed information from bedID
+    public Bed(int bedID) {
+        this.bedID = bedID;
+        
+        Connection conn = null;
+        final String myDBURL = "jdbc:sqlserver://sql5008.site4now.net:1433;DatabaseName=DB_A47087_smgroup;user=DB_A47087_smgroup_admin;password=ftccgroup1";
+
+        try {
+            conn = DriverManager.getConnection(myDBURL);
+            String sql = "SELECT * FROM [dbo].[Bed] WHERE [Bed_ID] = ?";
+            
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, this.bedID);
+            ResultSet rs = ps.executeQuery(); 
+            rs.next();
+            typeOfBed = rs.getString("TypeOfBed");
+            bed_description = rs.getString("Description");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "" + "No Resident Found", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
     
-    public Bed(int bID, int vID, int lID)
-    {
-        bedID = bID;
-        visit = new Visit(vID);
-        locker = new Locker(lID);
-        typeOfBed = "";
-        bed_description = "";
-    }
-    //forgot abour this constructor
-    public Bed(int bID, String tob, int vID, int lID)
-    {
-        bedID = bID;
-        visit = new Visit(vID);
-        locker = new Locker(lID);
-        typeOfBed = tob;
-        bed_description = "";
-    }*/
-
     public int getBedID() {
         return bedID;
     }

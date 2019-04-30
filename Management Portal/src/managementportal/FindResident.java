@@ -22,7 +22,6 @@ public class FindResident extends javax.swing.JFrame {
 
     final String myDBURL = "jdbc:sqlserver://sql5008.site4now.net:1433;DatabaseName=DB_A47087_smgroup;user=DB_A47087_smgroup_admin;password=ftccgroup1";
     private static Connection conn = null;
-    private static Statement statement = null;
     private static final Vector<Integer> ids = new Vector<>();
     private Resident r; 
     

@@ -7,6 +7,8 @@ package managementportal;
 
 import java.sql.*;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.HashSet;
 import java.util.logging.*;
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
@@ -24,17 +26,23 @@ public class ViewResidentForm extends javax.swing.JFrame {
     CheckboxListCellRenderer cellRenderer = new CheckboxListCellRenderer();
     private static Connection conn = null;
     private static Statement statement = null;
-    private Resident r; 
+    private Resident res; 
 
     /**
      * Creates new form ViewResidentForm
      * @param r
      */
-    public ViewResidentForm(Resident res) {
+    public ViewResidentForm() {
 
         initComponents();
-        this.r = res;
+        
     }
+    public ViewResidentForm(int id) {
+
+        initComponents();
+        
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -442,7 +450,7 @@ public class ViewResidentForm extends javax.swing.JFrame {
         pnlDemo.setLayout(pnlDemoLayout);
         pnlDemoLayout.setHorizontalGroup(
             pnlDemoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1125, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1125, Short.MAX_VALUE)
         );
         pnlDemoLayout.setVerticalGroup(
             pnlDemoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1020,7 +1028,7 @@ public class ViewResidentForm extends javax.swing.JFrame {
             }
         });
 
-        btnSaveResident.setText("Save Resident");
+        btnSaveResident.setText("Save Changes");
         btnSaveResident.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSaveResidentActionPerformed(evt);
@@ -1072,7 +1080,7 @@ public class ViewResidentForm extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         populateComponents();
-        pullSelectionsFromDatabase(r); 
+        pullSelectionsFromDatabase(res); 
     }//GEN-LAST:event_formWindowOpened
 
     private void btnNextPageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextPageActionPerformed
@@ -1323,6 +1331,30 @@ public class ViewResidentForm extends javax.swing.JFrame {
         }
         return gender;
     }
+    
+    private String getGenderDescriptionFromCode(String g) {
+        String gender;
+        String sql;
+
+        try {
+            conn = DriverManager.getConnection(myDBURL);
+            statement = conn.createStatement();
+
+            //create result set for query results 
+            ResultSet custResultsOfQuery = null;
+
+            // populate Gender combo box
+            sql = "select Gender_Description from Gender where Gender  = '" + g + "';";
+            //JOptionPane.showMessageDialog(null, "SQL Sent: " + sql, "SQL", JOptionPane.INFORMATION_MESSAGE);
+            custResultsOfQuery = statement.executeQuery(sql);
+            custResultsOfQuery.next();
+            gender = custResultsOfQuery.getObject(1).toString();
+
+        } catch (SQLException ex) {
+            gender = ex.getMessage();
+        }
+        return gender;
+    }
 
     private String getRaceLookupValue(String r) {
         String race;
@@ -1337,6 +1369,29 @@ public class ViewResidentForm extends javax.swing.JFrame {
 
             // get race code from description
             sql = "select Race_Name from Resident_Race where Race_Description = '" + r + "'";
+            custResultsOfQuery = statement.executeQuery(sql);
+            custResultsOfQuery.next();
+            race = custResultsOfQuery.getObject(1).toString();
+            //JOptionPane.showMessageDialog(null, "SQL Sent: " + sql + "/nRace retrieved: " + race, "SQL", JOptionPane.INFORMATION_MESSAGE);
+        } catch (SQLException ex) {
+            race = ex.getMessage();
+        }
+        return race;
+    }
+    
+    private String getRaceDescriptionFromCode(String r) {
+        String race;
+        String sql;
+
+        try {
+            conn = DriverManager.getConnection(myDBURL);
+            statement = conn.createStatement();
+
+            //create result set for query results 
+            ResultSet custResultsOfQuery = null;
+
+            // get race code from description
+            sql = "select Race_Description from Resident_Race where Race_Name  = '" + r + "'";
             custResultsOfQuery = statement.executeQuery(sql);
             custResultsOfQuery.next();
             race = custResultsOfQuery.getObject(1).toString();
@@ -1361,7 +1416,31 @@ public class ViewResidentForm extends javax.swing.JFrame {
             // populate Ethnicity combo box
             sql = "select Ethnicity_Name from Resident_Ethnicity where Ethnicity_Description = '" + eth + "'";
 
-            custResultsOfQuery = statement.executeQuery(sql); //Remember to tell them its Execute Query like Fig 28.23
+            custResultsOfQuery = statement.executeQuery(sql);
+            custResultsOfQuery.next();
+            ethnicity = custResultsOfQuery.getObject(1).toString();
+
+        } catch (SQLException ex) {
+            ethnicity = ex.getMessage();
+        }
+        return ethnicity;
+    }
+    
+    private String getEthnicityDescriptionFromCode(String eth) {
+        String ethnicity;
+        String sql;
+
+        try {
+            conn = DriverManager.getConnection(myDBURL);
+            statement = conn.createStatement();
+
+            //create result set for query results 
+            ResultSet custResultsOfQuery = null;
+
+            // populate Ethnicity combo box
+            sql = "select Ethnicity_Description from Resident_Ethnicity where Ethnicity_Name = '" + eth + "'";
+
+            custResultsOfQuery = statement.executeQuery(sql);
             custResultsOfQuery.next();
             ethnicity = custResultsOfQuery.getObject(1).toString();
 
@@ -1385,6 +1464,31 @@ public class ViewResidentForm extends javax.swing.JFrame {
             // populate Gender combo box
             sel = sel.replaceAll("'", "''");
             sql = "select Client_Choice from Resident_Yes_No_Doesnt_Know_Refused where upper(Client_Choice_Description) = upper('" + sel + "')";
+
+            custResultsOfQuery = statement.executeQuery(sql);
+            custResultsOfQuery.next();
+            selection = custResultsOfQuery.getObject(1).toString();
+
+        } catch (SQLException ex) {
+            selection = ex.getMessage();
+        }
+        return selection;
+    }
+    
+    private String getBooleanDescriptionFromCode(String sel) {
+        String selection;
+        String sql;
+
+        try {
+            conn = DriverManager.getConnection(myDBURL);
+            statement = conn.createStatement();
+
+            //create result set for query results 
+            ResultSet custResultsOfQuery = null;
+
+            // populate Gender combo box
+            sel = sel.replaceAll("'", "''");
+            sql = "select Client_Choice_Description from Resident_Yes_No_Doesnt_Know_Refused where upper(Client_Choice) = upper('" + sel + "')";
 
             custResultsOfQuery = statement.executeQuery(sql);
             custResultsOfQuery.next();
@@ -1419,6 +1523,30 @@ public class ViewResidentForm extends javax.swing.JFrame {
         }
         return homelessStatus;
     }
+    
+    private String getHomelessDescriptionFromCode(String hlstat) {
+        String homelessStatus;
+        String sql;
+
+        try {
+            conn = DriverManager.getConnection(myDBURL);
+            statement = conn.createStatement();
+
+            //create result set for query results 
+            ResultSet custResultsOfQuery = null;
+
+            // get description from DB
+            sql = "select Homeless_Description from Resident_Homeless_History_Type where = Homeless_History_Type '" + hlstat + "';";
+
+            custResultsOfQuery = statement.executeQuery(sql);
+            custResultsOfQuery.next();
+            homelessStatus = custResultsOfQuery.getObject(1).toString();
+
+        } catch (SQLException ex) {
+            homelessStatus = ex.getMessage();
+        }
+        return homelessStatus;
+    }
 
     private String getLengthOfStayLookupValue(String len) {
         String lengthOfStay = "";
@@ -1433,6 +1561,30 @@ public class ViewResidentForm extends javax.swing.JFrame {
 
             // populate Gender combo box
             sql = "select Length_Name from Resident_Length_Of_Stay_In_Prior_Living_Situation where Length_Of_Stay_Description = '" + len + "';";
+
+            custResultsOfQuery = statement.executeQuery(sql);
+            custResultsOfQuery.next();
+            lengthOfStay = custResultsOfQuery.getObject(1).toString();
+
+        } catch (SQLException ex) {
+            lengthOfStay = ex.getMessage();
+        }
+        return lengthOfStay;
+    }
+    
+    private String getLengthOfStayDescriptionFromCode(String len) {
+        String lengthOfStay;
+        String sql;
+
+        try {
+            conn = DriverManager.getConnection(myDBURL);
+            statement = conn.createStatement();
+
+            //create result set for query results 
+            ResultSet custResultsOfQuery = null;
+
+            // get description from DB
+            sql = "select Length_Of_Stay_Description from Resident_Length_Of_Stay_In_Prior_Living_Situation where Length_Name = '" + len + "';";
 
             custResultsOfQuery = statement.executeQuery(sql);
             custResultsOfQuery.next();
@@ -1467,6 +1619,30 @@ public class ViewResidentForm extends javax.swing.JFrame {
         }
         return timesHomeless;
     }
+    
+    private String getTimesHomelessDescriptionFromCode(String timesh) {
+        String timesHomeless;
+        String sql;
+
+        try {
+            conn = DriverManager.getConnection(myDBURL);
+            statement = conn.createStatement();
+
+            //create result set for query results 
+            ResultSet custResultsOfQuery = null;
+
+            // get description from DB
+            sql = "select Description from Resident_Number_Of_Times_Homeless where Number_Of_Time_Homeless = '" + timesh + "';";
+
+            custResultsOfQuery = statement.executeQuery(sql);
+            custResultsOfQuery.next();
+            timesHomeless = custResultsOfQuery.getObject(1).toString();
+
+        } catch (SQLException ex) {
+            timesHomeless = ex.getMessage();
+        }
+        return timesHomeless;
+    }
 
     private String getHousingStatusLookupValue(String houstat) {
         String housingStatus = "";
@@ -1481,6 +1657,30 @@ public class ViewResidentForm extends javax.swing.JFrame {
 
             // populate Gender combo box
             sql = "select Housing_Status_Category from Resident_Housing_Status where Housing_Status_Description = '" + houstat + "';";
+
+            custResultsOfQuery = statement.executeQuery(sql);
+            custResultsOfQuery.next();
+            housingStatus = custResultsOfQuery.getObject(1).toString();
+
+        } catch (SQLException ex) {
+            housingStatus = ex.getMessage();
+        }
+        return housingStatus;
+    }
+    
+    private String getHousingStatusDescriptionFromCode(String houstat) {
+        String housingStatus;
+        String sql;
+
+        try {
+            conn = DriverManager.getConnection(myDBURL);
+            statement = conn.createStatement();
+
+            //create result set for query results 
+            ResultSet custResultsOfQuery = null;
+
+            // populate Gender combo box
+            sql = "select Housing_Status_Description from Resident_Housing_Status where Housing_Status_Category = '" + houstat + "';";
 
             custResultsOfQuery = statement.executeQuery(sql);
             custResultsOfQuery.next();
@@ -1737,7 +1937,7 @@ public class ViewResidentForm extends javax.swing.JFrame {
             //TestOptionPane11 dbg = new TestOptionPane11(values);
             Resident newRes = new Resident();
 
-            newRes.AddNewResident(conn, statement, fName, lName, add, add2, c, st, zp, phne, phneAlt, email, bDate, ssn, gen, emergencyP, emergencyN, vet, r, eth, dcon, ins, hlstat, len, hlDate, timesh, houstat, lzip, coc, counts, countr, cityr);
+            newRes.AddNewResident(conn, fName, lName, add, add2, c, st, zp, phne, phneAlt, email, bDate, ssn, gen, emergencyP, emergencyN, vet, r, eth, dcon, ins, hlstat, len, hlDate, timesh, houstat, lzip, coc, counts, countr, cityr);
 
             saveDisability(conn, statement, newRes);
             saveInsurance(conn, statement, newRes);
@@ -2241,23 +2441,81 @@ public class ViewResidentForm extends javax.swing.JFrame {
         ======= Pull in Demographics Selections =======
         ===============================================
         */
-        // first name
-        txtFirstName.setText(r.getFirstName());
+        txtFirstName.setText(r.getFirstName()); // first name - text only
+        txtLastName.setText(r.getLastName()); // last name  - text only
         
-        // last name 
-        txtLastName.setText(r.getLastName());
+        switch (r.getSocialSN()) {
+            case "111111111":
+                radSSNNoSay.setSelected(true);
+                break;
+            case "000000000":
+                radSSNUnknown.setSelected(true);
+                break;
+            default:
+                txtSSN.setText(r.getSocialSN());
+                break; 
+        } // SSN (or radio buttons)
         
-        // SSN (or radio buttons)
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        switch (sdf.format(r.getBirthDate())) {
+            case "01/01/1901":
+                radDateOfBirthNoSay.setSelected(true);
+                break;
+            case "01/01/1900":
+                radDateOfBirthUnknown.setSelected(true);
+                break;
+            default:
+                txtDateOfBirth.setText(sdf.format(r.getBirthDate()));
+                break; 
+        } // DOB (or radio buttons)
+
+        switch (getGenderDescriptionFromCode(r.getGender())) {
+            case "Client refused":
+                radGenderNoSay.setSelected(true);
+                break;
+            case "Client doesn't know":
+                radGenderUnknown.setSelected(true);
+                break;
+            default:
+                cboGender.setSelectedItem(getGenderDescriptionFromCode(r.getGender()));
+                break; 
+        } // Gender (cbo / radio buttons)  getGenderDescriptionFromCode()
         
-        // DOB (or radio buttons) 
-        
-        //Gender (cbo / radio buttons)
-        
-        // Race (cbo / radio buttons)
-        
-        // Ethnicity (cbo / radio buttons)
-        
-        // Military Veteran (cbo / radio buttons)
+        switch (getRaceDescriptionFromCode(r.getRace())) {
+            case "Client refused":
+                radRaceNoSay.setSelected(true);
+                break;
+            case "Client doesn't know":
+                radRaceUnknown.setSelected(true);
+                break;
+            default:
+                cboRace.setSelectedItem(getRaceDescriptionFromCode(r.getRace()));
+                break; 
+        } // Race (cbo / radio buttons)  getRaceDescriptionFromCode
+
+        switch (getEthnicityDescriptionFromCode(r.getEthnicity())) {
+            case "Client refused":
+                radEthnicityNoSay.setSelected(true);
+                break;
+            case "Client doesn't know":
+                radEthnicityUnknown.setSelected(true);
+                break;
+            default:
+                cboEthnicity.setSelectedItem(getEthnicityDescriptionFromCode(r.getEthnicity()));
+                break; 
+        } // Ethnicity (cbo / radio buttons)  getEthnicityDescriptionFromCode
+
+        switch (getBooleanDescriptionFromCode(r.getUsVet())) {
+            case "Client refused":
+                radMilitaryNoSay.setSelected(true);
+                break;
+            case "Client doesn't know":
+                radMilitaryUnknown.setSelected(true);
+                break;
+            default:
+                cboMilitary.setSelectedItem(getBooleanDescriptionFromCode(r.getUsVet()));
+                break; 
+        }// Military Veteran (cbo / radio buttons)  getBooleanDescriptionFromCode
         
         
         /* 
@@ -2266,52 +2524,79 @@ public class ViewResidentForm extends javax.swing.JFrame {
         ===========================================
         */
         
-        // Resident phone
+        txtPhone.setText(r.getPhone()); // Resident phone - text only
+        txtPhoneAlt.setText(r.getPhoneAlt()); // Alternate phone - text only
+        jtxtEmail.setText(r.getRes_email()); // Email  - text only
+        jtxtLastZip.setText(r.getLast_zip()); // Last zip - text only
+        jtxtCOCCode.setText(r.getCoc_code()); // HMIS - COC code  - text only
+        jtxtNCCountServ.setText(r.getNC_county_serv()); // HMIS - County of Service  - text only
+        jtxtCountRes.setText(r.getResidentCounty()); // HMIS - County of Residence  - text only
+        jtxtCityRes.setText(r.getResidentCity()); // HMIS - City of Residence  - text only
+        jtxtEmName.setText(r.getEmContName()); // Em Contact - Full Name  - text only
+        jtxtAdd.setText(r.getAddressLn1());  // Em Contact - Address  - text only
+        jtxtAdd2.setText(r.getAddressLn2()); // Em Contact - Address  - text only
+        jtxtCity.setText(r.getCity()); // Em Contact - City - text only
+        jtxtState.setText(r.getState()); // Em Contact - State - text only
+        jtxtZip.setText(r.getZip()); // Em Contact - Zip - text only
+        txtEmPhone.setText(r.getEmContPhone()); // Em Contact - Emergency Phone - text only
         
-        // Alternate phone
+        /* 
+        ================================================================
+        ====== Pull in Disability and Health Insurance Selections ======
+        ================================================================
+        */
         
-        // Email 
-        
-        // Last zip
-        
-        // HMIS - COC code 
-        
-        // HMIS - County of Service 
-        
-        // HMIS - County of Residence 
-        
-        // HMIS - City of Residence 
-        
-        // Em Contact - Full Name 
-        
-        jtxtAdd.setText(r.getAddressLn1());  // Em Contact - Address 
-        
-        jtxtAdd2.setText(r.getAddressLn2()); // Em Contact - Address 
-        
-        
-        
-        
+        cboDisablingCondition.setSelectedItem(getBooleanDescriptionFromCode(r.getDisability_con()));  // disabling condition (Cbo YN)  getBooleanDescriptionFromCode        
         
         
+        // list of disabilities 
 
-        try {
-            conn = DriverManager.getConnection(myDBURL);
-            statement = conn.createStatement();
-
-            //create result set for query results 
-            ResultSet custResultsOfQuery = null;
-
-            // populate Gender combo box
-            sql = "select Housing_Status_Category from Resident_Housing_Status where Housing_Status_Description = ;";
-
-            custResultsOfQuery = statement.executeQuery(sql);
-            custResultsOfQuery.next();
-            r = custResultsOfQuery.getObject(1).toString();
-
-        } catch (SQLException ex) {
-            r = ex.getMessage();
-        }
+        cboHealthInsurance.setSelectedItem(getBooleanDescriptionFromCode(r.getInsurance_con()));  // health insurance (cbo YN)  getBooleanDescriptionFromCode        
+        // list of insurances 
+        
+        /* 
+        =========================================
+        ====== Pull in History Information ======
+        =========================================
+        */
+        
+        txtHomelessStart.setText(sdf.format(r.getHomeless_start()));  // Start Date of Homelessness - text only
+        cboHousingStatus.setSelectedItem(getHousingStatusDescriptionFromCode(r.getHouse_status())); // Housing Status (cbo) getHousingStatusDescriptionFromCode
+        switch (getHomelessDescriptionFromCode(r.getHomeless_history())) {
+            case "Client refused":
+                radHomelessStatusNoSay.setSelected(true);
+                break;
+            case "Client doesn't know":
+                radHomelessStatusUnknown.setSelected(true);
+                break;
+            default:
+                cboHomelessStatus.setSelectedItem(getHomelessDescriptionFromCode(r.getHomeless_history()));
+                break; 
+        } // Homeless Status (cbo or radio) getHomelessDescriptionFromCode        
+        switch (getLengthOfStayDescriptionFromCode(r.getLength_stay_prior())) {
+            case "Client refused":
+                radLengthNoSay.setSelected(true);
+                break;
+            case "Client doesn't know":
+                radLengthUnknown.setSelected(true);
+                break;
+            default:
+                cboLengthOfStay.setSelectedItem(getLengthOfStayDescriptionFromCode(r.getLength_stay_prior()));
+                break; 
+        }// Length of Stay in Prior Living Situation (cbo or radio)   getLengthOfStayDescriptionFromCode
+        switch (getTimesHomelessDescriptionFromCode(r.getNumOfTimes_homeless())) {
+            case "Client refused":
+                radTimesHomelessNoSay.setSelected(true);
+                break;
+            case "Client doesn't know":
+                radTimesHomelessUnknown.setSelected(true);
+                break;
+            default:
+                cboTimesHomeless.setSelectedItem(getTimesHomelessDescriptionFromCode(r.getNumOfTimes_homeless()));
+                break; 
+        }  // Number of Times Homeless (cbo or radio)  getTimesHomelessDescriptionFromCode
     }
+    
     private void getBooleanDropdownValues(JComboBox box, Boolean rad) {
         // clear result set 
         ResultSet custResultsOfQuery = null;
@@ -2364,7 +2649,7 @@ public class ViewResidentForm extends javax.swing.JFrame {
             for (int i = 0; i < selectedIx.length; i++) {
                 dis[i] = lstDisabilityTypes.getModel().getElementAt(selectedIx[i]);
             }
-            r.AddDisability(conn, statement, dis);
+            r.AddDisability(conn, dis);
         }
 
     }
@@ -2379,7 +2664,7 @@ public class ViewResidentForm extends javax.swing.JFrame {
             for (int i = 0; i < selectedIx.length; i++) {
                 ins[i] = lstInsuranceTypes.getModel().getElementAt(selectedIx[i]);
             }
-            r.AddInsurance(conn, statement, ins);
+            r.AddInsurance(conn, ins);
         }
     }
 

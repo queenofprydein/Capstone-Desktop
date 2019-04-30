@@ -76,6 +76,7 @@ public class Resident {
         ethnicity = "";
     }
 
+    // constructor to get resident information from the DB and store as a new instance of a resident 
     public Resident(int rID) {
         Connection conn = null;
         final String myDBURL = "jdbc:sqlserver://sql5008.site4now.net:1433;DatabaseName=DB_A47087_smgroup;user=DB_A47087_smgroup_admin;password=ftccgroup1";
@@ -129,6 +130,7 @@ public class Resident {
         }
     }
 
+    // constructor when we have all the relevant information about a resident 
     public Resident(int residentID, String firstName, String lastName, String addressLn1, String addressLn2, String city, String state, String zip, String phone, String phoneAlt, String res_email, java.sql.Date birthDate, String socialSN, String gender, String emContPhone, String emContName, String usVet, String race, String ethnicity, String disability_con, String disabilityType, String insurance_con, String insuranceType, String homeless_history, String length_stay_prior, java.sql.Date homeless_start, String numOfTimes_homeless, String house_status, String last_zip, String coc_code, String NC_county_serv, String residentCounty, String residentCity, int length_stay_current) {
         this.residentID = residentID;
         this.firstName = firstName;
@@ -506,8 +508,8 @@ public class Resident {
         return gen.equals("MA");
     }
     
+    // save the resident to the DB 
     public void AddNewResident(Connection conn, String fName, String lName, String add, String add2, String c, String st, String zp, String phne, String phneAlt, String email, String bDate, String ssn, String gen, String emergencyP, String emergencyN, String vet, String r, String eth, String dcon, String ins, String hlstat, String len, String hlDate, String timesh, String houstat, String lzip, String coc, String counts, String countr, String cityr) {
-        String sql;
         String error = "The following fields contain an error: ";
         int errorCount = 0;
 
@@ -800,8 +802,7 @@ public class Resident {
                     tableKeys.next();
                     int residentKey = tableKeys.getInt(1);
                     this.residentID = residentKey;
-                    TestOptionPane11 dbg = new TestOptionPane11("Resident Key is: " + residentID);
-
+                    //TestOptionPane11 dbg = new TestOptionPane11("Resident Key is: " + residentID);
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
@@ -813,8 +814,8 @@ public class Resident {
         }
     }
 
+    // update an existing resident in the DB 
     public void UpdateResident(Connection conn, int resID, String fName, String lName, String add, String add2, String c, String st, String zp, String phne, String phneAlt, String email, String bDate, String ssn, String gen, String emergencyP, String emergencyN, String vet, String r, String eth, String dcon, String ins, String hlstat, String len, String hlDate, String timesh, String houstat, String lzip, String coc, String counts, String countr, String cityr) {
-        String sql;
         String error = "The following fields contain an error: ";
         int errorCount = 0;
         
@@ -1104,11 +1105,11 @@ public class Resident {
                     //dbg = new TestOptionPane11(nullValues);
                     ps.executeUpdate();
                     
-                    ResultSet tableKeys = ps.getGeneratedKeys();
-                    tableKeys.next();
-                    int residentKey = tableKeys.getInt(1);
-                    this.residentID = residentKey;
-                    TestOptionPane11 dbg = new TestOptionPane11("Resident Key is: " + residentID);
+                    //ResultSet tableKeys = ps.getGeneratedKeys();
+                    //tableKeys.next();
+                    //int residentKey = tableKeys.getInt(1);
+                    //this.residentID = residentKey;
+                    //TestOptionPane11 dbg = new TestOptionPane11("Resident Key is: " + residentID);
 
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());

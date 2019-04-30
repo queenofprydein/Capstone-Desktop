@@ -6,6 +6,7 @@
 package managementportal;
 
 import java.sql.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.logging.Level;
@@ -21,17 +22,19 @@ public class CheckIn extends javax.swing.JFrame {
     final String myDBURL = "jdbc:sqlserver://sql5008.site4now.net:1433;DatabaseName=DB_A47087_smgroup;user=DB_A47087_smgroup_admin;password=ftccgroup1";
     private static Connection conn = null;
     private static Statement statement = null;
-    private static int resID;
+    private static Resident r; 
+    
     /**
      * Creates new form CheckIn
      */
+    
     public CheckIn() {
         initComponents();
     }
     
-    public CheckIn(int id) {
+    public CheckIn(Resident r) {
         initComponents();
-        resID = id;
+        this.r = r;
     }
 
     /**
@@ -70,6 +73,11 @@ public class CheckIn extends javax.swing.JFrame {
         jLabel4.setText("Time:");
 
         btnOK.setText("OK");
+        btnOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOKActionPerformed(evt);
+            }
+        });
 
         btnCancel.setText("Cancel");
 
@@ -132,63 +140,44 @@ public class CheckIn extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        // TODO add your handling code here:
-        String name = "";
-        String first = "";
-        String last = "";
-        try
-        {
-            conn = DriverManager.getConnection(myDBURL);
+        // pull name from resident and display current time  
+        String name = r.getFirstName() + " " + r.getLastName(); 
+        txtName.setText(name);
             
-            PreparedStatement res = conn.prepareStatement("SELECT First_Name, Last_Name FROM [DB_A47087_smgroup].[dbo].[Resident] WHERE Resident_ID = ?");
-            res.setInt(1, resID);
-            ResultSet guy = res.executeQuery();
-            ResultSetMetaData guyMD = guy.getMetaData();
-            int columns = guyMD.getColumnCount();
-            
-            while(guy.next())
-            {
-                for (int columnIndex = 1; columnIndex <= columns; columnIndex++)
-                {
-                    if(columnIndex == 1)
-                    {
-                        first = guy.getString(columnIndex);
-                    }
-                    if(columnIndex == 2)
-                    {
-                        last = guy.getString(columnIndex);
-                    }
-                    
-                    name = first + " " + last;
-                }
-            }
-            
-            txtName.setText(name);
-            
-            java.util.Date curr = new java.util.Date();
-            curr = Calendar.getInstance().getTime();
-            String date = new SimpleDateFormat("MM/dd/yyyy").format(curr);
-            txtDate.setText(date);
-            
-            String time = new SimpleDateFormat("hh:mm").format(curr);
-            txtTime.setText(time);
-        }
-        catch(SQLException ex)
-        {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        }
-        finally 
-        {
-            try 
-            {
-                conn.close();
-            } 
-            catch (SQLException ex) 
-            {
-                Logger.getLogger(ManagementPortal.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        java.util.Date curr = Calendar.getInstance().getTime();
+        String date = new SimpleDateFormat("MM/dd/yyyy").format(curr);
+        txtDate.setText(date);
+
+        String time = new SimpleDateFormat("hh:mm").format(curr);
+        txtTime.setText(time);
+        
+        
     }//GEN-LAST:event_formWindowOpened
+
+    private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
+        // get check in date 
+        
+        java.sql.Timestamp checkinDate;
+        String current = new SimpleDateFormat("hh:mm a").format(Calendar.getInstance().getTime());
+        try {
+            SimpleDateFormat sdf1 = new SimpleDateFormat("MM/dd/yyyy hh:mm:00");
+            java.util.Date date = sdf1.parse(txtDate.getText() + " " + txtTime.getText() + ":00");
+            //TestOptionPane11 dbg = new TestOptionPane11("Trying to send... " + date);
+            checkinDate = new Timestamp(date.getTime());
+            
+            if (current.substring(6).equalsIgnoreCase("PM")) {
+                checkinDate.setTime(checkinDate.getTime() + (12*3600000));
+            }
+            
+            Visit v = new Visit(r.getResidentID(), checkinDate);
+            TestOptionPane11 dbg = new TestOptionPane11("Visitor has been assigned to bed and locker # " + v.getBedID());
+            
+            v.AddNewVisit();
+        } catch (ParseException pe) {
+            System.out.println("Parse Exception getting Check In Date/Time: " + pe);
+        }
+        
+    }//GEN-LAST:event_btnOKActionPerformed
 
     /**
      * @param args the command line arguments
