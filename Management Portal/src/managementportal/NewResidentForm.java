@@ -5,31 +5,23 @@
  */
 package managementportal;
 
-import java.awt.Component;
 import java.sql.*;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.text.ParseException;
-import java.util.Locale;
 import java.util.logging.*;
 import javax.swing.*;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.*;
 import javax.swing.text.MaskFormatter;
-import javax.swing.text.NumberFormatter;
-
 
 /**
  *
  * @author saved
  */
 public class NewResidentForm extends javax.swing.JFrame {
+
     // Variable Declaration
     // final String myDBURL = "jdbc:mysql://db4free.net:3306/karnij?user=quinicacid&password=Mm436yru";
     // final String myDBURL = "jdbc:mysql://db4free.net:3306/smgroup?user=ftccgroup&password=ftccgroup";
     final String myDBURL = "jdbc:sqlserver://sql5008.site4now.net:1433;DatabaseName=DB_A47087_smgroup;user=DB_A47087_smgroup_admin;password=ftccgroup1";
-    CheckboxListCellRenderer cellRenderer = new CheckboxListCellRenderer(); 
+    CheckboxListCellRenderer cellRenderer = new CheckboxListCellRenderer();
     private static Connection conn = null;
     private static Statement statement = null;
 
@@ -37,7 +29,7 @@ public class NewResidentForm extends javax.swing.JFrame {
      * Creates new form NewResidentForm
      */
     public NewResidentForm() {
-        
+
         initComponents();
     }
 
@@ -175,17 +167,6 @@ public class NewResidentForm extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         lstInsuranceTypes = new javax.swing.JList<>();
         jLabel16 = new javax.swing.JLabel();
-        pnlIncome = new javax.swing.JPanel();
-        jLabel24 = new javax.swing.JLabel();
-        cboIncome = new javax.swing.JComboBox<>();
-        pnlIncomeTabs = new javax.swing.JTabbedPane();
-        pnlMonthlyIncome = new javax.swing.JScrollPane();
-        tblIncome = new javax.swing.JTable();
-        pnlNonCashIncome = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tblNonCashIncome = new javax.swing.JTable();
-        txtMonthlyIncome = new javax.swing.JTextField();
-        txtNonCashIncome = new javax.swing.JTextField();
         pnlHistory = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
@@ -480,12 +461,6 @@ public class NewResidentForm extends javax.swing.JFrame {
 
         jlblEmail.setText("Email");
 
-        jtxtEmail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtxtEmailActionPerformed(evt);
-            }
-        });
-
         jLabel19.setText("Last Zip");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -534,42 +509,13 @@ public class NewResidentForm extends javax.swing.JFrame {
 
         jlblEmName.setText("Full Name");
 
-        jtxtEmName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtxtEmNameActionPerformed(evt);
-            }
-        });
-
         jlblAdd.setText("Address");
 
         jlblAdd2.setText("Address Ln2");
 
         jlblCity.setText("City");
 
-        jtxtCity.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtxtCityActionPerformed(evt);
-            }
-        });
-
-        jtxtZip.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtxtZipActionPerformed(evt);
-            }
-        });
-
         jlblZip.setText("Zip");
-
-        jtxtState.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtxtStateActionPerformed(evt);
-            }
-        });
-        jtxtState.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jtxtStateKeyTyped(evt);
-            }
-        });
 
         jlblState.setText("State");
 
@@ -897,88 +843,6 @@ public class NewResidentForm extends javax.swing.JFrame {
 
         tabs.addTab("Health Insurance", pnlInsurance);
 
-        jLabel24.setText("Is the resident currently receiving income from any source? ");
-
-        cboIncome.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cboIncomeItemStateChanged(evt);
-            }
-        });
-
-        pnlMonthlyIncome.setViewportView(tblIncome);
-
-        pnlIncomeTabs.addTab("Monthly Income Sources", pnlMonthlyIncome);
-
-        tblNonCashIncome.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Source of Non-Cash Benefit", "Amount (if applicable)"
-            }
-        ));
-        jScrollPane3.setViewportView(tblNonCashIncome);
-
-        javax.swing.GroupLayout pnlNonCashIncomeLayout = new javax.swing.GroupLayout(pnlNonCashIncome);
-        pnlNonCashIncome.setLayout(pnlNonCashIncomeLayout);
-        pnlNonCashIncomeLayout.setHorizontalGroup(
-            pnlNonCashIncomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1016, Short.MAX_VALUE)
-        );
-        pnlNonCashIncomeLayout.setVerticalGroup(
-            pnlNonCashIncomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
-        );
-
-        pnlIncomeTabs.addTab("Non-Cash Benefit Sources", pnlNonCashIncome);
-
-        txtMonthlyIncome.setEditable(false);
-        txtMonthlyIncome.setText("Total Income from Monthly Income Sources: $0.00");
-
-        txtNonCashIncome.setEditable(false);
-        txtNonCashIncome.setText("Total Income from Non-Cash Benefit Sources: $0.00");
-
-        javax.swing.GroupLayout pnlIncomeLayout = new javax.swing.GroupLayout(pnlIncome);
-        pnlIncome.setLayout(pnlIncomeLayout);
-        pnlIncomeLayout.setHorizontalGroup(
-            pnlIncomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlIncomeLayout.createSequentialGroup()
-                .addGroup(pnlIncomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlIncomeLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(pnlIncomeTabs))
-                    .addGroup(pnlIncomeLayout.createSequentialGroup()
-                        .addGap(77, 77, 77)
-                        .addComponent(jLabel24)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cboIncome, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(pnlIncomeLayout.createSequentialGroup()
-                .addGap(68, 68, 68)
-                .addComponent(txtMonthlyIncome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(74, 74, 74)
-                .addComponent(txtNonCashIncome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        pnlIncomeLayout.setVerticalGroup(
-            pnlIncomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlIncomeLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlIncomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel24)
-                    .addComponent(cboIncome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pnlIncomeTabs, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlIncomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtMonthlyIncome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNonCashIncome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
-        );
-
-        tabs.addTab("Income", pnlIncome);
-
         jPanel7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel14.setText("Homeless Status");
@@ -1129,7 +993,7 @@ public class NewResidentForm extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        tabs.addTab("History", pnlHistory);
+        tabs.addTab("Homeless History", pnlHistory);
 
         btnNextPage.setText("Next >");
         btnNextPage.addActionListener(new java.awt.event.ActionListener() {
@@ -1202,39 +1066,68 @@ public class NewResidentForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        populateComponents(); 
+        populateComponents();
     }//GEN-LAST:event_formWindowOpened
-    
+
     private void btnNextPageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextPageActionPerformed
         //move to the next panel
-        tabs.setSelectedIndex(tabs.getSelectedIndex()+1);
-        if (tabs.getSelectedIndex() == tabs.getTabCount()-1) {
+        tabs.setSelectedIndex(tabs.getSelectedIndex() + 1);
+        if (tabs.getSelectedIndex() == tabs.getTabCount() - 1) {
             btnNextPage.setEnabled(false);
         }
-        
-        if (!btnPrevPage.isEnabled()) { 
+
+        if (!btnPrevPage.isEnabled()) {
             btnPrevPage.setEnabled(true);
         }
     }//GEN-LAST:event_btnNextPageActionPerformed
 
     private void btnPrevPageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevPageActionPerformed
         // move to the previous panel 
-        tabs.setSelectedIndex(tabs.getSelectedIndex()-1);
+        tabs.setSelectedIndex(tabs.getSelectedIndex() - 1);
         if (tabs.getSelectedIndex() == 0) {
             btnPrevPage.setEnabled(false);
         }
-        
-        if (!btnNextPage.isEnabled()) { 
+
+        if (!btnNextPage.isEnabled()) {
             btnNextPage.setEnabled(true);
-        }        
+        }
     }//GEN-LAST:event_btnPrevPageActionPerformed
 
     private void btnSaveResidentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveResidentActionPerformed
-        saveResident();
-        // saveVisit();
+        Resident res = saveResident();
+        int response = JOptionPane.showConfirmDialog(null, "Would you like to check in this resident?", "Check in",
+        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        switch (response) {
+            case JOptionPane.NO_OPTION:
+                System.out.println("Resident saved, user declined to check in");
+                // load Main Menu
+                this.setVisible(false);
+                MainMenu menu = new MainMenu();
+                menu.setVisible(true);
+                break;
+            case JOptionPane.YES_OPTION:
+                // load Check In window
+                this.setVisible(false);
+                CheckIn ci = new CheckIn(res);
+                ci.setVisible(true);
+                System.out.println("Resident saved, user moved to check in");
+                break;
+            case JOptionPane.CLOSED_OPTION:
+                System.out.println("JOptionPane closed, resident saved, no check in");
+                break;
+            default:
+                break;
+        }
     }//GEN-LAST:event_btnSaveResidentActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        // load Main Menu
+        this.setVisible(false);
+        MainMenu menu = new MainMenu();
+        menu.setVisible(true);
+    }//GEN-LAST:event_btnCancelActionPerformed
 
     private void tabsFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tabsFocusGained
         if (tabs.getSelectedIndex() == 0) {
@@ -1243,29 +1136,73 @@ public class NewResidentForm extends javax.swing.JFrame {
             btnPrevPage.setEnabled(true);
         }
 
-        if (tabs.getSelectedIndex() == tabs.getTabCount()-1) {
+        if (tabs.getSelectedIndex() == tabs.getTabCount() - 1) {
             btnNextPage.setEnabled(false);
         } else {
             btnNextPage.setEnabled(true);
         }
     }//GEN-LAST:event_tabsFocusGained
 
-    private void cboDisablingConditionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboDisablingConditionItemStateChanged
-        // disable the list box if the combo box is not set to "Yes"
-        if (cboDisablingCondition.getItemCount() > 0){
-            if (cboDisablingCondition.getSelectedItem().equals("Yes")){
-                lstDisabilityTypes.setEnabled(true);
+    private void tabsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabsStateChanged
+        if (tabs.getSelectedIndex() == 0) {
+            btnPrevPage.setEnabled(false);
+        } else {
+            btnPrevPage.setEnabled(true);
+        }
+
+        if (tabs.getSelectedIndex() == tabs.getTabCount() - 1) {
+            btnNextPage.setEnabled(false);
+        } else {
+            btnNextPage.setEnabled(true);
+        }
+    }//GEN-LAST:event_tabsStateChanged
+
+    private void cboTimesHomelessItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboTimesHomelessItemStateChanged
+        // disable the radio buttons if the combo box has a value selected
+        if (cboTimesHomeless.getItemCount() > 0) {
+            if (cboTimesHomeless.getSelectedItem().equals("")) {
+                radTimesHomelessUnknown.setEnabled(true);
+                radTimesHomelessNoSay.setEnabled(true);
             } else {
-                lstDisabilityTypes.setEnabled(false);
-                lstDisabilityTypes.clearSelection();
+                grpTimesHomeless.clearSelection();
+                radTimesHomelessUnknown.setEnabled(false);
+                radTimesHomelessNoSay.setEnabled(false);
             }
         }
-    }//GEN-LAST:event_cboDisablingConditionItemStateChanged
+    }//GEN-LAST:event_cboTimesHomelessItemStateChanged
+
+    private void cboLengthOfStayItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboLengthOfStayItemStateChanged
+        // disable the radio buttons if the combo box has a value selected
+        if (cboLengthOfStay.getItemCount() > 0) {
+            if (cboLengthOfStay.getSelectedItem().equals("")) {
+                radLengthUnknown.setEnabled(true);
+                radLengthNoSay.setEnabled(true);
+            } else {
+                grpLength.clearSelection();
+                radLengthUnknown.setEnabled(false);
+                radLengthNoSay.setEnabled(false);
+            }
+        }
+    }//GEN-LAST:event_cboLengthOfStayItemStateChanged
+
+    private void cboHomelessStatusItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboHomelessStatusItemStateChanged
+        // disable the radio buttons if the combo box has a value selected
+        if (cboHomelessStatus.getItemCount() > 0) {
+            if (cboHomelessStatus.getSelectedItem().equals("")) {
+                radHomelessStatusUnknown.setEnabled(true);
+                radHomelessStatusNoSay.setEnabled(true);
+            } else {
+                grpHomelessStatus.clearSelection();
+                radHomelessStatusUnknown.setEnabled(false);
+                radHomelessStatusNoSay.setEnabled(false);
+            }
+        }
+    }//GEN-LAST:event_cboHomelessStatusItemStateChanged
 
     private void cboHealthInsuranceItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboHealthInsuranceItemStateChanged
         // disable the list box if the combo box is not set to "Yes"
-        if (cboHealthInsurance.getItemCount() > 0){
-            if (cboHealthInsurance.getSelectedItem().equals("Yes")){
+        if (cboHealthInsurance.getItemCount() > 0) {
+            if (cboHealthInsurance.getSelectedItem().equals("Yes")) {
                 lstInsuranceTypes.setEnabled(true);
             } else {
                 lstInsuranceTypes.setEnabled(false);
@@ -1274,35 +1211,21 @@ public class NewResidentForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cboHealthInsuranceItemStateChanged
 
-    private void jtxtStateKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtStateKeyTyped
-        if (jtxtState.getText().length() > 2) {
-            jtxtState.setText(jtxtState.getText().length() < 2 ? jtxtState.getText() : jtxtState.getText().substring(0, 2));
+    private void cboDisablingConditionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboDisablingConditionItemStateChanged
+        // disable the list box if the combo box is not set to "Yes"
+        if (cboDisablingCondition.getItemCount() > 0) {
+            if (cboDisablingCondition.getSelectedItem().equals("Yes")) {
+                lstDisabilityTypes.setEnabled(true);
+            } else {
+                lstDisabilityTypes.setEnabled(false);
+                lstDisabilityTypes.clearSelection();
+            }
         }
-    }//GEN-LAST:event_jtxtStateKeyTyped
-
-    private void jtxtStateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtStateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtxtStateActionPerformed
-
-    private void jtxtZipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtZipActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtxtZipActionPerformed
-
-    private void jtxtCityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtCityActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtxtCityActionPerformed
-
-    private void jtxtEmNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtEmNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtxtEmNameActionPerformed
-
-    private void jtxtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtEmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtxtEmailActionPerformed
+    }//GEN-LAST:event_cboDisablingConditionItemStateChanged
 
     private void txtSSNKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSSNKeyTyped
         // disable the radio buttons if there's text entered into the text field
-        if (txtSSN.getText().equals("")){
+        if (txtSSN.getText().equals("")) {
             radSSNUnknown.setEnabled(true);
             radSSNNoSay.setEnabled(true);
         } else {
@@ -1314,7 +1237,7 @@ public class NewResidentForm extends javax.swing.JFrame {
 
     private void txtDateOfBirthKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDateOfBirthKeyTyped
         // disable the radio buttons if there's text entered into the text field
-        if (txtDateOfBirth.getText().equals("")){
+        if (txtDateOfBirth.getText().equals("")) {
             radDateOfBirthUnknown.setEnabled(true);
             radDateOfBirthNoSay.setEnabled(true);
         } else {
@@ -1326,8 +1249,8 @@ public class NewResidentForm extends javax.swing.JFrame {
 
     private void cboMilitaryItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboMilitaryItemStateChanged
         // disable the radio buttons if the combo box has a value selected
-        if (cboMilitary.getItemCount() > 0){
-            if (cboMilitary.getSelectedItem().equals("")){
+        if (cboMilitary.getItemCount() > 0) {
+            if (cboMilitary.getSelectedItem().equals("")) {
                 radMilitaryUnknown.setEnabled(true);
                 radMilitaryNoSay.setEnabled(true);
             } else {
@@ -1340,8 +1263,8 @@ public class NewResidentForm extends javax.swing.JFrame {
 
     private void cboEthnicityItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboEthnicityItemStateChanged
         // disable the radio buttons if the combo box has a value selected
-        if (cboEthnicity.getItemCount() > 0){
-            if (cboEthnicity.getSelectedItem().equals("")){
+        if (cboEthnicity.getItemCount() > 0) {
+            if (cboEthnicity.getSelectedItem().equals("")) {
                 radEthnicityUnknown.setEnabled(true);
                 radEthnicityNoSay.setEnabled(true);
             } else {
@@ -1354,8 +1277,8 @@ public class NewResidentForm extends javax.swing.JFrame {
 
     private void cboRaceItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboRaceItemStateChanged
         // disable the radio buttons if the combo box has a value selected
-        if (cboRace.getItemCount() > 0){
-            if (cboRace.getSelectedItem().equals("")){
+        if (cboRace.getItemCount() > 0) {
+            if (cboRace.getSelectedItem().equals("")) {
                 radRaceUnknown.setEnabled(true);
                 radRaceNoSay.setEnabled(true);
             } else {
@@ -1368,8 +1291,8 @@ public class NewResidentForm extends javax.swing.JFrame {
 
     private void cboGenderItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboGenderItemStateChanged
         // disable the radio buttons if the combo box has a value selected
-        if (cboGender.getItemCount() > 0){
-            if (cboGender.getSelectedItem().equals("")){
+        if (cboGender.getItemCount() > 0) {
+            if (cboGender.getSelectedItem().equals("")) {
                 radGenderUnknown.setEnabled(true);
                 radGenderNoSay.setEnabled(true);
             } else {
@@ -1380,202 +1303,44 @@ public class NewResidentForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cboGenderItemStateChanged
 
-    private void cboIncomeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboIncomeItemStateChanged
-        // disable the tabs if the combo box is not set to "Yes"
-        if (cboIncome.getItemCount() > 0){
-            // if the box is set to "Yes" then enable the tabs and pull in values
-            if (cboIncome.getSelectedItem().equals("Yes")){
-                pnlIncomeTabs.setEnabled(true);
-                
-                
-                String sql = "";
-                DefaultTableModel incomeTableModel;
-                DefaultTableModel nonCashTableModel;
-                TableColumnModel incomeColumnModel; 
-                TableColumnModel nonCashColumnModel; 
-                
-                NumberFormat curr = NumberFormat.getCurrencyInstance();
-                
-
-                try {
-                    conn = DriverManager.getConnection(myDBURL);
-                    statement = conn.createStatement();
-
-                    //create result set for query results 
-                    ResultSet custResultsOfQuery = null;
-                    
-
-                    // **************************************************
-                    // *******   populate Monthly Income Table    *******
-                    // **************************************************
-                    // clear result set 
-                    custResultsOfQuery = null;
-
-                    // populate Gender combo box
-                    sql = "SELECT Source_Description FROM [DB_A47087_smgroup].[dbo].[Resident_Source_Of_Income_Monthly_Option]";
-
-                    custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
-
-                    resultSetToTableModel(custResultsOfQuery, tblIncome, "Source of Monthly Income");
-                    incomeTableModel = (DefaultTableModel) tblIncome.getModel();
-                    incomeTableModel.addColumn("Amount from Source");
-                    incomeColumnModel = tblIncome.getColumnModel();
-                    //setUpTable(tblIncome);
-                    
-                    // tblIncome.getColumnModel().getColumn(1).setCellRenderer(new NumberRenderer( NumberFormat.getCurrencyInstance() ));
-                    // incomeColumnModel.getColumn(1).setCellRenderer(NumberRenderer.getCurrencyRenderer());
-                    
-                                        
-                    tblIncome.getModel().addTableModelListener((TableModelEvent e) -> {
-                        txtMonthlyIncome.setText("Total Income from Monthly Income Sources: " + curr.format(getTableSum(tblIncome, 1)));
-                    });
-                    
-                    
-                    // **************************************************
-                    // *******   populate Non-Cash Benefit Table  *******
-                    // **************************************************
-                    // clear result set 
-                    custResultsOfQuery = null;
-
-                    // populate Gender combo box
-                    sql = "SELECT Source_Description FROM [DB_A47087_smgroup].[dbo].[Resident_Source_Of_Non_Cash_Benefit_Monthly_Option]";
-
-                    custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
-
-                    resultSetToTableModel(custResultsOfQuery, tblNonCashIncome, "Source of Monthly Income");
-                    incomeTableModel = (DefaultTableModel) tblNonCashIncome.getModel();
-                    incomeTableModel.addColumn("Amount from Source");
-                    incomeColumnModel = tblNonCashIncome.getColumnModel();
-                    //setUpTable(tblNonCashIncome);
-                    
-                    tblNonCashIncome.getModel().addTableModelListener((TableModelEvent e) -> {
-                        txtNonCashIncome.setText("Total Income from Non-Cash Benefit Sources: " + curr.format(getTableSum(tblNonCashIncome, 1)));
-                    });
-
-                    
-
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage(), "" + "Error Loading Data", JOptionPane.INFORMATION_MESSAGE);
-
-                } finally {
-                    try {
-                        conn.close();
-                    } catch (SQLException ex) {
-                        Logger.getLogger(ManagementPortal.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-                
-            // if the box is not set to "Yes" then clear out the tables and disable the tabs
-            } else {
-                pnlIncomeTabs.setSelectedIndex(0);
-                pnlIncomeTabs.setEnabled(false);
-            }
-        }
-    }//GEN-LAST:event_cboIncomeItemStateChanged
-
-    private void tabsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabsStateChanged
-        if (tabs.getSelectedIndex() == 0) {
-            btnPrevPage.setEnabled(false);
-        } else {
-            btnPrevPage.setEnabled(true);
-        }
-
-        if (tabs.getSelectedIndex() == tabs.getTabCount()-1) {
-            btnNextPage.setEnabled(false);
-        } else {
-            btnNextPage.setEnabled(true);
-        }
-    }//GEN-LAST:event_tabsStateChanged
-
-    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        // load Main Menu
-        this.setVisible(false);
-        MainMenu menu = new MainMenu(); 
-        menu.setVisible(true); 
-    }//GEN-LAST:event_btnCancelActionPerformed
-
-    private void cboHomelessStatusItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboHomelessStatusItemStateChanged
-        // disable the radio buttons if the combo box has a value selected
-        if (cboHomelessStatus.getItemCount() > 0){
-            if (cboHomelessStatus.getSelectedItem().equals("")){
-                radHomelessStatusUnknown.setEnabled(true);
-                radHomelessStatusNoSay.setEnabled(true);
-            } else {
-                grpHomelessStatus.clearSelection();
-                radHomelessStatusUnknown.setEnabled(false);
-                radHomelessStatusNoSay.setEnabled(false);
-            }
-        }
-    }//GEN-LAST:event_cboHomelessStatusItemStateChanged
-
-    private void cboLengthOfStayItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboLengthOfStayItemStateChanged
-        // disable the radio buttons if the combo box has a value selected
-        if (cboLengthOfStay.getItemCount() > 0){
-            if (cboLengthOfStay.getSelectedItem().equals("")){
-                radLengthUnknown.setEnabled(true);
-                radLengthNoSay.setEnabled(true);
-            } else {
-                grpLength.clearSelection();
-                radLengthUnknown.setEnabled(false);
-                radLengthNoSay.setEnabled(false);
-            }
-        }
-    }//GEN-LAST:event_cboLengthOfStayItemStateChanged
-
-    private void cboTimesHomelessItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboTimesHomelessItemStateChanged
-        // disable the radio buttons if the combo box has a value selected
-        if (cboTimesHomeless.getItemCount() > 0){
-            if (cboTimesHomeless.getSelectedItem().equals("")){
-                radTimesHomelessUnknown.setEnabled(true);
-                radTimesHomelessNoSay.setEnabled(true);
-            } else {
-                grpTimesHomeless.clearSelection();
-                radTimesHomelessUnknown.setEnabled(false);
-                radTimesHomelessNoSay.setEnabled(false);
-            }
-        }
-    }//GEN-LAST:event_cboTimesHomelessItemStateChanged
-  
     private String getGenderLookupValue(String g) {
-        String gender = ""; 
-        String sql = ""; 
-        
+        String gender = "";
+        String sql = "";
+
         try {
             conn = DriverManager.getConnection(myDBURL);
             statement = conn.createStatement();
-            
+
             //create result set for query results 
-            ResultSet custResultsOfQuery = null;            
-            
+            ResultSet custResultsOfQuery = null;
+
             // populate Gender combo box
-            
             sql = "select Gender from Gender where Gender_Description = '" + g + "';";
             //JOptionPane.showMessageDialog(null, "SQL Sent: " + sql, "SQL", JOptionPane.INFORMATION_MESSAGE);
-            custResultsOfQuery = statement.executeQuery(sql); 
+            custResultsOfQuery = statement.executeQuery(sql);
             custResultsOfQuery.next();
             gender = custResultsOfQuery.getObject(1).toString();
-            
-            
+
         } catch (SQLException ex) {
             gender = ex.getMessage();
         }
         return gender;
     }
-       
+
     private String getRaceLookupValue(String r) {
-        String race; 
-        String sql; 
+        String race;
+        String sql;
 
         try {
             conn = DriverManager.getConnection(myDBURL);
             statement = conn.createStatement();
 
             //create result set for query results 
-            ResultSet custResultsOfQuery = null;            
+            ResultSet custResultsOfQuery = null;
 
             // get race code from description
             sql = "select Race_Name from Resident_Race where Race_Description = '" + r + "'";
-            custResultsOfQuery = statement.executeQuery(sql); 
+            custResultsOfQuery = statement.executeQuery(sql);
             custResultsOfQuery.next();
             race = custResultsOfQuery.getObject(1).toString();
             //JOptionPane.showMessageDialog(null, "SQL Sent: " + sql + "/nRace retrieved: " + race, "SQL", JOptionPane.INFORMATION_MESSAGE);
@@ -1584,187 +1349,184 @@ public class NewResidentForm extends javax.swing.JFrame {
         }
         return race;
     }
-        
+
     private String getEthnicityLookupValue(String eth) {
-        String ethnicity = ""; 
-        String sql = ""; 
-        
+        String ethnicity = "";
+        String sql = "";
+
         try {
             conn = DriverManager.getConnection(myDBURL);
             statement = conn.createStatement();
-            
+
             //create result set for query results 
-            ResultSet custResultsOfQuery = null;            
-            
+            ResultSet custResultsOfQuery = null;
+
             // populate Ethnicity combo box
             sql = "select Ethnicity_Name from Resident_Ethnicity where Ethnicity_Description = '" + eth + "'";
 
             custResultsOfQuery = statement.executeQuery(sql); //Remember to tell them its Execute Query like Fig 28.23
             custResultsOfQuery.next();
             ethnicity = custResultsOfQuery.getObject(1).toString();
-            
+
         } catch (SQLException ex) {
             ethnicity = ex.getMessage();
         }
         return ethnicity;
     }
-        
+
     private String getBooleanLookupValue(String sel) {
-        String selection; 
-        String sql; 
-        
+        String selection;
+        String sql;
+
         try {
             conn = DriverManager.getConnection(myDBURL);
             statement = conn.createStatement();
-            
+
             //create result set for query results 
-            ResultSet custResultsOfQuery = null;            
-            
+            ResultSet custResultsOfQuery = null;
+
             // populate Gender combo box
             sel = sel.replaceAll("'", "''");
             sql = "select Client_Choice from Resident_Yes_No_Doesnt_Know_Refused where upper(Client_Choice_Description) = upper('" + sel + "')";
 
-            custResultsOfQuery = statement.executeQuery(sql); 
+            custResultsOfQuery = statement.executeQuery(sql);
             custResultsOfQuery.next();
             selection = custResultsOfQuery.getObject(1).toString();
-            
+
         } catch (SQLException ex) {
             selection = ex.getMessage();
         }
         return selection;
     }
-    
-    private String getHomelessStatusLookupValue (String hlstat) {
-        String homelessStatus = ""; 
-        String sql = ""; 
-        
+
+    private String getHomelessStatusLookupValue(String hlstat) {
+        String homelessStatus = "";
+        String sql = "";
+
         try {
             conn = DriverManager.getConnection(myDBURL);
             statement = conn.createStatement();
-            
+
             //create result set for query results 
             ResultSet custResultsOfQuery = null;
-            
-            // populate Gender combo box
-            sql = "select Homeless_History_Type from Resident_Homeless_History_Type where Homeless_Description = '" + hlstat+ "';";
 
-            custResultsOfQuery = statement.executeQuery(sql); 
+            // populate Gender combo box
+            sql = "select Homeless_History_Type from Resident_Homeless_History_Type where Homeless_Description = '" + hlstat + "';";
+
+            custResultsOfQuery = statement.executeQuery(sql);
             custResultsOfQuery.next();
             homelessStatus = custResultsOfQuery.getObject(1).toString();
-            
+
         } catch (SQLException ex) {
             homelessStatus = ex.getMessage();
         }
         return homelessStatus;
     }
-    
-    private String getLengthOfStayLookupValue (String len) {
-        String lengthOfStay = ""; 
-        String sql = ""; 
-        
+
+    private String getLengthOfStayLookupValue(String len) {
+        String lengthOfStay = "";
+        String sql = "";
+
         try {
             conn = DriverManager.getConnection(myDBURL);
             statement = conn.createStatement();
-            
-            //create result set for query results 
-            ResultSet custResultsOfQuery = null;            
-            
-            // populate Gender combo box
-            sql = "select Length_Name from Resident_Length_Of_Stay_In_Prior_Living_Situation where Length_Of_Stay_Description = '" + len+ "';";
 
-            custResultsOfQuery = statement.executeQuery(sql); 
+            //create result set for query results 
+            ResultSet custResultsOfQuery = null;
+
+            // populate Gender combo box
+            sql = "select Length_Name from Resident_Length_Of_Stay_In_Prior_Living_Situation where Length_Of_Stay_Description = '" + len + "';";
+
+            custResultsOfQuery = statement.executeQuery(sql);
             custResultsOfQuery.next();
             lengthOfStay = custResultsOfQuery.getObject(1).toString();
-            
+
         } catch (SQLException ex) {
             lengthOfStay = ex.getMessage();
         }
         return lengthOfStay;
     }
-    
-    private String getTimesHomelessLookupValue (String timesh) {
-        String timesHomeless = ""; 
-        String sql = ""; 
-        
+
+    private String getTimesHomelessLookupValue(String timesh) {
+        String timesHomeless = "";
+        String sql = "";
+
         try {
             conn = DriverManager.getConnection(myDBURL);
             statement = conn.createStatement();
-            
+
             //create result set for query results 
             ResultSet custResultsOfQuery = null;
-            
-            // populate Gender combo box
-            sql = "select Number_Of_Time_Homeless from Resident_Number_Of_Times_Homeless where Description = '" + timesh+ "';";
 
-            custResultsOfQuery = statement.executeQuery(sql); 
+            // populate Gender combo box
+            sql = "select Number_Of_Time_Homeless from Resident_Number_Of_Times_Homeless where Description = '" + timesh + "';";
+
+            custResultsOfQuery = statement.executeQuery(sql);
             custResultsOfQuery.next();
             timesHomeless = custResultsOfQuery.getObject(1).toString();
-            
+
         } catch (SQLException ex) {
             timesHomeless = ex.getMessage();
         }
         return timesHomeless;
     }
-    
-    private String getHousingStatusLookupValue (String houstat) {
-        String housingStatus = ""; 
-        String sql = ""; 
-        
+
+    private String getHousingStatusLookupValue(String houstat) {
+        String housingStatus = "";
+        String sql = "";
+
         try {
             conn = DriverManager.getConnection(myDBURL);
             statement = conn.createStatement();
-            
+
             //create result set for query results 
             ResultSet custResultsOfQuery = null;
-            
-            // populate Gender combo box
-            sql = "select Housing_Status_Category from Resident_Housing_Status where Housing_Status_Description = '" + houstat+ "';";
 
-            custResultsOfQuery = statement.executeQuery(sql); 
+            // populate Gender combo box
+            sql = "select Housing_Status_Category from Resident_Housing_Status where Housing_Status_Description = '" + houstat + "';";
+
+            custResultsOfQuery = statement.executeQuery(sql);
             custResultsOfQuery.next();
             housingStatus = custResultsOfQuery.getObject(1).toString();
-            
+
         } catch (SQLException ex) {
             housingStatus = ex.getMessage();
         }
         return housingStatus;
     }
-    
-    private void saveResident(){
+
+    private Resident saveResident() {
         // Check for valid resident information
         String fName = "";
-        String lName = ""; 
-        String add = jtxtAdd.getText().trim();  
-        String add2 = jtxtAdd2.getText().trim(); 
-        String c = jtxtCity.getText().trim(); 
-        String st = jtxtState.getText().trim(); 
-        String zp = jtxtZip.getText().trim(); 
+        String lName = "";
+        String add = jtxtAdd.getText().trim();
+        String add2 = jtxtAdd2.getText().trim();
+        String c = jtxtCity.getText().trim();
+        String st = jtxtState.getText().trim();
+        String zp = jtxtZip.getText().trim();
         String phne = txtPhone.getText().trim();
-        String phneAlt = txtPhoneAlt.getText().trim();  
-        String email = jtxtEmail.getText().trim(); 
-        String bDate = txtDateOfBirth.getText().trim(); 
-        String ssn = txtSSN.getText().trim(); 
+        String phneAlt = txtPhoneAlt.getText().trim();
+        String email = jtxtEmail.getText().trim();
+        String bDate = txtDateOfBirth.getText().trim();
+        String ssn = txtSSN.getText().trim();
         String gen = cboGender.getSelectedItem().toString().trim();
-        String emergencyP = txtEmPhone.getText().trim(); 
-        String emergencyN = jtxtEmName.getText().trim(); 
+        String emergencyP = txtEmPhone.getText().trim();
+        String emergencyN = jtxtEmName.getText().trim();
         String vet = cboMilitary.getSelectedItem().toString().trim();
         String r = cboRace.getSelectedItem().toString().trim();
-        String eth = cboEthnicity.getSelectedItem().toString().trim(); 
+        String eth = cboEthnicity.getSelectedItem().toString().trim();
         String dcon = "";
         String ins = "";
         String hlstat = "";
         String len = "";
-        String hlDate; 
+        String hlDate;
         String timesh = "";
         String houstat = "";
-        String inc = "";
-        String lzip = jtxtLastZip.getText().trim(); 
-        String coc = jtxtCOCCode.getText().trim(); 
-        String counts = jtxtNCCountServ.getText().trim(); 
-        String countr = jtxtCountRes.getText().trim(); 
-        String cityr = jtxtCityRes.getText().trim(); 
-
-
+        String lzip = jtxtLastZip.getText().trim();
+        String coc = jtxtCOCCode.getText().trim();
+        String counts = jtxtNCCountServ.getText().trim();
+        String countr = jtxtCountRes.getText().trim();
+        String cityr = jtxtCityRes.getText().trim();
 
         //get first name from form (no lookup table needed)
         if (txtFirstName.getText().trim().isEmpty()) {
@@ -1772,14 +1534,14 @@ public class NewResidentForm extends javax.swing.JFrame {
         } else {
             fName = txtFirstName.getText().trim();
         }
-        
+
         //get last name from form (no lookup table needed)
         if (txtLastName.getText().trim().isEmpty()) {
             //error message
         } else {
             lName = txtLastName.getText().trim();
         }
-        
+
         //get birth date from form (no lookup table needed)
         if (radDateOfBirthNoSay.isSelected()) {
             bDate = "Client doesn't know";
@@ -1790,14 +1552,14 @@ public class NewResidentForm extends javax.swing.JFrame {
         } else {
             bDate = txtDateOfBirth.getText().trim();
         }
-        
+
         //get birth date from form (no lookup table needed)
         if (txtHomelessStart.getText().trim().isEmpty()) {
             hlDate = "";
         } else {
             hlDate = txtHomelessStart.getText().trim();
         }
-        
+
         //get social from form (no lookup table needed)
         if (radSSNNoSay.isSelected()) {
             ssn = "111-11-1111";
@@ -1808,7 +1570,7 @@ public class NewResidentForm extends javax.swing.JFrame {
         } else {
             ssn = txtSSN.getText().trim();
         }
-        
+
         //get gender from form (get lookup value) 
         if (radGenderNoSay.isSelected()) {
             gen = getGenderLookupValue("Client refused");
@@ -1821,7 +1583,7 @@ public class NewResidentForm extends javax.swing.JFrame {
             gen = getGenderLookupValue(cboGender.getSelectedItem().toString());
             //JOptionPane.showMessageDialog(null, "Gender Lookup: " + gen, "Gender Info", JOptionPane.INFORMATION_MESSAGE);
         }
-        
+
         //get military status from form (get lookup value) 
         if (radMilitaryNoSay.isSelected()) {
             vet = getBooleanLookupValue("Client refused");
@@ -1832,7 +1594,7 @@ public class NewResidentForm extends javax.swing.JFrame {
         } else {
             vet = getBooleanLookupValue(cboMilitary.getSelectedItem().toString());
         }
-        
+
         //get race from form (get lookup value) 
         if (radRaceNoSay.isSelected()) {
             r = getRaceLookupValue("Client refused");
@@ -1843,7 +1605,7 @@ public class NewResidentForm extends javax.swing.JFrame {
         } else {
             r = getRaceLookupValue(cboRace.getSelectedItem().toString());
         }
-        
+
         //get ethnicity from form
         if (radEthnicityNoSay.isSelected()) {
             eth = getEthnicityLookupValue("Client refused");
@@ -1854,21 +1616,21 @@ public class NewResidentForm extends javax.swing.JFrame {
         } else {
             eth = getEthnicityLookupValue(cboEthnicity.getSelectedItem().toString());
         }
-        
+
         //get Disabling Condition from form
         if (cboDisablingCondition.getSelectedItem().toString().equals("")) {
             //error message
         } else {
             dcon = getBooleanLookupValue(cboDisablingCondition.getSelectedItem().toString());
         }
-        
+
         //get Health Insurance from form
         if (cboHealthInsurance.getSelectedItem().toString().equals("")) {
             //error message
         } else {
             ins = getBooleanLookupValue(cboHealthInsurance.getSelectedItem().toString());
         }
-        
+
         //get Homeless History from form
         if (radHomelessStatusNoSay.isSelected()) {
             hlstat = getHomelessStatusLookupValue("Client refused");
@@ -1879,7 +1641,7 @@ public class NewResidentForm extends javax.swing.JFrame {
         } else {
             hlstat = getHomelessStatusLookupValue(cboHomelessStatus.getSelectedItem().toString());
         }
-        
+
         //get length of stay from form
         if (radLengthNoSay.isSelected()) {
             len = getLengthOfStayLookupValue("Client refused");
@@ -1890,7 +1652,7 @@ public class NewResidentForm extends javax.swing.JFrame {
         } else {
             len = getLengthOfStayLookupValue(cboLengthOfStay.getSelectedItem().toString());
         }
-        
+
         //get Times Homeless from form
         if (radTimesHomelessNoSay.isSelected()) {
             timesh = getTimesHomelessLookupValue("Client refused");
@@ -1901,21 +1663,13 @@ public class NewResidentForm extends javax.swing.JFrame {
         } else {
             timesh = getTimesHomelessLookupValue(cboTimesHomeless.getSelectedItem().toString());
         }
-        
+
         //get Housing Status from form
         if (cboHousingStatus.getSelectedItem().toString().equals("")) {
             //error message
         } else {
             houstat = getHousingStatusLookupValue(cboHousingStatus.getSelectedItem().toString());
         }
-        
-        //get Income y/n from form
-        if (cboIncome.getSelectedItem().toString().equals("")) {
-            //error message
-        } else {
-            inc = getBooleanLookupValue(cboIncome.getSelectedItem().toString());
-        }
-                
 
         // cleanse phone number 
         if (phne.equals("(___) ___-____")) {
@@ -1939,263 +1693,24 @@ public class NewResidentForm extends javax.swing.JFrame {
         }
         // cleanse homeless start date 
         if (hlDate.equals("__/__/____")) {
-            hlDate = "";    
+            hlDate = "";
         }
-        
-        try {
-            conn = DriverManager.getConnection(myDBURL);
-            statement = conn.createStatement();
-            
-            String values = "Sending SQL with values: "; 
-            values += "\nFirst Name: " + fName; 
-            values += "\nLast Name: " + lName; 
-            values += "\nAddress: " + add; 
-            values += "\nAddress Line 2: " + add2; 
-            values += "\nCity: " + c; 
-            values += "\nState: " + st; 
-            values += "\nZip: " + zp; 
-            values += "\nPhone: " + phne; 
-            values += "\nPhone Alt: " + phneAlt; 
-            values += "\nEmail: " + email; 
-            values += "\nBirth Date: " + bDate; 
-            values += "\nSocial: " + ssn; 
-            values += "\nGender: " + gen; 
-            values += "\nEmergency Phone: " + emergencyP; 
-            values += "\nEmergency Name: " + emergencyN; 
-            values += "\nVeteran Status: " + vet; 
-            values += "\nRace: " + r; 
-            values += "\nEthnicity: " + eth;
-            values += "\nCurrent Length of Stay: " + "0";
-            values += "\nDisabling Condition Y/N: " + dcon;
-            values += "\nDisability Type: " + "NULL";
-            values += "\nInsurance Coverage Y/N: " + ins;
-            values += "\nInsurance Type: " + "NULL";
-            values += "\nHomeless History: " + hlstat;
-            values += "\nLength Of Stay In Prior Living Situation: " + len;
-            values += "\nHomeless Start Date: " + hlDate;
-            values += "\nNumber Of Times Homeless: " + timesh;
-            values += "\nHousing Status: " + houstat;
-            values += "\nLast Known Zip Code: " + lzip;
-            values += "\nCOC Code: " + coc;
-            values += "\nNC County Of Service: " + counts;
-            values += "\nCounty Of Residence: " + countr;
-            values += "\nCity Of Residence: " + cityr;
-            values += "\nCurrently receiving income from any Source: " + inc;
-            values += "\nSource Of Income Monthly Name:" + "NULL";
-            values += "\nSource Of Non Cash Benefit Monthly Name: " + "NULL";
-            
-            //TestOptionPane11 dbg = new TestOptionPane11(values);
 
-            Resident newRes = new Resident();
+        Resident newRes = new Resident();
+
+        newRes.AddNewResident(conn, fName, lName, add, add2, c, st, zp, phne, phneAlt, email, bDate, ssn, gen, emergencyP, emergencyN, vet, r, eth, dcon, ins, hlstat, len, hlDate, timesh, houstat, lzip, coc, counts, countr, cityr);
+        saveDisability(conn, newRes);
+        saveInsurance(conn, newRes);
             
-            newRes.AddNewResident(conn,statement,fName,lName,add,add2,c,st,zp,phne,phneAlt,email,bDate,ssn,gen,emergencyP,emergencyN,vet,r,eth,dcon,ins,hlstat,len,hlDate,timesh,houstat,lzip,coc,counts,countr,cityr,inc);
-            
-            saveDisability(conn,statement,newRes);
-            saveInsurance(conn,statement, newRes); 
-            saveMonthlyIncome(conn,statement, tblIncome, newRes); 
-            saveNonCashIncome(conn,statement, tblNonCashIncome, newRes); 
-            
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "" + "Error Loading Data", JOptionPane.INFORMATION_MESSAGE);
-            
-        } finally {
-            try {
-                conn.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(ManagementPortal.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        return newRes;
     }
-    
-    private void saveVisit(){
-        /*
-        // Check for valid visit information
-        String date_CheckIn;        
-        String refer_other_org;     
-        String relationship_head = "SELF";  
-        String disability_con;      
-        String disabilityType;      
-        String disability_longT;    
-        String disability_dep;      
-        String recieve_disab;       
-        String insurance_con;       
-        String insuranceType;       
-        String homeless_history;    
-        String length_stay_prior;   
-        String homeless_start;      
-        int numOfTimes_homeless;    
-        String house_status;        
-        String last_zip;            
-        String coc_code;            
-        String NC_county_serv;      
-        String residentCounty;      
-        String residentCity;        
-        String shelter_cat;         
-        String recieving_income;    
-        String source_income;       
-        String source_nonIncome_name;
-        String form_sharingPlan;        
-        
-        //get first name from form (no lookup table needed)
-        if (radFirstNameNoSay.isSelected()) {
-            fName = "Client refused";
-        } else if (radFirstNameUnknown.isSelected()) {
-            fName = "Client doesn't know";
-        } else if (txtFirstName.getText().trim().isEmpty()) {
-            fNameError = true; 
-        } else {
-            fName = txtFirstName.getText().trim();
-        }
-        
-        //get last name from form (no lookup table needed)
-        if (radLastNameNoSay.isSelected()) {
-            lName = "Client refused";
-        } else if (radLastNameUnknown.isSelected()) {
-            lName = "Client doesn't know";
-        } else if (txtLastName.getText().trim().isEmpty()) {
-            lNameError = true; 
-        } else {
-            lName = txtLastName.getText().trim();
-        }
-        
-        //get birth date from form (no lookup table needed)
-        if (radDateOfBirthNoSay.isSelected()) {
-            bDate = "01/01/1901";
-        } else if (radDateOfBirthUnknown.isSelected()) {
-            bDate = "01/01/1900";
-        } else if (txtDateOfBirth.getText().trim().isEmpty()) {
-            bDateError = true; 
-        } else {
-            bDate = txtDateOfBirth.getText().trim();
-        }
-        
-        //get social from form (no lookup table needed)
-        if (radSSNNoSay.isSelected()) {
-            ssn = "1";
-        } else if (radSSNUnknown.isSelected()) {
-            ssn = "0";
-        } else if (txtSSN.getText().trim().isEmpty()) {
-            ssnError = true; 
-        } else {
-            ssn = txtSSN.getText().trim();
-        }
-        
-        //get gender from form (get lookup value) 
-        if (radGenderNoSay.isSelected()) {
-            gen = getGenderLookupValue("Client refused");
-        } else if (radGenderUnknown.isSelected()) {
-            gen = getGenderLookupValue("Client doesn''t know");
-        } else if (cboGender.getSelectedItem().toString().equals("")) {
-            genError = true; 
-        } else {
-            //JOptionPane.showMessageDialog(null, "Gender: " + cboGender.getSelectedItem(), "Gender Info", JOptionPane.INFORMATION_MESSAGE);
-            gen = getGenderLookupValue(cboGender.getSelectedItem().toString());
-            //JOptionPane.showMessageDialog(null, "Gender Lookup: " + gen, "Gender Info", JOptionPane.INFORMATION_MESSAGE);
-        }
-        
-        //get military status from form (get lookup value) 
-        if (radMilitaryNoSay.isSelected()) {
-            vet = getMilitaryLookupValue("Client refused");
-        } else if (radMilitaryUnknown.isSelected()) {
-            vet = getMilitaryLookupValue("Client doesn''t know");
-        } else if (cboMilitary.getSelectedItem().toString().equals("")) {
-            vetError = true; 
-        } else {
-            vet = getMilitaryLookupValue(cboMilitary.getSelectedItem().toString());
-        }
-        
-        //get race from form (get lookup value) 
-        if (radRaceNoSay.isSelected()) {
-            r = getRaceLookupValue("Client refused");
-        } else if (radRaceUnknown.isSelected()) {
-            r = getRaceLookupValue("Client doesn''t know");
-        } else if (cboRace.getSelectedItem().toString().equals("")) {
-            rError = true; 
-        } else {
-            r = getRaceLookupValue(cboRace.getSelectedItem().toString());
-        }
-        
-        //get ethnicity from form
-        if (radEthnicityNoSay.isSelected()) {
-            eth = getEthnicityLookupValue("Client refused");
-        } else if (radEthnicityUnknown.isSelected()) {
-            eth = getEthnicityLookupValue("Client doesn''t know");
-        } else if (cboEthnicity.getSelectedItem().toString().equals("")) {
-            ethError = true; 
-        } else {
-            eth = getEthnicityLookupValue(cboEthnicity.getSelectedItem().toString());
-        }
-        
-        // cleanse phone number 
-        if (phne.equals("(___) ___-____")) {
-            phne = "";
-        }
-        // cleanse phone number - alternate
-        if (phneAlt.equals("(___) ___-____")) {
-            phneAlt = "";
-        }
-        // cleanse emergency contact phone number 
-        if (emergencyP.equals("(___) ___-____")) {
-            emergencyP = "";
-        }
-        // cleanse social security number
-        if (ssn.equals("___-__-____")) {
-            ssn = "";
-        }
-        // cleanse date of birth
-        if (bDate.equals("__/__/____")) {
-            bDate = "";
-        }
-        
-        
-        try {
-            conn = DriverManager.getConnection(myDBURL);
-            statement = conn.createStatement();
-            String values = "Sending SQL with values: "; 
-            values += "\nFirst Name: " + fName; 
-            values += "\nLast Name: " + lName; 
-            values += "\nAddress: " + add; 
-            values += "\nAddress Line 2: " + add2; 
-            values += "\nCity: " + c; 
-            values += "\nState: " + st; 
-            values += "\nZip: " + zp; 
-            values += "\nPhone: " + phne; 
-            values += "\nPhone Alt: " + phneAlt; 
-            values += "\nEmail: " + email; 
-            values += "\nBirth Date: " + bDate; 
-            values += "\nSocial: " + ssn; 
-            values += "\nGender: " + gen; 
-            values += "\nEmergency Phone: " + emergencyP; 
-            values += "\nEmergency Name: " + emergencyN; 
-            values += "\nVeteran Status: " + vet; 
-            values += "\nRace: " + r; 
-            values += "\nEthnicity: " + eth;
-            
-            JOptionPane.showMessageDialog(null, values, "Values", JOptionPane.INFORMATION_MESSAGE);
-            
-            Resident newRes = new Resident();
-            
-            newRes.AddNewResident(conn,statement,fName,lName,add,add2,c,st,zp,phne,phneAlt,email,bDate,ssn,gen,emergencyP,emergencyN,vet,r,eth);
-            
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "" + "Error Loading Data", JOptionPane.INFORMATION_MESSAGE);
-            
-        } finally {
-            try {
-                conn.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(ManagementPortal.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        */
-    }
-    
-    private void populateComponents(){
+
+    private void populateComponents() {
         String sql = "";
-        
+
         // Declare arrays for options from database to populate selection controls on the form
-        String result = ""; 
-        
+        String result = "";
+
         try {
             conn = DriverManager.getConnection(myDBURL);
             statement = conn.createStatement();
@@ -2203,13 +1718,12 @@ public class NewResidentForm extends javax.swing.JFrame {
             // **********************************************
             // *******    populate Gender Combo Box   *******
             // **********************************************
-            
             //create result set for query results 
             ResultSet custResultsOfQuery = null;
 
             //clear any current options from Gender combo box
             cboGender.removeAllItems();
-                        
+
             // populate Gender combo box
             sql = "select Gender_Description from Gender";
 
@@ -2218,238 +1732,228 @@ public class NewResidentForm extends javax.swing.JFrame {
             ResultSetMetaData meta = custResultsOfQuery.getMetaData();
 
             cboGender.addItem("");
-            while(custResultsOfQuery.next()) {
+            while (custResultsOfQuery.next()) {
                 result = custResultsOfQuery.getObject(1).toString();
-                
+
                 if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
                     cboGender.addItem(result);
                 }
             }
             //JOptionPane.showMessageDialog(null, "Populated Gender", "" + "Got this one", JOptionPane.INFORMATION_MESSAGE);
-            
+
             // **********************************************
             // *******     populate Race Combo Box    *******
             // **********************************************
-            
             // clear result set 
-            custResultsOfQuery = null; 
-                        
+            custResultsOfQuery = null;
+
             //clear any current options from Race combo box
             cboRace.removeAllItems();
-                        
+
             // populate Gender combo box
             sql = "select Race_Description from Resident_Race";
 
             custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
 
             cboRace.addItem("");
-            while(custResultsOfQuery.next()) {
+            while (custResultsOfQuery.next()) {
                 result = custResultsOfQuery.getObject(1).toString();
-                
+
                 if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
                     cboRace.addItem(result);
                 }
             }
             //JOptionPane.showMessageDialog(null, "Populated Race", "" + "Got this one", JOptionPane.INFORMATION_MESSAGE);
-            
-            
+
             // **********************************************
             // *******  populate Ethnicity Combo Box  *******
             // **********************************************
-            
             // clear result set 
-            custResultsOfQuery = null; 
-                        
+            custResultsOfQuery = null;
+
             //clear any current options from Ethnicity combo box
             cboEthnicity.removeAllItems();
-                        
+
             // populate Gender combo box
             sql = "select Ethnicity_Description from Resident_Ethnicity";
 
             custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
 
             cboEthnicity.addItem("");
-            while(custResultsOfQuery.next()) {
+            while (custResultsOfQuery.next()) {
                 result = custResultsOfQuery.getObject(1).toString();
-                
+
                 if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
                     cboEthnicity.addItem(result);
                 }
             }
             //JOptionPane.showMessageDialog(null, "Populated Ethnicity", "" + "Got this one", JOptionPane.INFORMATION_MESSAGE);
-            
+
             // **************************************************
             // *******  populate DisabilityType List Box  *******
             // **************************************************
-            
             lstDisabilityTypes.setSelectionModel(new DefaultListSelectionModel() {
                 @Override
                 public void setSelectionInterval(int index0, int index1) {
-                    if(super.isSelectedIndex(index0)) {
+                    if (super.isSelectedIndex(index0)) {
                         super.removeSelectionInterval(index0, index1);
-                    }
-                    else {
+                    } else {
                         super.addSelectionInterval(index0, index1);
                     }
                 }
             });
-            
+
             // clear result set 
-            custResultsOfQuery = null; 
-                        
+            custResultsOfQuery = null;
+
             DefaultListModel disabilityModel;
-            disabilityModel = new DefaultListModel(); 
-            
+            disabilityModel = new DefaultListModel();
+
             lstDisabilityTypes.setModel(disabilityModel);
-            
+
             //clear any current options from DisabilityType list box
             disabilityModel.clear();
-                        
+
             // populate Gender combo box
             sql = "SELECT Disability_Description FROM [DB_A47087_smgroup].[dbo].[Resident_Disability_Option]";
 
             custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
 
-            while(custResultsOfQuery.next()) {
+            while (custResultsOfQuery.next()) {
                 result = custResultsOfQuery.getObject(1).toString();
-                
+
                 if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
                     disabilityModel.addElement(result);
                 }
             }
             //JOptionPane.showMessageDialog(null, "Populated Disability Types", "" + "Got this one", JOptionPane.INFORMATION_MESSAGE);
-            
+
             // **************************************************
             // *******  populate InsuranceTypes List Box  *******
             // **************************************************
             lstInsuranceTypes.setSelectionModel(new DefaultListSelectionModel() {
                 @Override
                 public void setSelectionInterval(int index0, int index1) {
-                    if(super.isSelectedIndex(index0)) {
+                    if (super.isSelectedIndex(index0)) {
                         super.removeSelectionInterval(index0, index1);
-                    }
-                    else {
+                    } else {
                         super.addSelectionInterval(index0, index1);
                     }
                 }
             });
-                        
+
             // clear result set 
-            custResultsOfQuery = null; 
-                        
+            custResultsOfQuery = null;
+
             DefaultListModel insuranceModel;
-            insuranceModel = new DefaultListModel(); 
-            
+            insuranceModel = new DefaultListModel();
+
             lstInsuranceTypes.setModel(insuranceModel);
-            
+
             //clear any current options from Insurance list box
             insuranceModel.clear();
-                        
+
             // populate Insurance list box
             sql = "SELECT Insurance_Description FROM [DB_A47087_smgroup].[dbo].[Resident_Health_Insurance_Type_Option]";
 
             custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
 
-            while(custResultsOfQuery.next()) {
+            while (custResultsOfQuery.next()) {
                 result = custResultsOfQuery.getObject(1).toString();
                 insuranceModel.addElement(result);
             }
             //JOptionPane.showMessageDialog(null, "Populated Insurance Types", "" + "Got this one", JOptionPane.INFORMATION_MESSAGE);
-            
+
             // **********************************************
             // **** populate Homeless History Combo Box  ****
             // **********************************************
-            
             // clear result set 
-            custResultsOfQuery = null; 
-                        
+            custResultsOfQuery = null;
+
             //clear any current options from Homeless History combo box
             cboHomelessStatus.removeAllItems();
-                        
+
             // populate Homeless History combo box
             sql = "select Homeless_Description from Resident_Homeless_History_Type";
 
             custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
 
             cboHomelessStatus.addItem("");
-            while(custResultsOfQuery.next()) {
+            while (custResultsOfQuery.next()) {
                 result = custResultsOfQuery.getObject(1).toString();
-                
+
                 if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
                     cboHomelessStatus.addItem(result);
                 }
             }
             //JOptionPane.showMessageDialog(null, "Populated Homeless History", "" + "Got this one", JOptionPane.INFORMATION_MESSAGE);
-            
+
             // **********************************************
             // ***** populate Length of Stay Combo Box  *****
             // **********************************************
-            
             // clear result set 
-            custResultsOfQuery = null; 
-                        
+            custResultsOfQuery = null;
+
             //clear any current options from Length of Stay combo box
             cboLengthOfStay.removeAllItems();
-                        
+
             // populate Length of Stay combo box
             sql = "select Length_Of_Stay_Description from Resident_Length_of_Stay_In_Prior_Living_Situation";
 
             custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
 
             cboLengthOfStay.addItem("");
-            while(custResultsOfQuery.next()) {
+            while (custResultsOfQuery.next()) {
                 result = custResultsOfQuery.getObject(1).toString();
-                
+
                 if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
                     cboLengthOfStay.addItem(result);
                 }
             }
             //JOptionPane.showMessageDialog(null, "Populated Length of Stay", "" + "Got this one", JOptionPane.INFORMATION_MESSAGE);
-            
+
             // **********************************************
             // ***** populate Times Homeless Combo Box  *****
             // **********************************************
-            
             // clear result set 
-            custResultsOfQuery = null; 
-                        
+            custResultsOfQuery = null;
+
             //clear any current options from Times Homeless combo box
             cboTimesHomeless.removeAllItems();
-                        
+
             // populate Times Homeless combo box
             sql = "select Description from Resident_Number_Of_Times_Homeless";
 
             custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
 
             cboTimesHomeless.addItem("");
-            while(custResultsOfQuery.next()) {
+            while (custResultsOfQuery.next()) {
                 result = custResultsOfQuery.getObject(1).toString();
-                
+
                 if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
                     cboTimesHomeless.addItem(result);
                 }
             }
             //JOptionPane.showMessageDialog(null, "Populated Times Homeless", "" + "Got this one", JOptionPane.INFORMATION_MESSAGE);
-            
+
             // **********************************************
             // ***** populate Housing Status Combo Box  *****
             // **********************************************
-            
             // clear result set 
-            custResultsOfQuery = null; 
-                        
+            custResultsOfQuery = null;
+
             //clear any current options from Housing Status combo box
             cboHousingStatus.removeAllItems();
-                        
+
             // populate Housing Status combo box
             sql = "select Housing_Status_Description from Resident_Housing_Status";
 
             custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
 
             cboHousingStatus.addItem("");
-            while(custResultsOfQuery.next()) {
+            while (custResultsOfQuery.next()) {
                 result = custResultsOfQuery.getObject(1).toString();
-                
+
                 if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
                     cboHousingStatus.addItem(result);
                 }
@@ -2457,7 +1961,7 @@ public class NewResidentForm extends javax.swing.JFrame {
             //JOptionPane.showMessageDialog(null, "Populated Housing Status", "" + "Got this one", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "" + "Error Loading Data", JOptionPane.INFORMATION_MESSAGE);
-            
+
         } finally {
             try {
                 conn.close();
@@ -2465,11 +1969,10 @@ public class NewResidentForm extends javax.swing.JFrame {
                 Logger.getLogger(ManagementPortal.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
         // ****************************************************
         // *******  populate HealthInsurance Combo Box  *******
         // ****************************************************
-
         //clear any current options from Health Insurance combo box
         cboHealthInsurance.removeAllItems();
 
@@ -2477,11 +1980,9 @@ public class NewResidentForm extends javax.swing.JFrame {
         getBooleanDropdownValues(cboHealthInsurance, false);
         //JOptionPane.showMessageDialog(null, "Populated Health Insurance", "" + "Got this one", JOptionPane.INFORMATION_MESSAGE);
 
-
         // *******************************************************
         // *******  populate DisablingCondition Combo Box  *******
         // *******************************************************
-
         //clear any current options from Disabling Condition combo box
         cboDisablingCondition.removeAllItems();
 
@@ -2492,58 +1993,46 @@ public class NewResidentForm extends javax.swing.JFrame {
         // *******************************************************
         // *******  populate Military Veteran Combo Box  *******
         // *******************************************************
-
         //clear any current options from Military combo box
         cboMilitary.removeAllItems();
 
         // populate Military Veteran combo box
         getBooleanDropdownValues(cboMilitary, true);
         //JOptionPane.showMessageDialog(null, "Populated Military", "" + "Got this one", JOptionPane.INFORMATION_MESSAGE);
-
-        // *******************************************
-        // *******  populate Income Combo Box  *******
-        // *******************************************
-
-        //clear any current options from Income combo box
-        cboIncome.removeAllItems();
-
-        // populate Income combo box
-        getBooleanDropdownValues(cboIncome, false);
-        //JOptionPane.showMessageDialog(null, "Populated Income", "" + "Got this one", JOptionPane.INFORMATION_MESSAGE);
     }
-    
+
     private void getBooleanDropdownValues(JComboBox box, Boolean rad) {
         // clear result set 
-        ResultSet custResultsOfQuery = null; 
-        String sql; 
-        String result = ""; 
-        
+        ResultSet custResultsOfQuery = null;
+        String sql;
+        String result = "";
+
         //clear any current options from Housing Status combo box
         box.removeAllItems();
 
         try {
             conn = DriverManager.getConnection(myDBURL);
             statement = conn.createStatement();
-            
+
             // populate Housing Status combo box
             sql = "select Client_Choice_Description from Resident_Yes_No_Doesnt_Know_Refused order by Client_Choice_Description desc";
 
             custResultsOfQuery = statement.executeQuery(sql); //run SQL statement
 
             box.addItem("");
-            while(custResultsOfQuery.next()) {
+            while (custResultsOfQuery.next()) {
                 result = custResultsOfQuery.getObject(1).toString();
                 // add the value to the combo box if this combo box doesn't have radio buttons for "doesn't know" and "refused" 
                 // or if it does have radio buttons, but the value found isn't "client doesn't know" or "client refused" 
-                if (!rad ) {
+                if (!rad) {
                     box.addItem(result);
                 } else if (!result.equalsIgnoreCase("Client doesn't know") && (!result.equalsIgnoreCase("Client Refused"))) {
                     box.addItem(result);
                 }
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage() , "" + "Error Loading Data", JOptionPane.INFORMATION_MESSAGE);
-            
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "" + "Error Loading Data", JOptionPane.INFORMATION_MESSAGE);
+
         } finally {
             try {
                 conn.close();
@@ -2552,133 +2041,40 @@ public class NewResidentForm extends javax.swing.JFrame {
             }
         }
     }
-    
-    private void resultSetToTableModel(ResultSet rs, JTable table, String colName) throws SQLException{
-        /*
-        //Create new table model
-        DefaultTableModel tableModel = new DefaultTableModel();
 
-        //Retrieve meta data from ResultSet
-        ResultSetMetaData metaData = rs.getMetaData();
-
-        //Get number of columns from meta data
-        int columnCount = metaData.getColumnCount();
-
-        // set column name
-        tableModel.addColumn(colName);
-
-        //Create array of Objects with size of column count from meta data
-        Object[] row = new Object[columnCount];
-
-        //Scroll through result set
-        while (rs.next()){
-            //Get object from column with specific index of result set to array of objects
-            for (int i = 0; i < columnCount; i++){
-                row[i] = rs.getObject(i+1);
-            }
-            //add row to table model with that array of objects as an argument
-            tableModel.addRow(row);
-        }
-        
-        // create object array of column names 
-        Object[] colNames = new Object[2]; 
-        for (int i = 0; i< columnCount; i++) {
-            colNames[i] = tableModel.getColumnName(i);
-        }
-        
-        //add table model to table
-        table.setModel(tableModel);
-        */
-    }
-    
-    protected boolean isCellEditable(int row, int col) {
-        return col >= 1; //column 0 is not editable everything else is
-    }
-    
-    private double getTableSum(JTable tbl, int col)  {
-        
-        double sum = 0D; 
-        for (int i = 0; i < tbl.getRowCount(); i++){
-            if (tbl.getValueAt(i,col) != null) {
-                sum += Double.parseDouble(tbl.getValueAt(i, col)+""); 
-            }
-        }
-        return sum; 
-        
-    }
-    
-    protected void setUpTable(JTable tbl) {
-
-        NumberFormat format = NumberFormat.getCurrencyInstance();
-        NumberRenderer renderer = new NumberRenderer(format);
-        TableColumnModel model = tbl.getColumnModel();
-        TableColumn column = model.getColumn(1);
-        column.setCellRenderer(renderer);
-        
-
-        NumberFormatter formatter = new NumberFormatter(format);
-        JFormattedTextField field = new JFormattedTextField(formatter);
-        CurrencyCellEditor editor = new CurrencyCellEditor(field, format);
-        column.setCellEditor(editor);
-    }
-    
-    private void saveDisability(Connection conn, Statement statement, Resident r) {
+    private void saveDisability(Connection conn, Resident r) {
         // lstDisabilityTypes holds values - need to send them to their tables 
-        
+
         // Get the index of all the selected items
         int[] selectedIx = lstDisabilityTypes.getSelectedIndices();
-        
+
         if (selectedIx.length > 0) {
             String[] dis = new String[selectedIx.length];
             for (int i = 0; i < selectedIx.length; i++) {
-                dis[i] = lstDisabilityTypes.getModel().getElementAt(selectedIx[i]);    
+                dis[i] = lstDisabilityTypes.getModel().getElementAt(selectedIx[i]);
             }
-            r.AddDisability(conn, statement, dis);
+            r.AddDisability(conn, dis);
         }
-        
+
     }
-    
-    private void saveInsurance(Connection conn, Statement statement, Resident r) {
+
+    private void saveInsurance(Connection conn, Resident r) {
         // lstInsuranceTypes holds values - need to send them to their tables 
         // Get the index of all the selected items
         int[] selectedIx = lstInsuranceTypes.getSelectedIndices();
-        
+
         if (selectedIx.length > 0) {
             String[] ins = new String[selectedIx.length];
             for (int i = 0; i < selectedIx.length; i++) {
-                ins[i] = lstInsuranceTypes.getModel().getElementAt(selectedIx[i]);    
+                ins[i] = lstInsuranceTypes.getModel().getElementAt(selectedIx[i]);
             }
-            r.AddInsurance(conn, statement, ins);
+            r.AddInsurance(conn, ins);
         }
     }
-    
-    private void saveMonthlyIncome(Connection conn, Statement statement, JTable tbl, Resident r) {
-        // tblIncome holds values - need to send them to their tables 
-        double[] inc = new double[tbl.getRowCount()];
-        String[] col = new String[tbl.getRowCount()];
-        
-        for (int i = 0; i < tbl.getRowCount(); i++){
-            inc[i] = (Double) (tbl.getValueAt(i,1));
-            col[i] = tbl.getValueAt(i,0).toString(); 
-        }
-        
-        String msg = "Amounts: "; 
-        for (int i = 0; i < tbl.getRowCount(); i++) {
-            msg += "\n" + col[i] + ": $" + inc[i];
-        }
-        TestOptionPane11 dbg = new TestOptionPane11(msg); 
-        
-    }
-    
-    private void saveNonCashIncome(Connection conn, Statement statement, JTable tblNonCash, Resident r) {
-        // tblNonCashIncome holds values - need to send them to their tables 
-    }
-    
+
     /**
-    * @param args the command line arguments
-    */
-    
-    
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -2707,11 +2103,11 @@ public class NewResidentForm extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new NewResidentForm().setVisible(true);
-                
+
             }
         });
-    } 
-    
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
@@ -2724,7 +2120,6 @@ public class NewResidentForm extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cboHealthInsurance;
     private javax.swing.JComboBox<String> cboHomelessStatus;
     private javax.swing.JComboBox<String> cboHousingStatus;
-    private javax.swing.JComboBox<String> cboIncome;
     private javax.swing.JComboBox<String> cboLengthOfStay;
     private javax.swing.JComboBox<String> cboMilitary;
     private javax.swing.JComboBox<String> cboRace;
@@ -2756,7 +2151,6 @@ public class NewResidentForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel29;
@@ -2779,7 +2173,6 @@ public class NewResidentForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel jlblAdd;
     private javax.swing.JLabel jlblAdd2;
     private javax.swing.JLabel jlblCity;
@@ -2808,11 +2201,7 @@ public class NewResidentForm extends javax.swing.JFrame {
     private javax.swing.JPanel pnlDemo;
     private javax.swing.JPanel pnlDisability;
     private javax.swing.JPanel pnlHistory;
-    private javax.swing.JPanel pnlIncome;
-    private javax.swing.JTabbedPane pnlIncomeTabs;
     private javax.swing.JPanel pnlInsurance;
-    private javax.swing.JScrollPane pnlMonthlyIncome;
-    private javax.swing.JPanel pnlNonCashIncome;
     private javax.swing.JRadioButton radDateOfBirthNoSay;
     private javax.swing.JRadioButton radDateOfBirthUnknown;
     private javax.swing.JRadioButton radEthnicityNoSay;
@@ -2832,48 +2221,14 @@ public class NewResidentForm extends javax.swing.JFrame {
     private javax.swing.JRadioButton radTimesHomelessNoSay;
     private javax.swing.JRadioButton radTimesHomelessUnknown;
     private javax.swing.JTabbedPane tabs;
-    private javax.swing.JTable tblIncome;
-    private javax.swing.JTable tblNonCashIncome;
     private javax.swing.JFormattedTextField txtDateOfBirth;
     private javax.swing.JFormattedTextField txtEmPhone;
     private javax.swing.JTextField txtFirstName;
     private javax.swing.JFormattedTextField txtHomelessStart;
     private javax.swing.JTextField txtLastName;
-    private javax.swing.JTextField txtMonthlyIncome;
-    private javax.swing.JTextField txtNonCashIncome;
     private javax.swing.JFormattedTextField txtPhone;
     private javax.swing.JFormattedTextField txtPhoneAlt;
     private javax.swing.JFormattedTextField txtSSN;
     // End of variables declaration//GEN-END:variables
 
 }
-/*
-class MyTableModel extends DefaultTableModel {
- 
-    public MyTableModel(Object rowData[][], Object columnNames[]) {
-         super(rowData, columnNames);
-      }
-    
-    @Override
-      public Class getColumnClass(int col) {
-        if (col == 1)       //second column accepts only Double values
-            return Double.class;
-        else return String.class;  //other columns accept String values
-    }
- 
-    @Override
-      public boolean isCellEditable(int row, int col) {
-        return col != 0; //first column will be uneditable
-      }
-      
-    @Override
-      public Object getValueAt (int row , int column ) {
-          Object s=super.getValueAt(row,column);
-          if(s==null) {
-            s=0;
-        }
-        return s;
-    }
-}
-*/
-
