@@ -211,7 +211,7 @@ public class MainMenu extends javax.swing.JFrame {
     private void btnEditResidentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditResidentActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        ViewEditResident edit = new ViewEditResident();
+        FindResident edit = new FindResident();
         edit.setVisible(true);
     }//GEN-LAST:event_btnEditResidentActionPerformed
 
