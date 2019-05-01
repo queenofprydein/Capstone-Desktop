@@ -206,8 +206,8 @@ public class FindResident extends javax.swing.JFrame {
        /* resID.setText(ids.get(ResidentList.getSelectedIndex()).toString());*/
        int num = ids.get(ResidentList.getSelectedIndex());
        this.setVisible(false);
-       CheckIn in = new CheckIn(new Resident(num));
-       in.setVisible(true);
+       ViewResidentForm vr = new ViewResidentForm(num); 
+       vr.setVisible(true);
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed

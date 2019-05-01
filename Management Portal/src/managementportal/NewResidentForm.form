@@ -2,10 +2,6 @@
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
-    <Component class="javax.swing.ButtonGroup" name="grpFirstName">
-    </Component>
-    <Component class="javax.swing.ButtonGroup" name="grpLastName">
-    </Component>
     <Component class="javax.swing.ButtonGroup" name="grpSSN">
     </Component>
     <Component class="javax.swing.ButtonGroup" name="grpDateOfBirth">

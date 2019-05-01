@@ -42,8 +42,6 @@ public class NewResidentForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        grpFirstName = new javax.swing.ButtonGroup();
-        grpLastName = new javax.swing.ButtonGroup();
         grpSSN = new javax.swing.ButtonGroup();
         grpDateOfBirth = new javax.swing.ButtonGroup();
         grpGender = new javax.swing.ButtonGroup();
@@ -2126,10 +2124,8 @@ public class NewResidentForm extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cboTimesHomeless;
     private javax.swing.ButtonGroup grpDateOfBirth;
     private javax.swing.ButtonGroup grpEthnicity;
-    private javax.swing.ButtonGroup grpFirstName;
     private javax.swing.ButtonGroup grpGender;
     private javax.swing.ButtonGroup grpHomelessStatus;
-    private javax.swing.ButtonGroup grpLastName;
     private javax.swing.ButtonGroup grpLength;
     private javax.swing.ButtonGroup grpMilitary;
     private javax.swing.ButtonGroup grpRace;

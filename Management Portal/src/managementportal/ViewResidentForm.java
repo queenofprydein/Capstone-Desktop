@@ -40,7 +40,9 @@ public class ViewResidentForm extends javax.swing.JFrame {
     public ViewResidentForm(int id) {
 
         initComponents();
-        
+        Resident r = new Resident(id);
+        populateComponents(); 
+        pullSelectionsFromDatabase(r); 
     }
     
 
@@ -64,7 +66,7 @@ public class ViewResidentForm extends javax.swing.JFrame {
         grpHomelessStatus = new javax.swing.ButtonGroup();
         grpLength = new javax.swing.ButtonGroup();
         grpTimesHomeless = new javax.swing.ButtonGroup();
-        jLabel1 = new javax.swing.JLabel();
+        lblResidentTitle = new javax.swing.JLabel();
         tabs = new javax.swing.JTabbedPane();
         pnlDemo = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -202,6 +204,7 @@ public class ViewResidentForm extends javax.swing.JFrame {
         btnPrevPage = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         btnSaveResident = new javax.swing.JButton();
+        lblResidentID = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -210,8 +213,8 @@ public class ViewResidentForm extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("New Resident Entry");
+        lblResidentTitle.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lblResidentTitle.setText("View/Edit Resident #");
 
         tabs.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -1035,13 +1038,18 @@ public class ViewResidentForm extends javax.swing.JFrame {
             }
         });
 
+        lblResidentID.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lblResidentID.setText("00");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(224, 224, 224)
-                .addComponent(jLabel1)
+                .addComponent(lblResidentTitle)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblResidentID)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -1061,7 +1069,9 @@ public class ViewResidentForm extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblResidentTitle)
+                    .addComponent(lblResidentID))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tabs)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1079,8 +1089,6 @@ public class ViewResidentForm extends javax.swing.JFrame {
 
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        populateComponents();
-        pullSelectionsFromDatabase(res); 
     }//GEN-LAST:event_formWindowOpened
 
     private void btnNextPageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextPageActionPerformed
@@ -1108,15 +1116,24 @@ public class ViewResidentForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPrevPageActionPerformed
 
     private void btnSaveResidentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveResidentActionPerformed
-        saveResident();
+        Resident updateRes = new Resident(Integer.parseInt(lblResidentID.getText()));
+        saveResident(updateRes); 
+        
         int response = JOptionPane.showConfirmDialog(null, "Would you like to check in this resident?", "Check in",
         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         switch (response) {
             case JOptionPane.NO_OPTION:
                 System.out.println("Resident saved, user declined to check in");
+                // load Main Menu
+                this.setVisible(false);
+                MainMenu menu = new MainMenu();
+                menu.setVisible(true);
                 break;
             case JOptionPane.YES_OPTION:
-                
+                // load Check In window
+                this.setVisible(false);
+                CheckIn ci = new CheckIn(updateRes);
+                ci.setVisible(true);
                 System.out.println("Resident saved, user moved to check in");
                 break;
             case JOptionPane.CLOSED_OPTION:
@@ -1501,8 +1518,8 @@ public class ViewResidentForm extends javax.swing.JFrame {
     }
 
     private String getHomelessStatusLookupValue(String hlstat) {
-        String homelessStatus = "";
-        String sql = "";
+        String homelessStatus;
+        String sql;
 
         try {
             conn = DriverManager.getConnection(myDBURL);
@@ -1536,7 +1553,7 @@ public class ViewResidentForm extends javax.swing.JFrame {
             ResultSet custResultsOfQuery = null;
 
             // get description from DB
-            sql = "select Homeless_Description from Resident_Homeless_History_Type where = Homeless_History_Type '" + hlstat + "';";
+            sql = "select Homeless_Description from Resident_Homeless_History_Type where Homeless_History_Type = '" + hlstat + "';";
 
             custResultsOfQuery = statement.executeQuery(sql);
             custResultsOfQuery.next();
@@ -1692,7 +1709,7 @@ public class ViewResidentForm extends javax.swing.JFrame {
         return housingStatus;
     }
 
-    private void saveResident() {
+    private void saveResident(Resident res) {
         // Check for valid resident information
         String fName = "";
         String lName = "";
@@ -1893,248 +1910,9 @@ public class ViewResidentForm extends javax.swing.JFrame {
             hlDate = "";
         }
 
-        try {
-            conn = DriverManager.getConnection(myDBURL);
-            statement = conn.createStatement();
-
-            String values = "Sending SQL with values: ";
-            values += "\nFirst Name: " + fName;
-            values += "\nLast Name: " + lName;
-            values += "\nAddress: " + add;
-            values += "\nAddress Line 2: " + add2;
-            values += "\nCity: " + c;
-            values += "\nState: " + st;
-            values += "\nZip: " + zp;
-            values += "\nPhone: " + phne;
-            values += "\nPhone Alt: " + phneAlt;
-            values += "\nEmail: " + email;
-            values += "\nBirth Date: " + bDate;
-            values += "\nSocial: " + ssn;
-            values += "\nGender: " + gen;
-            values += "\nEmergency Phone: " + emergencyP;
-            values += "\nEmergency Name: " + emergencyN;
-            values += "\nVeteran Status: " + vet;
-            values += "\nRace: " + r;
-            values += "\nEthnicity: " + eth;
-            values += "\nCurrent Length of Stay: " + "0";
-            values += "\nDisabling Condition Y/N: " + dcon;
-            values += "\nDisability Type: " + "NULL";
-            values += "\nInsurance Coverage Y/N: " + ins;
-            values += "\nInsurance Type: " + "NULL";
-            values += "\nHomeless History: " + hlstat;
-            values += "\nLength Of Stay In Prior Living Situation: " + len;
-            values += "\nHomeless Start Date: " + hlDate;
-            values += "\nNumber Of Times Homeless: " + timesh;
-            values += "\nHousing Status: " + houstat;
-            values += "\nLast Known Zip Code: " + lzip;
-            values += "\nCOC Code: " + coc;
-            values += "\nNC County Of Service: " + counts;
-            values += "\nCounty Of Residence: " + countr;
-            values += "\nCity Of Residence: " + cityr;
-            values += "\nSource Of Income Monthly Name:" + "NULL";
-            values += "\nSource Of Non Cash Benefit Monthly Name: " + "NULL";
-
-            //TestOptionPane11 dbg = new TestOptionPane11(values);
-            Resident newRes = new Resident();
-
-            newRes.AddNewResident(conn, fName, lName, add, add2, c, st, zp, phne, phneAlt, email, bDate, ssn, gen, emergencyP, emergencyN, vet, r, eth, dcon, ins, hlstat, len, hlDate, timesh, houstat, lzip, coc, counts, countr, cityr);
-
-            saveDisability(conn, statement, newRes);
-            saveInsurance(conn, statement, newRes);
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "" + "Error Loading Data", JOptionPane.INFORMATION_MESSAGE);
-
-        } finally {
-            try {
-                conn.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(ManagementPortal.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-
-    private void saveVisit() {
-        /*
-        // Check for valid visit information
-        String date_CheckIn;        
-        String refer_other_org;     
-        String relationship_head = "SELF";  
-        String disability_con;      
-        String disabilityType;      
-        String disability_longT;    
-        String disability_dep;      
-        String recieve_disab;       
-        String insurance_con;       
-        String insuranceType;       
-        String homeless_history;    
-        String length_stay_prior;   
-        String homeless_start;      
-        int numOfTimes_homeless;    
-        String house_status;        
-        String last_zip;            
-        String coc_code;            
-        String NC_county_serv;      
-        String residentCounty;      
-        String residentCity;        
-        String shelter_cat;         
-        String recieving_income;    
-        String source_income;       
-        String source_nonIncome_name;
-        String form_sharingPlan;        
-        
-        //get first name from form (no lookup table needed)
-        if (radFirstNameNoSay.isSelected()) {
-            fName = "Client refused";
-        } else if (radFirstNameUnknown.isSelected()) {
-            fName = "Client doesn't know";
-        } else if (txtFirstName.getText().trim().isEmpty()) {
-            fNameError = true; 
-        } else {
-            fName = txtFirstName.getText().trim();
-        }
-        
-        //get last name from form (no lookup table needed)
-        if (radLastNameNoSay.isSelected()) {
-            lName = "Client refused";
-        } else if (radLastNameUnknown.isSelected()) {
-            lName = "Client doesn't know";
-        } else if (txtLastName.getText().trim().isEmpty()) {
-            lNameError = true; 
-        } else {
-            lName = txtLastName.getText().trim();
-        }
-        
-        //get birth date from form (no lookup table needed)
-        if (radDateOfBirthNoSay.isSelected()) {
-            bDate = "01/01/1901";
-        } else if (radDateOfBirthUnknown.isSelected()) {
-            bDate = "01/01/1900";
-        } else if (txtDateOfBirth.getText().trim().isEmpty()) {
-            bDateError = true; 
-        } else {
-            bDate = txtDateOfBirth.getText().trim();
-        }
-        
-        //get social from form (no lookup table needed)
-        if (radSSNNoSay.isSelected()) {
-            ssn = "1";
-        } else if (radSSNUnknown.isSelected()) {
-            ssn = "0";
-        } else if (txtSSN.getText().trim().isEmpty()) {
-            ssnError = true; 
-        } else {
-            ssn = txtSSN.getText().trim();
-        }
-        
-        //get gender from form (get lookup value) 
-        if (radGenderNoSay.isSelected()) {
-            gen = getGenderLookupValue("Client refused");
-        } else if (radGenderUnknown.isSelected()) {
-            gen = getGenderLookupValue("Client doesn''t know");
-        } else if (cboGender.getSelectedItem().toString().equals("")) {
-            genError = true; 
-        } else {
-            //JOptionPane.showMessageDialog(null, "Gender: " + cboGender.getSelectedItem(), "Gender Info", JOptionPane.INFORMATION_MESSAGE);
-            gen = getGenderLookupValue(cboGender.getSelectedItem().toString());
-            //JOptionPane.showMessageDialog(null, "Gender Lookup: " + gen, "Gender Info", JOptionPane.INFORMATION_MESSAGE);
-        }
-        
-        //get military status from form (get lookup value) 
-        if (radMilitaryNoSay.isSelected()) {
-            vet = getMilitaryLookupValue("Client refused");
-        } else if (radMilitaryUnknown.isSelected()) {
-            vet = getMilitaryLookupValue("Client doesn''t know");
-        } else if (cboMilitary.getSelectedItem().toString().equals("")) {
-            vetError = true; 
-        } else {
-            vet = getMilitaryLookupValue(cboMilitary.getSelectedItem().toString());
-        }
-        
-        //get race from form (get lookup value) 
-        if (radRaceNoSay.isSelected()) {
-            r = getRaceLookupValue("Client refused");
-        } else if (radRaceUnknown.isSelected()) {
-            r = getRaceLookupValue("Client doesn''t know");
-        } else if (cboRace.getSelectedItem().toString().equals("")) {
-            rError = true; 
-        } else {
-            r = getRaceLookupValue(cboRace.getSelectedItem().toString());
-        }
-        
-        //get ethnicity from form
-        if (radEthnicityNoSay.isSelected()) {
-            eth = getEthnicityLookupValue("Client refused");
-        } else if (radEthnicityUnknown.isSelected()) {
-            eth = getEthnicityLookupValue("Client doesn''t know");
-        } else if (cboEthnicity.getSelectedItem().toString().equals("")) {
-            ethError = true; 
-        } else {
-            eth = getEthnicityLookupValue(cboEthnicity.getSelectedItem().toString());
-        }
-        
-        // cleanse phone number 
-        if (phne.equals("(___) ___-____")) {
-            phne = "";
-        }
-        // cleanse phone number - alternate
-        if (phneAlt.equals("(___) ___-____")) {
-            phneAlt = "";
-        }
-        // cleanse emergency contact phone number 
-        if (emergencyP.equals("(___) ___-____")) {
-            emergencyP = "";
-        }
-        // cleanse social security number
-        if (ssn.equals("___-__-____")) {
-            ssn = "";
-        }
-        // cleanse date of birth
-        if (bDate.equals("__/__/____")) {
-            bDate = "";
-        }
-        
-        
-        try {
-            conn = DriverManager.getConnection(myDBURL);
-            statement = conn.createStatement();
-            String values = "Sending SQL with values: "; 
-            values += "\nFirst Name: " + fName; 
-            values += "\nLast Name: " + lName; 
-            values += "\nAddress: " + add; 
-            values += "\nAddress Line 2: " + add2; 
-            values += "\nCity: " + c; 
-            values += "\nState: " + st; 
-            values += "\nZip: " + zp; 
-            values += "\nPhone: " + phne; 
-            values += "\nPhone Alt: " + phneAlt; 
-            values += "\nEmail: " + email; 
-            values += "\nBirth Date: " + bDate; 
-            values += "\nSocial: " + ssn; 
-            values += "\nGender: " + gen; 
-            values += "\nEmergency Phone: " + emergencyP; 
-            values += "\nEmergency Name: " + emergencyN; 
-            values += "\nVeteran Status: " + vet; 
-            values += "\nRace: " + r; 
-            values += "\nEthnicity: " + eth;
-            
-            JOptionPane.showMessageDialog(null, values, "Values", JOptionPane.INFORMATION_MESSAGE);
-            
-            Resident newRes = new Resident();
-            
-            newRes.AddNewResident(conn,statement,fName,lName,add,add2,c,st,zp,phne,phneAlt,email,bDate,ssn,gen,emergencyP,emergencyN,vet,r,eth);
-            
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "" + "Error Loading Data", JOptionPane.INFORMATION_MESSAGE);
-            
-        } finally {
-            try {
-                conn.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(ManagementPortal.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-         */
+        res.UpdateResident(conn, res.getResidentID(), fName, lName, add, add2, c, st, zp, phne, phneAlt, email, bDate, ssn, gen, emergencyP, emergencyN, vet, r, eth, dcon, ins, hlstat, len, hlDate, timesh, houstat, lzip, coc, counts, countr, cityr);
+        saveDisability(conn, res);
+        saveInsurance(conn, res);
     }
 
     private void populateComponents() {
@@ -2431,10 +2209,19 @@ public class ViewResidentForm extends javax.swing.JFrame {
         // populate Military Veteran combo box
         getBooleanDropdownValues(cboMilitary, true);
         //JOptionPane.showMessageDialog(null, "Populated Military", "" + "Got this one", JOptionPane.INFORMATION_MESSAGE);
+        
+        
+        
     }
 
     private void pullSelectionsFromDatabase(Resident r) {
-        String sql = "";
+        /* 
+        ===============================================
+        ======= Show Resident ID on Title Label =======
+        ===============================================
+        */
+        lblResidentID.setText(String.valueOf(r.getResidentID()));
+        
         
         /* 
         ===============================================
@@ -2560,7 +2347,9 @@ public class ViewResidentForm extends javax.swing.JFrame {
         =========================================
         */
         
-        txtHomelessStart.setText(sdf.format(r.getHomeless_start()));  // Start Date of Homelessness - text only
+        if (r.getHomeless_start() != null ){
+            txtHomelessStart.setText(sdf.format(r.getHomeless_start()));  // Start Date of Homelessness - text only
+        }        
         cboHousingStatus.setSelectedItem(getHousingStatusDescriptionFromCode(r.getHouse_status())); // Housing Status (cbo) getHousingStatusDescriptionFromCode
         switch (getHomelessDescriptionFromCode(r.getHomeless_history())) {
             case "Client refused":
@@ -2571,6 +2360,7 @@ public class ViewResidentForm extends javax.swing.JFrame {
                 break;
             default:
                 cboHomelessStatus.setSelectedItem(getHomelessDescriptionFromCode(r.getHomeless_history()));
+                System.out.println("Homeless Status = " + r.getHomeless_history());
                 break; 
         } // Homeless Status (cbo or radio) getHomelessDescriptionFromCode        
         switch (getLengthOfStayDescriptionFromCode(r.getLength_stay_prior())) {
@@ -2638,7 +2428,7 @@ public class ViewResidentForm extends javax.swing.JFrame {
         }
     }
 
-    private void saveDisability(Connection conn, Statement statement, Resident r) {
+    private void saveDisability(Connection conn, Resident r) {
         // lstDisabilityTypes holds values - need to send them to their tables 
 
         // Get the index of all the selected items
@@ -2654,7 +2444,7 @@ public class ViewResidentForm extends javax.swing.JFrame {
 
     }
 
-    private void saveInsurance(Connection conn, Statement statement, Resident r) {
+    private void saveInsurance(Connection conn, Resident r) {
         // lstInsuranceTypes holds values - need to send them to their tables 
         // Get the index of all the selected items
         int[] selectedIx = lstInsuranceTypes.getSelectedIndices();
@@ -2732,7 +2522,6 @@ public class ViewResidentForm extends javax.swing.JFrame {
     private javax.swing.ButtonGroup grpRace;
     private javax.swing.ButtonGroup grpSSN;
     private javax.swing.ButtonGroup grpTimesHomeless;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -2792,6 +2581,8 @@ public class ViewResidentForm extends javax.swing.JFrame {
     private javax.swing.JTextField jtxtNCCountServ;
     private javax.swing.JTextField jtxtState;
     private javax.swing.JTextField jtxtZip;
+    private javax.swing.JLabel lblResidentID;
+    private javax.swing.JLabel lblResidentTitle;
     private javax.swing.JList<String> lstDisabilityTypes;
     private javax.swing.JList<String> lstInsuranceTypes;
     private javax.swing.JPanel pnlContact;

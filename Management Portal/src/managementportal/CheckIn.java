@@ -170,9 +170,14 @@ public class CheckIn extends javax.swing.JFrame {
             }
             
             Visit v = new Visit(r.getResidentID(), checkinDate);
-            TestOptionPane11 dbg = new TestOptionPane11("Visitor has been assigned to bed and locker # " + v.getBedID());
-            
             v.AddNewVisit();
+            
+            JOptionPane.showMessageDialog(null, r.getFirstName() + " " + r.getLastName() + " has been assigned to bed and locker # " + v.getBedID(), "Visit Saved", JOptionPane.INFORMATION_MESSAGE);
+            
+            //return to main menu
+            this.setVisible(false);
+            MainMenu menu = new MainMenu();
+            menu.setVisible(true);
         } catch (ParseException pe) {
             System.out.println("Parse Exception getting Check In Date/Time: " + pe);
         }
