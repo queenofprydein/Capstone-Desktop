@@ -5,12 +5,21 @@
  */
 package managementportal;
 
+import java.awt.Component;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
 /**
  *
  * @author Lupe
@@ -66,6 +75,7 @@ public class ViewResidentReports extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        ResidentTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         jScrollPane1.setViewportView(ResidentTable);
 
         jLabel2.setText("Types of Reports");
@@ -131,7 +141,7 @@ public class ViewResidentReports extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(350, 350, 350)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 350, Short.MAX_VALUE))
+                .addContainerGap(350, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnMain)
@@ -256,6 +266,9 @@ public class ViewResidentReports extends javax.swing.JFrame {
             
             DefaultTableModel resModel = new DefaultTableModel(data,columnNames);
             ResidentTable.setModel(resModel);
+            ResidentTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+            TableColumnAdjuster tca = new TableColumnAdjuster(ResidentTable);
+            tca.adjustColumns();
         }
         catch(SQLException ex)
         {
@@ -275,7 +288,6 @@ public class ViewResidentReports extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtnReportsActionPerformed
 
     private void btnMainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMainActionPerformed
-        // TODO add your handling code here:
         this.setVisible(false);
         MainMenu main = new MainMenu();
         main.setVisible(true);

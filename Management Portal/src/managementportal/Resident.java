@@ -5,14 +5,10 @@
  */
 package managementportal;
 
-import java.util.*;
 import java.sql.*;
 import java.text.DateFormat;
-import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
@@ -1125,11 +1121,16 @@ public class Resident {
     public void AddDisability(Connection conn, String[] dis) {
         // create table entries for disabilities selected 
         try {
-            String[] dn = new String[dis.length];
-            String sql = "SELECT [Disability_Name] FROM [dbo].[Resident_Disability_Option] WHERE [Disability_Description] = ?";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet rs;
             
+            ResultSet rs;
+            String[] dn = new String[dis.length];
+            String sql = "DELETE FROM [dbo].[Resident_Disability_Type] WHERE [Residentt_ID] = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, this.residentID);
+            ps.executeUpdate();
+            
+            sql = "SELECT [Disability_Name] FROM [dbo].[Resident_Disability_Option] WHERE [Disability_Description] = ?";
+            ps = conn.prepareStatement(sql);
             for (int i = 0; i < dis.length; i++) {
                 ps.setString(1, dis[i]);
                 rs = ps.executeQuery();
@@ -1137,8 +1138,6 @@ public class Resident {
                     dn[i] = rs.getString("Disability_Name"); 
                 }
             }
-            
-            
             ps = conn.prepareStatement("INSERT into [dbo].[Resident_Disability_Type] ([Disability_Name],[Residentt_ID]) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
 
             for (String d : dn) {
@@ -1149,30 +1148,44 @@ public class Resident {
             }
 
         } catch (SQLException ex) {
+            System.out.println("Failed on Add Disability");
             JOptionPane.showMessageDialog(null, ex.getMessage(), "" + "Error Writing to Disability Table", JOptionPane.INFORMATION_MESSAGE);
         }
     }
     
     public String[] getDisability(Connection conn) {
         // create table entries for disabilities selected 
+        int rowCount;
         
         try {
-            String sql = "SELECT [Disability_Name] FROM [dbo].[Resident_Disability_Type] WHERE [Residentt_ID] = ?";
-            
-            
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, residentID);
-
+            PreparedStatement ps = conn.prepareStatement("SELECT count(*) FROM [dbo].[Resident_Disability_Type] WHERE [Residentt_ID] = " + residentID);
             ResultSet rs = ps.executeQuery(); 
-            String[] dis = new String[rs.getRow()];
-            rs.beforeFirst();
-            for (String d : dis) {
+            rs.next();
+            rowCount = rs.getInt(1);
+            String[] dis = new String[rowCount];  
+            System.out.println(rowCount + " rows found");
+            
+            rs = null; 
+            
+            ps = conn.prepareStatement("SELECT [Disability_Name] FROM [dbo].[Resident_Disability_Type] WHERE [Residentt_ID] = " + residentID);
+            System.out.println("set up prepared statement with SQL");
+            //ps.setInt(1, residentID);
+            rs = ps.executeQuery(); 
+            System.out.println("Executed query");
+            
+            for (int i = 0; i < dis.length; i++) {
+            //for (String d : dis) {
+                System.out.println("in for loop");
                 rs.next();
-                d = rs.getString("Disability_Name");
+                System.out.println("in resultset on row # " + rs.getRow());
+                dis[i] = rs.getObject(1).toString();
+                System.out.println("got string from resultset: " + dis[i]);
             }
+            System.out.println("Sending an array starting with " + dis[0]);
             return dis; 
 
         } catch (SQLException ex) {
+            System.out.println("Failed on getDisability");
             JOptionPane.showMessageDialog(null, ex.getMessage(), "" + "Error Writing to Disability Table", JOptionPane.INFORMATION_MESSAGE);
             String[] dis = {"No Results"}; 
             return dis; 
@@ -1206,4 +1219,44 @@ public class Resident {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "" + "Error Writing to Insurance Table", JOptionPane.INFORMATION_MESSAGE);
         }
     }
+
+
+    public String[] getInsurance(Connection conn) {
+        // select insurances stored in DB
+        int rowCount;
+        
+        try {
+            PreparedStatement ps = conn.prepareStatement("SELECT count(*) FROM [dbo].[Resident_Health_Insurance_Type] WHERE [Resident_ID] = " + residentID);
+            ResultSet rs = ps.executeQuery(); 
+            rs.next();
+            rowCount = rs.getInt(1);
+            String[] dis = new String[rowCount];  
+            System.out.println(rowCount + " rows found");
+            
+            rs = null; 
+            
+            ps = conn.prepareStatement("SELECT [Insurance_Name] FROM [dbo].[Resident_Health_Insurance_Type] WHERE [Resident_ID] = " + residentID);
+            System.out.println("set up prepared statement with SQL");
+            rs = ps.executeQuery(); 
+            System.out.println("Executed query");
+            
+            for (int i = 0; i < dis.length; i++) {
+            //for (String d : dis) {
+                System.out.println("in for loop");
+                rs.next();
+                System.out.println("in resultset on row # " + rs.getRow());
+                dis[i] = rs.getObject(1).toString();
+                System.out.println("got string from resultset: " + dis[i]);
+            }
+            System.out.println("Sending an array starting with " + dis[0]);
+            return dis; 
+
+        } catch (SQLException ex) {
+            System.out.println("Failed on getDisability");
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "" + "Error Writing to Disability Table", JOptionPane.INFORMATION_MESSAGE);
+            String[] dis = {"No Results"}; 
+            return dis; 
+        }
+    }
+
 }

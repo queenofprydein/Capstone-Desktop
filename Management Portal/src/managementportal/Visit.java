@@ -164,7 +164,7 @@ public class Visit {
             tableKeys.next();
             int visitKey = tableKeys.getInt(1);
             this.visitID = visitKey;
-            TestOptionPane11 dbg = new TestOptionPane11("Visit ID is: " + visitID);
+            //TestOptionPane11 dbg = new TestOptionPane11("Visit ID is: " + visitID);
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage() + "\nEXCEPTION LOGGED AT AddNewVisit");

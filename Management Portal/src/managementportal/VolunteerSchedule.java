@@ -52,13 +52,13 @@ public class VolunteerSchedule extends javax.swing.JFrame {
 
         ScheduleTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         jScrollPane1.setViewportView(ScheduleTable);
@@ -119,7 +119,7 @@ public class VolunteerSchedule extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnMain)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         pack();
@@ -179,6 +179,8 @@ public class VolunteerSchedule extends javax.swing.JFrame {
             
             DefaultTableModel scheModel = new DefaultTableModel(data,columnNames);
             ScheduleTable.setModel(scheModel);
+            TableColumnAdjuster tca = new TableColumnAdjuster(ScheduleTable); 
+            tca.adjustColumns();
         }
         catch(SQLException ex)
         {

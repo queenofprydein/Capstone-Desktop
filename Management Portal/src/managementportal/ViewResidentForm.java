@@ -2337,9 +2337,11 @@ public class ViewResidentForm extends javax.swing.JFrame {
         
         
         // list of disabilities 
+        populateDisability(conn, r);
 
         cboHealthInsurance.setSelectedItem(getBooleanDescriptionFromCode(r.getInsurance_con()));  // health insurance (cbo YN)  getBooleanDescriptionFromCode        
         // list of insurances 
+        populateInsurance(conn, r);
         
         /* 
         =========================================
@@ -2427,6 +2429,42 @@ public class ViewResidentForm extends javax.swing.JFrame {
             }
         }
     }
+    
+    private void populateDisability(Connection conn, Resident r) {
+        String[] dis = r.getDisability(conn);
+        String[] des = new String[dis.length];
+        String sql = "select Disability_Description from Resident_Disability_Option WHERE Disability_Name = ?";
+        ResultSet rs; 
+        PreparedStatement ps;
+        
+        if (dis.length > 0) {
+            try {           
+                // convert disability_name to disability_description
+                for (int i = 0; i < dis.length; i++){
+
+                    // populate Disability Types List Box
+                    ps = conn.prepareStatement(sql);
+                    System.out.println("sending " + sql + " with parameter " + dis[i]);
+                    ps.setString(1, dis[i]);
+                    rs = ps.executeQuery(); //run SQL statement
+                    rs.next();
+                    des[i] = rs.getString("Disability_Description");
+                    System.out.println("Got Disability_Description " + des[i]);
+                }
+
+                for (int i = 0; i < lstDisabilityTypes.getModel().getSize(); i++){
+                    for (String j : des) {
+                        if (j.trim().equals(lstDisabilityTypes.getModel().getElementAt(i).trim())) {
+                            lstDisabilityTypes.setSelectedIndex(i);                    
+                        }
+                        System.out.println("Database info: " + j.trim() + " and listbox value: " + lstDisabilityTypes.getModel().getElementAt(i));
+                    }
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            }
+        }
+    }
 
     private void saveDisability(Connection conn, Resident r) {
         // lstDisabilityTypes holds values - need to send them to their tables 
@@ -2444,6 +2482,42 @@ public class ViewResidentForm extends javax.swing.JFrame {
 
     }
 
+    private void populateInsurance(Connection conn, Resident r) {
+        String[] dis = r.getInsurance(conn);
+        String[] des = new String[dis.length];
+        String sql = "select Insurance_Description from Resident_Health_Insurance_Type_Option WHERE Insurance_Name = ?";
+        ResultSet rs; 
+        PreparedStatement ps;
+        
+        if (dis.length > 0 ) {
+            try {           
+                // convert disability_name to disability_description
+                for (int i = 0; i < dis.length; i++){
+
+                    // populate Disability Types List Box
+                    ps = conn.prepareStatement(sql);
+                    System.out.println("sending " + sql + " with parameter " + dis[i]);
+                    ps.setString(1, dis[i]);
+                    rs = ps.executeQuery(); //run SQL statement
+                    rs.next();
+                    des[i] = rs.getString("Insurance_Description");
+                    System.out.println("Got Insurance_Description " + des[i]);
+                }
+
+                for (int i = 0; i < lstInsuranceTypes.getModel().getSize(); i++){
+                    for (String j : des) {
+                        if (j.trim().equals(lstInsuranceTypes.getModel().getElementAt(i).trim())) {
+                            lstInsuranceTypes.setSelectedIndex(i);                    
+                        }
+                        System.out.println("Database info: " + j.trim() + " and listbox value: " + lstInsuranceTypes.getModel().getElementAt(i));
+                    }
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            }
+        }
+    }
+    
     private void saveInsurance(Connection conn, Resident r) {
         // lstInsuranceTypes holds values - need to send them to their tables 
         // Get the index of all the selected items

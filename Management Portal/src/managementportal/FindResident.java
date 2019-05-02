@@ -7,6 +7,7 @@
 package managementportal;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,6 +51,7 @@ public class FindResident extends javax.swing.JFrame {
         btnEdit = new javax.swing.JButton();
         resID = new javax.swing.JLabel();
         btnCancel = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -83,6 +85,10 @@ public class FindResident extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("Dialog", 2, 12)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Resident shown as [ID#, First Name, Last Name, Date of Birth]");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -115,6 +121,7 @@ public class FindResident extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jScrollPane1)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -137,14 +144,16 @@ public class FindResident extends javax.swing.JFrame {
                     .addComponent(txtLName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnSearch)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(resID)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEdit)
                     .addComponent(btnCancel))
-                .addGap(18, 18, 18)
-                .addComponent(resID)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -153,27 +162,42 @@ public class FindResident extends javax.swing.JFrame {
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
-        String first = "%" + txtFName.getText() + "%";
-        String last = "%" + txtLName.getText() + "%";
+        String first = txtFName.getText() + "%";
+        String last = txtLName.getText() + "%";
         
         Vector<Object> data = new Vector<Object>();
         try
         {
             conn = DriverManager.getConnection(myDBURL);
             
-            PreparedStatement search = conn.prepareStatement("SELECT Resident_ID, First_Name, Last_Name, Birth_Date FROM [DB_A47087_smgroup].[dbo].[Resident] WHERE First_Name LIKE ? OR Last_Name LIKE ?");
+            PreparedStatement search = conn.prepareStatement("SELECT Resident_ID, First_Name, Last_Name, Birth_Date FROM [DB_A47087_smgroup].[dbo].[Resident] WHERE First_Name LIKE ? AND Last_Name LIKE ?");
             search.setString(1, first);
             search.setString(2, last);
             ResultSet searchR = search.executeQuery();
             ResultSetMetaData searchRMD = searchR.getMetaData();
             int columns = searchRMD.getColumnCount();
+            String dobTest; 
             DefaultListModel sList = new DefaultListModel();
             
             while (searchR.next()) 
             {
                 Vector<Object> vector = new Vector<Object>();
                 for (int columnIndex = 1; columnIndex <= columns; columnIndex++) {
-                    vector.add(searchR.getObject(columnIndex));
+                    if (columnIndex == 4){
+                        dobTest = searchR.getObject("Birth_Date").toString();
+                        switch (dobTest) {
+                            case "1901-01-01":
+                                vector.add("DOB not given");
+                                break;
+                            case "1900-01-01":
+                                vector.add("DOB unknown");
+                                break;
+                            default: 
+                                vector.add(dobTest);
+                        }         
+                    } else {
+                        vector.add(searchR.getObject(columnIndex));
+                    }
                     if(columnIndex == 1)
                     {
                         ids.add(searchR.getInt(columnIndex));
@@ -261,6 +285,7 @@ public class FindResident extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel resID;
     private javax.swing.JTextField txtFName;
